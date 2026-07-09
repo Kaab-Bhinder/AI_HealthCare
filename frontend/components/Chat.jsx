@@ -1,6 +1,36 @@
 "use client"
 import { useState, useRef, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import VoiceChat from './VoiceChat'
+
+// Tailwind-styled renderers for the markdown in AI answers (dark-mode aware).
+const mdComponents = {
+  p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
+  strong: ({ children }) => (
+    <strong className="font-semibold text-healthcare-800 dark:text-healthcare-200">{children}</strong>
+  ),
+  em: ({ children }) => <em className="italic">{children}</em>,
+  ul: ({ children }) => <ul className="list-disc pl-5 mb-2 space-y-1">{children}</ul>,
+  ol: ({ children }) => <ol className="list-decimal pl-5 mb-2 space-y-1">{children}</ol>,
+  li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+  h1: ({ children }) => <h3 className="font-bold text-healthcare-700 dark:text-healthcare-300 text-base mt-3 mb-1">{children}</h3>,
+  h2: ({ children }) => <h3 className="font-bold text-healthcare-700 dark:text-healthcare-300 text-base mt-3 mb-1">{children}</h3>,
+  h3: ({ children }) => <h4 className="font-bold text-healthcare-700 dark:text-healthcare-300 mt-2 mb-1">{children}</h4>,
+  a: ({ href, children }) => (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="text-healthcare-600 dark:text-healthcare-300 underline">{children}</a>
+  ),
+  code: ({ children }) => (
+    <code className="px-1 py-0.5 rounded bg-healthcare-50 dark:bg-slate-700 text-healthcare-700 dark:text-healthcare-200 text-[13px]">{children}</code>
+  ),
+  blockquote: ({ children }) => (
+    <blockquote className="border-l-4 border-healthcare-300 dark:border-healthcare-600 pl-3 italic text-gray-600 dark:text-slate-400">{children}</blockquote>
+  ),
+  table: ({ children }) => <table className="w-full text-left border-collapse my-2">{children}</table>,
+  th: ({ children }) => <th className="border-b border-healthcare-200 dark:border-slate-600 px-2 py-1 font-semibold">{children}</th>,
+  td: ({ children }) => <td className="border-b border-healthcare-100 dark:border-slate-700 px-2 py-1">{children}</td>,
+}
+
 export default function Chat() {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
@@ -15,6 +45,7 @@ export default function Chat() {
   const [bookingStep, setBookingStep] = useState(1)
   const [notification, setNotification] = useState({ show: false, message: '', type: 'success' })
   const [playingId, setPlayingId] = useState(null)  // Track which message is playing
+  const [copiedId, setCopiedId] = useState(null)    // Track which message was just copied
   useEffect(() => {
     listRef.current?.lastElementChild?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
@@ -63,68 +94,12 @@ export default function Chat() {
       setLoaded(true)
     }
   }, [])
-  function parseAndFormatResponse(text) {
-    const lines = text.split('\n')
-    const elements = []
-    let currentSection = []
-    for (let line of lines) {
-      const trimmed = line.trim()
-      if (!trimmed) continue
-      if (/^[A-Z][A-Z\s]+:/.test(trimmed)) {
-        if (currentSection.length > 0) {
-          elements.push(currentSection)
-          currentSection = []
-        }
-        elements.push({ type: 'heading', text: trimmed })
-      }
-      else if (trimmed.startsWith('-')) {
-        currentSection.push({ type: 'bullet', text: trimmed.substring(1).trim() })
-      }
-      else {
-        currentSection.push({ type: 'paragraph', text: trimmed })
-      }
-    }
-    if (currentSection.length > 0) {
-      elements.push(currentSection)
-    }
-    return elements
-  }
   function renderFormattedText(text) {
-    const elements = parseAndFormatResponse(text)
     return (
-      <div className="space-y-3">
-        {elements.map((el, idx) => {
-          if (el.type === 'heading') {
-            return (
-              <div key={idx} className="font-bold text-healthcare-700 text-sm mt-2">
-                {el.text}
-              </div>
-            )
-          } else if (Array.isArray(el)) {
-            return (
-              <div key={idx} className="space-y-1">
-                {el.map((item, itemIdx) => {
-                  if (item.type === 'bullet') {
-                    return (
-                      <div key={itemIdx} className="flex gap-2 text-sm">
-                        <span className="text-healthcare-600">•</span>
-                        <span>{item.text}</span>
-                      </div>
-                    )
-                  } else if (item.type === 'paragraph') {
-                    return (
-                      <div key={itemIdx} className="text-sm leading-relaxed">
-                        {item.text}
-                      </div>
-                    )
-                  }
-                  return null
-                })}
-              </div>
-            )
-          }
-          return null
-        })}
+      <div className="text-sm">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
+          {text}
+        </ReactMarkdown>
       </div>
     )
   }
@@ -224,24 +199,30 @@ export default function Chat() {
       </div>
 
       {/* Chat Messages */}
-      <div className="flex-1 rounded-xl border border-healthcare-200 bg-gradient-to-b from-healthcare-50 to-white p-6 overflow-y-auto shadow-inner" ref={listRef}>
+      <div className="flex-1 rounded-xl border border-healthcare-200 dark:border-slate-700 bg-gradient-to-b from-healthcare-50 to-white dark:from-slate-800 dark:to-slate-800 p-6 overflow-y-auto shadow-inner" ref={listRef}>
         {!loaded && (
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
               <div className="inline-block animate-spin text-4xl mb-3">⌛</div>
-              <p className="text-gray-500 font-semibold">Loading conversation...</p>
+              <p className="text-gray-500 dark:text-slate-400 font-semibold">Loading conversation...</p>
             </div>
           </div>
         )}
         {loaded && messages.length === 0 && (
           <div className="text-center py-16 space-y-4">
             <div className="text-5xl">👋</div>
-            <h2 className="text-xl font-bold text-healthcare-700">Welcome!</h2>
-            <p className="text-gray-600 max-w-sm mx-auto">Tell me about your symptoms and I'll provide guidance. You can also book appointments with doctors.</p>
+            <h2 className="text-xl font-bold text-healthcare-700 dark:text-healthcare-300">Welcome!</h2>
+            <p className="text-gray-600 dark:text-slate-400 max-w-sm mx-auto">Tell me about your symptoms and I'll provide guidance. You can also book appointments with doctors.</p>
             <div className="flex gap-2 justify-center flex-wrap mt-6">
-              <span className="text-xs bg-healthcare-100 text-healthcare-700 px-3 py-1 rounded-full">💡 Try: "I have a headache"</span>
-              <span className="text-xs bg-healthcare-100 text-healthcare-700 px-3 py-1 rounded-full">💡 Try: "What helps with fever?"</span>
-              <span className="text-xs bg-healthcare-100 text-healthcare-700 px-3 py-1 rounded-full">💡 Try: "I'm feeling dizzy"</span>
+              {['I have a headache', 'What helps with fever?', "I'm feeling dizzy"].map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setInput(s)}
+                  className="text-xs bg-healthcare-100 dark:bg-slate-700 text-healthcare-700 dark:text-healthcare-300 hover:bg-healthcare-200 dark:hover:bg-slate-600 px-3 py-1 rounded-full transition-colors"
+                >
+                  💡 Try: "{s}"
+                </button>
+              ))}
             </div>
           </div>
         )}
@@ -305,14 +286,31 @@ export default function Chat() {
                     </svg>
                   )}
                 </button>
+                <button
+                  onClick={() => {
+                    const plain = m.text.replace(/[*_#`>]/g, '')
+                    navigator.clipboard?.writeText(plain).then(() => {
+                      setCopiedId(m.id)
+                      setTimeout(() => setCopiedId(null), 1500)
+                    }).catch(() => {})
+                  }}
+                  className="p-2 rounded-full transition-all text-healthcare-600 dark:text-healthcare-300 opacity-0 group-hover:opacity-100 transform hover:scale-110 hover:bg-healthcare-100 dark:hover:bg-slate-700"
+                  title={copiedId === m.id ? 'Copied!' : 'Copy response'}
+                >
+                  {copiedId === m.id ? (
+                    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  )}
+                </button>
               </div>
             )}
-            <div className={`max-w-[75%] rounded-2xl px-5 py-4 shadow-md ${m.from === 'user' ? 'bg-gradient-to-br from-healthcare-500 to-healthcare-600 text-white rounded-br-none' : 'bg-white text-healthcare-800 border border-healthcare-200 rounded-bl-none'}`}>
+            <div className={`max-w-[75%] rounded-2xl px-5 py-4 shadow-md ${m.from === 'user' ? 'bg-gradient-to-br from-healthcare-500 to-healthcare-600 text-white rounded-br-none' : 'bg-white dark:bg-slate-800 text-healthcare-800 dark:text-slate-200 border border-healthcare-200 dark:border-slate-700 rounded-bl-none'}`}>
               {m.from === 'assistant' ? renderFormattedText(m.text) : <div className="text-sm leading-relaxed">{m.text}</div>}
               {m.from === 'assistant' && Array.isArray(m.sources) && m.sources.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-healthcare-100">
+                <div className="mt-3 pt-3 border-t border-healthcare-100 dark:border-slate-700">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-[11px] font-semibold text-gray-400 flex items-center gap-1">
+                    <span className="text-[11px] font-semibold text-gray-400 dark:text-slate-500 flex items-center gap-1">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                       Based on
                     </span>
@@ -320,7 +318,7 @@ export default function Chat() {
                       <span
                         key={si}
                         title={s.score != null ? `Relevance: ${Math.round(s.score * 100)}%` : undefined}
-                        className="text-[11px] font-medium bg-healthcare-50 text-healthcare-700 border border-healthcare-200 rounded-full px-2.5 py-0.5"
+                        className="text-[11px] font-medium bg-healthcare-50 dark:bg-slate-700 text-healthcare-700 dark:text-healthcare-300 border border-healthcare-200 dark:border-slate-600 rounded-full px-2.5 py-0.5"
                       >
                         {s.title}
                       </span>
@@ -339,7 +337,7 @@ export default function Chat() {
         {typing && (
           <div className="flex items-center gap-3 mb-5 animate-fade-in">
             <div className="h-10 w-10 rounded-full bg-gradient-to-br from-healthcare-400 to-healthcare-600 flex items-center justify-center text-white font-bold shadow-md">🤖</div>
-            <div className="bg-white border border-healthcare-200 rounded-2xl rounded-bl-none px-5 py-3 shadow-md">
+            <div className="bg-white dark:bg-slate-800 border border-healthcare-200 dark:border-slate-700 rounded-2xl rounded-bl-none px-5 py-3 shadow-md">
               <div className="flex gap-2">
                 <div className="h-3 w-3 rounded-full bg-healthcare-400 animate-bounce"></div>
                 <div className="h-3 w-3 rounded-full bg-healthcare-400 animate-bounce" style={{animationDelay: '0.1s'}}></div>
@@ -351,7 +349,7 @@ export default function Chat() {
       </div>
 
       {/* Input Area */}
-      <div className="bg-white border-t border-healthcare-200 p-6 rounded-t-2xl shadow-lg">
+      <div className="bg-white dark:bg-slate-800 border-t border-healthcare-200 dark:border-slate-700 p-6 rounded-t-2xl shadow-lg">
         <div className="flex gap-3">
           <VoiceChat 
             onVoiceInput={(text) => {
@@ -397,7 +395,7 @@ export default function Chat() {
             value={input} 
             onChange={e => setInput(e.target.value)} 
             onKeyDown={e => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), send())}
-            className="flex-1 rounded-full border-2 border-healthcare-200 px-5 py-3 focus:outline-none focus:border-healthcare-500 focus:ring-2 focus:ring-healthcare-200 text-sm placeholder-gray-400 transition-all" 
+            className="flex-1 rounded-full border-2 border-healthcare-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 px-5 py-3 focus:outline-none focus:border-healthcare-500 focus:ring-2 focus:ring-healthcare-200 dark:focus:ring-slate-600 text-sm placeholder-gray-400 dark:placeholder-slate-500 transition-all"
             placeholder="Describe your symptoms or ask a question..." 
           />
           <button 
@@ -414,13 +412,13 @@ export default function Chat() {
             📅 Book
           </button>
         </div>
-        <p className="text-xs text-gray-500 mt-3 text-center">
+        <p className="text-xs text-gray-500 dark:text-slate-400 mt-3 text-center">
           🎤 <strong>Click microphone</strong> to speak (click again to stop) • 💬 <strong>Type</strong> to chat • 🔊 <strong>Hover & click speaker</strong> on AI messages to hear responses
         </p>
       </div>
       {showBooking && (
         <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-auto shadow-2xl">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-auto shadow-2xl">
             {/* Modal Header */}
             <div className="bg-gradient-to-r from-healthcare-600 to-healthcare-700 text-white p-8 rounded-t-3xl">
               <div className="flex justify-between items-center">
@@ -437,10 +435,10 @@ export default function Chat() {
               <div className="flex gap-3 mb-8">
                 {[1, 2, 3].map(step => (
                   <div key={step} className="flex flex-col items-center flex-1">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${bookingStep >= step ? 'bg-healthcare-500 text-white shadow-lg' : 'bg-gray-200 text-gray-600'}`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${bookingStep >= step ? 'bg-healthcare-500 text-white shadow-lg' : 'bg-gray-200 dark:bg-slate-600 text-gray-600 dark:text-slate-300'}`}>
                       {step === 1 ? '🔍' : step === 2 ? '👨‍⚕️' : '🕒'}
                     </div>
-                    <div className={`text-xs mt-2 font-semibold ${bookingStep >= step ? 'text-healthcare-600' : 'text-gray-500'}`}>
+                    <div className={`text-xs mt-2 font-semibold ${bookingStep >= step ? 'text-healthcare-600' : 'text-gray-500 dark:text-slate-400'}`}>
                       {step === 1 ? 'Symptom' : step === 2 ? 'Doctor' : 'Time'}
                     </div>
                   </div>
@@ -450,18 +448,18 @@ export default function Chat() {
               {/* Step 1: Symptom Input */}
               {bookingStep === 1 && (
                 <div className="space-y-6 animate-fade-in">
-                  <div className="bg-gradient-to-br from-healthcare-50 to-blue-50 p-6 rounded-2xl border-2 border-healthcare-200">
-                    <label className="block text-lg font-bold text-healthcare-700 mb-3">
+                  <div className="bg-gradient-to-br from-healthcare-50 to-blue-50 dark:from-slate-700 dark:to-slate-700 p-6 rounded-2xl border-2 border-healthcare-200 dark:border-slate-700">
+                    <label className="block text-lg font-bold text-healthcare-700 dark:text-slate-100 mb-3">
                       What symptom or condition do you need help with?
                     </label>
                     <input
                       id="symptom-input"
                       type="text"
                       placeholder="e.g., headache, fever, cold, chest pain, sore throat..."
-                      className="w-full px-5 py-4 border-2 border-healthcare-300 rounded-xl focus:outline-none focus:border-healthcare-500 focus:ring-2 focus:ring-healthcare-200 text-base transition-all placeholder-gray-400"
+                      className="w-full px-5 py-4 border-2 border-healthcare-300 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:placeholder-slate-500 rounded-xl focus:outline-none focus:border-healthcare-500 focus:ring-2 focus:ring-healthcare-200 text-base transition-all placeholder-gray-400"
                       autoFocus
                     />
-                    <p className="text-xs text-gray-600 mt-3 flex items-center gap-2">
+                    <p className="text-xs text-gray-600 dark:text-slate-300 mt-3 flex items-center gap-2">
                       <span>💡</span> We'll find specialized doctors for your condition
                     </p>
                   </div>
@@ -481,10 +479,10 @@ export default function Chat() {
             {/* Step 2: Doctor Selection */}
             {bookingStep === 2 && doctors.length > 0 && (
               <div className="space-y-6 animate-fade-in">
-                <div className="bg-gradient-to-r from-healthcare-100 to-green-100 p-5 rounded-2xl border-2 border-green-400 flex items-center justify-between">
+                <div className="bg-gradient-to-r from-healthcare-100 to-green-100 dark:from-slate-700 dark:to-slate-700 p-5 rounded-2xl border-2 border-green-400 dark:border-green-700 flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-green-900 font-bold">✓ Success!</p>
-                    <p className="text-lg font-black text-green-900">{doctors.length} Specialist{doctors.length !== 1 ? 's' : ''} Found</p>
+                    <p className="text-sm text-green-900 dark:text-green-300 font-bold">✓ Success!</p>
+                    <p className="text-lg font-black text-green-900 dark:text-green-300">{doctors.length} Specialist{doctors.length !== 1 ? 's' : ''} Found</p>
                   </div>
                   <div className="text-4xl">👨‍⚕️</div>
                 </div>
@@ -493,7 +491,7 @@ export default function Chat() {
                     <div
                       key={doc._id}
                       onClick={() => loadDoctorSlots(doc._id)}
-                      className="border-2 border-healthcare-200 rounded-2xl p-6 hover:border-healthcare-500 hover:bg-gradient-to-br hover:from-healthcare-50 hover:to-white cursor-pointer transition-all transform hover:scale-102 hover:shadow-xl bg-white group"
+                      className="border-2 border-healthcare-200 dark:border-slate-700 rounded-2xl p-6 hover:border-healthcare-500 hover:bg-gradient-to-br hover:from-healthcare-50 hover:to-white dark:hover:bg-slate-700 cursor-pointer transition-all transform hover:scale-102 hover:shadow-xl bg-white dark:bg-slate-900 group"
                     >
                       <div className="flex justify-between items-start gap-4">
                         <div className="flex-1">
@@ -502,23 +500,23 @@ export default function Chat() {
                               {idx + 1}
                             </div>
                             <div>
-                              <p className="font-bold text-lg text-healthcare-700 group-hover:text-healthcare-800">{doc.name}</p>
-                              <p className="text-xs text-gray-500">{doc.specialty}</p>
+                              <p className="font-bold text-lg text-healthcare-700 dark:text-slate-100 group-hover:text-healthcare-800">{doc.name}</p>
+                              <p className="text-xs text-gray-500 dark:text-slate-400">{doc.specialty}</p>
                             </div>
                           </div>
-                          <p className="text-xs text-gray-600 mt-2">{doc.qualifications}</p>
+                          <p className="text-xs text-gray-600 dark:text-slate-300 mt-2">{doc.qualifications}</p>
                         </div>
                         <div className="text-right flex-shrink-0">
                           <div className="flex items-center gap-1 mb-2">
                             <span className="text-2xl">⭐</span>
                             <span className="font-black text-lg text-yellow-600">{doc.rating}</span>
                           </div>
-                          <p className="text-xs text-gray-600 font-semibold">{doc.experience_years}y exp</p>
+                          <p className="text-xs text-gray-600 dark:text-slate-300 font-semibold">{doc.experience_years}y exp</p>
                         </div>
                       </div>
-                      <div className="mt-4 flex gap-4 text-xs text-gray-600 flex-wrap">
-                        <span className="inline-flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full">📱 {doc.phone}</span>
-                        <span className="inline-flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full">🕒 {doc.availability}</span>
+                      <div className="mt-4 flex gap-4 text-xs text-gray-600 dark:text-slate-300 flex-wrap">
+                        <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-slate-800 px-3 py-1 rounded-full">📱 {doc.phone}</span>
+                        <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-slate-800 px-3 py-1 rounded-full">🕒 {doc.availability}</span>
                       </div>
                       <div className="mt-4 text-right">
                         <span className="inline-block bg-healthcare-500 text-white px-5 py-2 rounded-full text-xs font-bold group-hover:bg-healthcare-600 transition-all">
@@ -530,7 +528,7 @@ export default function Chat() {
                 </div>
                 <button
                   onClick={() => setBookingStep(1)}
-                  className="w-full border-2 border-healthcare-500 text-healthcare-600 py-4 rounded-xl hover:bg-healthcare-50 font-bold transition-all flex items-center justify-center gap-2"
+                  className="w-full border-2 border-healthcare-500 text-healthcare-600 py-4 rounded-xl hover:bg-healthcare-50 dark:hover:bg-slate-700 font-bold transition-all flex items-center justify-center gap-2"
                 >
                   ← Change Symptom
                 </button>
@@ -540,18 +538,18 @@ export default function Chat() {
               {/* Step 3: Time Slot Selection */}
               {bookingStep === 3 && slots.length > 0 && (
                 <div className="space-y-6 animate-fade-in">
-                  <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-6 rounded-2xl border-2 border-purple-300">
+                  <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-slate-700 dark:to-slate-700 p-6 rounded-2xl border-2 border-purple-300 dark:border-slate-700">
                     {selectedDoctor && doctors.find(d => d._id === selectedDoctor) && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <span className="text-2xl">👨‍⚕️</span>
                           <div>
-                            <p className="text-xs text-purple-900 font-bold">BOOKING WITH</p>
-                            <p className="text-2xl font-black text-purple-900">{doctors.find(d => d._id === selectedDoctor).name}</p>
+                            <p className="text-xs text-purple-900 dark:text-purple-300 font-bold">BOOKING WITH</p>
+                            <p className="text-2xl font-black text-purple-900 dark:text-purple-300">{doctors.find(d => d._id === selectedDoctor).name}</p>
                           </div>
                         </div>
-                        <div className="bg-white rounded-lg px-4 py-2 inline-block">
-                          <p className="text-xs text-purple-700 font-semibold">{doctors.find(d => d._id === selectedDoctor).specialty}</p>
+                        <div className="bg-white dark:bg-slate-900 rounded-lg px-4 py-2 inline-block">
+                          <p className="text-xs text-purple-700 dark:text-purple-300 font-semibold">{doctors.find(d => d._id === selectedDoctor).specialty}</p>
                         </div>
                       </div>
                     )}
@@ -559,9 +557,9 @@ export default function Chat() {
                   <div>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="text-2xl">🕒</div>
-                      <h3 className="text-xl font-black text-healthcare-700">Choose Your Time</h3>
+                      <h3 className="text-xl font-black text-healthcare-700 dark:text-slate-100">Choose Your Time</h3>
                     </div>
-                    <p className="text-sm text-gray-600 mb-4 font-semibold">Select the slot that works best for you:</p>
+                    <p className="text-sm text-gray-600 dark:text-slate-300 mb-4 font-semibold">Select the slot that works best for you:</p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-80 overflow-y-auto">
                       {slots.map(slot => (
                         <button
@@ -581,22 +579,22 @@ export default function Chat() {
                               bookSlot(slot._id, email, phone)
                             }
                           }}
-                          className="p-4 border-2 border-healthcare-200 rounded-xl hover:border-healthcare-500 hover:bg-healthcare-100 text-center transition-all group hover:shadow-lg transform hover:scale-105 active:scale-95 bg-white"
+                          className="p-4 border-2 border-healthcare-200 dark:border-slate-700 rounded-xl hover:border-healthcare-500 hover:bg-healthcare-100 dark:hover:bg-slate-700 text-center transition-all group hover:shadow-lg transform hover:scale-105 active:scale-95 bg-white dark:bg-slate-900"
                         >
-                          <div className="text-sm font-bold text-healthcare-700 group-hover:text-healthcare-800 mb-2">
+                          <div className="text-sm font-bold text-healthcare-700 dark:text-slate-100 group-hover:text-healthcare-800 mb-2">
                             {new Date(slot.slot_time).toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'})}
                           </div>
                           <div className="text-3xl font-black text-healthcare-600 group-hover:text-healthcare-700">
                             {new Date(slot.slot_time).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: true})}
                           </div>
-                          <div className="text-xs text-gray-500 mt-2 group-hover:text-gray-700">Available</div>
+                          <div className="text-xs text-gray-500 dark:text-slate-400 mt-2 group-hover:text-gray-700">Available</div>
                         </button>
                       ))}
                     </div>
                   </div>
                   <button
                     onClick={() => setBookingStep(2)}
-                    className="w-full border-2 border-healthcare-500 text-healthcare-600 py-4 rounded-xl hover:bg-healthcare-50 font-bold transition-all flex items-center justify-center gap-2"
+                    className="w-full border-2 border-healthcare-500 text-healthcare-600 py-4 rounded-xl hover:bg-healthcare-50 dark:hover:bg-slate-700 font-bold transition-all flex items-center justify-center gap-2"
                   >
                     ← Select Different Doctor
                   </button>
@@ -607,7 +605,7 @@ export default function Chat() {
               {bookingStep === 3 && slots.length === 0 && (
                 <div className="text-center py-12 animate-fade-in">
                   <div className="text-5xl mb-4">⏳</div>
-                  <p className="text-gray-600 text-lg font-semibold mb-6">No available slots found</p>
+                  <p className="text-gray-600 dark:text-slate-400 text-lg font-semibold mb-6">No available slots found</p>
                   <button
                     onClick={() => setBookingStep(2)}
                     className="bg-healthcare-500 text-white px-8 py-3 rounded-xl hover:bg-healthcare-600 font-bold transition-all inline-block"
@@ -620,7 +618,7 @@ export default function Chat() {
               {bookingStep === 2 && doctors.length === 0 && (
                 <div className="text-center py-12 animate-fade-in">
                   <div className="text-5xl mb-4">🔍</div>
-                  <p className="text-gray-600 text-lg font-semibold mb-6">No doctors found for that symptom</p>
+                  <p className="text-gray-600 dark:text-slate-400 text-lg font-semibold mb-6">No doctors found for that symptom</p>
                   <button
                     onClick={() => setBookingStep(1)}
                     className="bg-healthcare-500 text-white px-8 py-3 rounded-xl hover:bg-healthcare-600 font-bold transition-all inline-block"

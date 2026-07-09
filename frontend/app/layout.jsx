@@ -1,13 +1,20 @@
 import './globals.css'
 import Link from 'next/link'
+import ThemeToggle from '../components/ThemeToggle'
 export const metadata = {
   title: 'AI Healthcare Assistant',
   description: 'A minimal healthcare assistant powered by AI'
 }
+// Runs before hydration so the correct theme is applied with no flash of the
+// wrong background. Respects a saved choice, otherwise the OS preference.
+const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();`
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen text-slate-800">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-screen text-slate-800 dark:text-slate-200">
         <div className="flex min-h-screen flex-col">
           {/* Header */}
           <header className="bg-gradient-to-r from-healthcare-600 to-healthcare-700 shadow-xl">
@@ -26,7 +33,8 @@ export default function RootLayout({ children }) {
                   <Link href="/admin" className="hover:text-healthcare-100 transition-colors">⚙️ Admin</Link>
                 </nav>
               </div>
-              <div>
+              <div className="flex items-center gap-3">
+                <ThemeToggle />
                 <Link href="/consult" className="rounded-full bg-white text-healthcare-600 px-6 py-3 text-sm hover:shadow-lg font-bold transition-all transform hover:scale-105 active:scale-95">
                   ➤ Start Consult
                 </Link>

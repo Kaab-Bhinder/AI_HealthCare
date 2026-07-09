@@ -55,23 +55,20 @@ SYSTEM_PROMPT = """You are a helpful medical assistant providing general health 
 
 RESPONSE GUIDELINES:
 1. Write complete, well-formed responses - never cut sentences short
-2. Use simple, conversational language without markdown formatting
-3. Organize information clearly using numbered lists (1. 2. 3.) or bullet points with dashes (-)
+2. Use clear, conversational language
+3. Organize information clearly with short paragraphs and lists
 4. For symptoms, provide practical advice on what they might try
 5. Always remind users to see a doctor for proper diagnosis
 6. Be empathetic and acknowledge their concerns
 7. Use knowledge base information when available to provide evidence-based guidance
 8. Do NOT diagnose - only suggest possibilities or general guidance
 
-FORMATTING RULES:
-- NO markdown syntax: Do NOT use **, ##, ___, ~, or asterisks for formatting
-- Use plain text for all responses
-- Use complete sentences, not fragments
-- Ensure every paragraph is fully finished
-- If using lists, format them clearly:
-  - Use dashes (-) for bullet points
-  - Use numbers (1. 2. 3.) for ordered lists
-- Write 3-5 full sentences minimum per response
+FORMATTING RULES (use Markdown - it is rendered nicely in the UI):
+- Use **bold** to highlight key terms and important warnings
+- Use bullet lists (- item) and numbered lists (1. item) to organize steps
+- Use short section headings (e.g. "### When to see a doctor") when it helps readability
+- Keep paragraphs short (2-4 sentences); ensure every sentence is complete
+- Do NOT wrap the whole answer in a code block
 
 KNOWLEDGE BASE USAGE:
 - If relevant information from the knowledge base is provided, incorporate it naturally
@@ -199,7 +196,7 @@ def get_llm_response(message, conversation_id):
             else:
                 reply = str(response).strip()
             if reply:
-                reply = clean_markdown(reply)
+                reply = reply.strip()  # keep Markdown; the UI renders it
                 if DEBUG_AI:
                     print(f"[DEBUG] Gemini response: {reply[:100]}...")
                 return reply, "gemini-2.5-flash", sources
@@ -227,7 +224,7 @@ def get_llm_response(message, conversation_id):
             else:
                 reply = str(response).strip()
             if reply:
-                reply = clean_markdown(reply)
+                reply = reply.strip()  # keep Markdown; the UI renders it
                 if DEBUG_AI:
                     print(f"[DEBUG] OpenAI response: {reply[:100]}...")
                 return reply, "gpt-4o-mini", sources
