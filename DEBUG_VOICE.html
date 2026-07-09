@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice API Debug</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+        .pass { color: green; font-weight: bold; }
+        .fail { color: red; font-weight: bold; }
+        .info { color: blue; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+        h2 { margin-top: 0; color: #333; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Voice API Debug Report</h1>
+
+    <div class="debug-box">
+        <h2>Browser Information</h2>
+        <p><strong>User Agent:</strong></p>
+        <code id="userAgent"></code>
+        <p><strong>Browser:</strong> <span id="browser"></span></p>
+    </div>
+
+    <div class="debug-box">
+        <h2>Speech Recognition API</h2>
+        <p id="recognition"></p>
+    </div>
+
+    <div class="debug-box">
+        <h2>Speech Synthesis API</h2>
+        <p id="synthesis"></p>
+    </div>
+
+    <div class="debug-box">
+        <h2>Microphone Permissions</h2>
+        <p id="permissions"></p>
+        <button onclick="testMicrophone()">🎤 Test Microphone Access</button>
+        <p id="micResult"></p>
+    </div>
+
+    <div class="debug-box">
+        <h2>Available Voices</h2>
+        <p id="voices"></p>
+    </div>
+
+    <script>
+        // Browser detection
+        const ua = navigator.userAgent;
+        document.getElementById('userAgent').textContent = ua;
+        
+        let browser = 'Unknown';
+        if (ua.includes('Chrome') && !ua.includes('Edge')) browser = 'Chrome';
+        else if (ua.includes('Edge')) browser = 'Edge';
+        else if (ua.includes('Firefox')) browser = 'Firefox';
+        else if (ua.includes('Safari')) browser = 'Safari';
+        
+        document.getElementById('browser').textContent = browser;
+
+        // Check Speech Recognition
+        const SpeechRecognition = window.SpeechRecognition || 
+                                 window.webkitSpeechRecognition || 
+                                 window.mozSpeechRecognition ||
+                                 window.msSpeechRecognition;
+        
+        const recDiv = document.getElementById('recognition');
+        if (SpeechRecognition) {
+            recDiv.innerHTML = '<span class="pass">✓ Speech Recognition API Available</span><br><code>' + 
+                             (window.SpeechRecognition ? 'window.SpeechRecognition' : 
+                              window.webkitSpeechRecognition ? 'window.webkitSpeechRecognition' :
+                              'other variant') + '</code>';
+        } else {
+            recDiv.innerHTML = '<span class="fail">✗ Speech Recognition NOT Available</span>';
+        }
+
+        // Check Speech Synthesis
+        const SpeechSynthesis = window.speechSynthesis;
+        const synDiv = document.getElementById('synthesis');
+        if (SpeechSynthesis) {
+            synDiv.innerHTML = '<span class="pass">✓ Speech Synthesis API Available</span><br>' +
+                             'Voices loaded: <span id="voiceCount">0</span>';
+        } else {
+            synDiv.innerHTML = '<span class="fail">✗ Speech Synthesis NOT Available</span>';
+        }
+
+        // Check permissions
+        if (navigator.permissions && navigator.permissions.query) {
+            navigator.permissions.query({ name: 'microphone' }).then(result => {
+                let status = result.state;
+                if (status === 'granted') {
+                    document.getElementById('permissions').innerHTML = 
+                        '<span class="pass">✓ Microphone Permission: GRANTED</span>';
+                } else if (status === 'prompt') {
+                    document.getElementById('permissions').innerHTML = 
+                        '<span class="info">⚠ Microphone Permission: PROMPT (will ask on use)</span>';
+                } else if (status === 'denied') {
+                    document.getElementById('permissions').innerHTML = 
+                        '<span class="fail">✗ Microphone Permission: DENIED</span><br>You need to allow microphone in browser settings!';
+                }
+            });
+        } else {
+            document.getElementById('permissions').innerHTML = 
+                '<span class="info">ℹ Permission API not available - permission status unknown</span>';
+        }
+
+        // List voices
+        function loadVoices() {
+            const voices = window.speechSynthesis.getVoices();
+            document.getElementById('voiceCount').textContent = voices.length;
+            
+            if (voices.length === 0) {
+                document.getElementById('voices').innerHTML = 
+                    '<span class="fail">✗ No voices available</span>';
+                return;
+            }
+            
+            const enVoices = voices.filter(v => v.lang.startsWith('en'));
+            let html = '<span class="pass">✓ ' + voices.length + ' total voices, ' + enVoices.length + ' English</span><br>';
+            html += '<strong>English Voices:</strong><ul>';
+            enVoices.slice(0, 5).forEach((v, i) => {
+                html += '<li>' + v.name + ' (' + v.lang + ')' + (v.default ? ' [DEFAULT]' : '') + '</li>';
+            });
+            html += '</ul>';
+            document.getElementById('voices').innerHTML = html;
+        }
+
+        // Load voices when available
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+
+        // Test microphone
+        function testMicrophone() {
+            const resultDiv = document.getElementById('micResult');
+            
+            if (!SpeechRecognition) {
+                resultDiv.innerHTML = '<span class="fail">✗ Speech Recognition not available</span>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<span class="info">🎤 Requesting microphone access...</span>';
+            
+            const recognition = new SpeechRecognition();
+            
+            recognition.onstart = () => {
+                resultDiv.innerHTML = '<span class="pass">✓ Microphone access granted! Listening...</span>';
+            };
+            
+            recognition.onerror = (e) => {
+                resultDiv.innerHTML = '<span class="fail">✗ Error: ' + e.error + '</span>';
+            };
+            
+            recognition.onresult = (e) => {
+                let transcript = '';
+                for (let i = e.resultIndex; i < e.results.length; i++) {
+                    transcript += e.results[i][0].transcript;
+                }
+                resultDiv.innerHTML = '<span class="pass">✓ Heard: "' + transcript + '"</span>';
+            };
+
+            setTimeout(() => {
+                recognition.stop();
+            }, 5000);
+
+            try {
+                recognition.start();
+            } catch (e) {
+                resultDiv.innerHTML = '<span class="fail">✗ Error: ' + e.message + '</span>';
+            }
+        }
+    </script>
+</body>
+</html>

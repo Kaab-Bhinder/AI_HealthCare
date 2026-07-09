@@ -1,0 +1,704 @@
+{
+  "manual_1765217333.672476": {
+    "title": "Headache Info",
+    "content": "Headaches can be tension, migraine, or dehydration-related. Rest, hydration, and pain relievers often help. Consult a doctor if it persists.",
+    "source": "manual",
+    "timestamp": "2025-12-08T18:08:53.672532"
+  },
+  "medical_001_fever": {
+    "title": "Fever Management and Treatment",
+    "content": "A fever is an elevated body temperature, typically above 100.4\u00b0F (38\u00b0C). It's often the body's natural response to infection. Common causes include viral infections, bacterial infections, inflammatory conditions, or heat exposure. Treatment includes rest, staying hydrated with water or electrolyte solutions, using cooling methods like cool compresses or tepid baths, and fever-reducing medications like acetaminophen or ibuprofen. Most fevers in adults resolve within 3-7 days. Seek medical attention if fever exceeds 103\u00b0F (39.4\u00b0C), persists beyond 3 days without improvement, is accompanied by severe symptoms like difficulty breathing or chest pain, or occurs in infants under 3 months.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:15:00.000000"
+  },
+  "medical_002_cold": {
+    "title": "Common Cold: Symptoms and Care",
+    "content": "The common cold is a viral infection affecting the upper respiratory tract. Symptoms typically include runny or stuffy nose, sneezing, sore throat, mild cough, and general malaise. Most colds develop gradually and last 7-10 days. Prevention includes frequent handwashing, avoiding close contact with sick people, and good hygiene practices. Treatment is supportive: rest, fluids, saline nasal drops, throat lozenges, and honey for cough relief. Most people recover without medical intervention. Over-the-counter pain relievers can ease discomfort. See a doctor if symptoms worsen after 7-10 days, you develop high fever, experience severe cough or difficulty breathing, or have signs of complications.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:16:00.000000"
+  },
+  "medical_003_flu": {
+    "title": "Influenza (Flu): Recognition and Treatment",
+    "content": "Influenza is a contagious viral respiratory infection, more serious than the common cold. Symptoms come on suddenly and include high fever, body aches, chills, fatigue, dry cough, and sore throat. The flu spreads through respiratory droplets. Risk groups include children, elderly, pregnant women, and immunocompromised individuals. Treatment includes rest, hydration, fever-reducing medications, and antiviral drugs (most effective within 48 hours of symptom onset). Prevention through annual vaccination is strongly recommended. Seek immediate medical attention if experiencing difficulty breathing, persistent chest pain, confusion, severe weakness, or if you're in a high-risk group.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:17:00.000000"
+  },
+  "medical_004_sore_throat": {
+    "title": "Sore Throat Relief and Management",
+    "content": "A sore throat can result from viral infections, bacterial infections like strep throat, or environmental irritation. Viral sore throats are more common and usually self-limiting. Symptoms include pain with swallowing, redness, and sometimes fever. Relief measures include throat lozenges, honey, warm salt water gargles, herbal teas, and rest. Over-the-counter pain relievers reduce discomfort. Bacterial infections like strep throat require antibiotics prescribed by a doctor. Avoid sharing eating utensils or drinking glasses. Use a humidifier to keep air moist. Seek medical care if pain is severe, difficulty swallowing saliva, fever exceeds 101\u00b0F, symptoms persist beyond 10 days, or you have difficulty breathing.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:18:00.000000"
+  },
+  "medical_005_cough": {
+    "title": "Cough Management and Relief",
+    "content": "A cough is the body's way of clearing airways and can be dry or productive (with mucus). Cough causes include viral infections, allergies, asthma, acid reflux, or environmental irritants. Dry coughs benefit from lozenges, honey, and humidity. Productive coughs should not be suppressed as they help clear secretions. Treatment depends on the underlying cause. Home remedies include fluids, salt water gargles, and cough drops. Over-the-counter cough suppressants help dry coughs; expectorants help productive coughs. Avoid irritants like smoke and strong perfumes. Seek medical attention if cough lasts more than 3 weeks, produces blood, causes difficulty breathing, or is accompanied by chest pain.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:19:00.000000"
+  },
+  "medical_006_nausea": {
+    "title": "Nausea and Vomiting Relief",
+    "content": "Nausea is an uncomfortable sensation preceding vomiting. Common causes include infections, food poisoning, migraines, motion sickness, pregnancy, medications, or anxiety. Treatment focuses on hydration and rest. Eat small, frequent bland meals like crackers, rice, or toast. Sip clear fluids slowly like water, broth, or ginger ale. Ginger tea or ginger supplements may help. Avoid fatty, spicy, or strong-smelling foods. Get fresh air and rest in a quiet space. Acupressure wristbands may provide relief. Medications like antiemetics can help severe cases. Seek medical attention if vomiting persists beyond a few hours, you cannot keep fluids down, show signs of dehydration, or if vomiting contains blood.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:20:00.000000"
+  },
+  "medical_007_dizziness": {
+    "title": "Dizziness and Vertigo: Causes and Management",
+    "content": "Dizziness is lightheadedness or feeling faint. Vertigo is a spinning sensation. Causes include low blood pressure, dehydration, inner ear problems, anxiety, medication side effects, or infection. Management includes sitting or lying down immediately, avoiding sudden movements, increasing fluid intake, and resting in a dark quiet room. Medication may cause dizziness; consult your doctor about alternatives. Balance exercises help with certain causes. Seek medical attention if dizziness is sudden and severe, accompanied by chest pain or difficulty breathing, follows a head injury, or persists for extended periods.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:21:00.000000"
+  },
+  "medical_008_fatigue": {
+    "title": "Fatigue and Low Energy: Understanding and Management",
+    "content": "Fatigue is persistent exhaustion that rest doesn't fully relieve. Causes include insufficient sleep, stress, poor nutrition, dehydration, anemia, thyroid disorders, depression, or underlying infections. Management strategies include getting 7-9 hours quality sleep, eating balanced meals with regular exercise, managing stress through relaxation techniques, staying hydrated, and limiting caffeine and alcohol. Gradual increase in physical activity often improves energy. Ensure adequate iron, B vitamins, and protein intake. Seek medical evaluation if fatigue persists despite adequate rest, is accompanied by fever or weight loss, or significantly impacts daily functioning.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:22:00.000000"
+  },
+  "medical_009_digestive": {
+    "title": "Digestive Issues: Stomach Pain and Indigestion",
+    "content": "Indigestion and stomach pain have various causes including overeating, spicy foods, stress, gastritis, or food intolerance. Symptoms include discomfort, bloating, heartburn, and nausea. Relief includes eating smaller meals, avoiding trigger foods, chewing slowly, waiting 2-3 hours after eating before lying down, and stress management. Antacids provide temporary relief. Herbal teas like peppermint or ginger aid digestion. Regular exercise aids digestive health. Avoid alcohol, caffeine, and smoking. Seek medical care if pain is severe, persistent beyond 2 weeks, accompanied by vomiting or blood, unexplained weight loss, or difficulty swallowing.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:23:00.000000"
+  },
+  "medical_010_sleep": {
+    "title": "Sleep Problems and Insomnia Management",
+    "content": "Insomnia involves difficulty falling or staying asleep, affecting daytime functioning. Causes include stress, anxiety, irregular sleep schedules, poor sleep environment, caffeine, or underlying conditions. Improvement strategies include establishing consistent sleep schedules, creating a dark quiet cool bedroom, avoiding screens 30 minutes before bed, limiting caffeine after 2 PM, regular exercise (but not close to bedtime), and relaxation techniques like deep breathing or meditation. Avoid long naps. Keep bedroom temperature around 65-68\u00b0F. If insomnia persists beyond 3 weeks or significantly impacts functioning, consult a healthcare provider about cognitive behavioral therapy or medication.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:24:00.000000"
+  },
+  "medical_011_allergies": {
+    "title": "Allergies: Symptoms and Management",
+    "content": "Allergies occur when the immune system reacts to harmless substances. Common allergens include pollen, dust mites, pet dander, and certain foods. Symptoms vary from mild (itchy eyes, sneezing) to severe (anaphylaxis). Seasonal allergies peak during specific seasons. Management includes identifying and avoiding triggers, using air filters, regular cleaning, wearing sunglasses outdoors, and keeping windows closed during high pollen days. Over-the-counter antihistamines provide relief. Nasal saline rinses help clear allergens. Immunotherapy (allergy shots) provides long-term relief. Seek immediate medical attention for severe allergic reactions including difficulty breathing, swelling of lips or tongue, or anaphylaxis.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:25:00.000000"
+  },
+  "medical_012_hydration": {
+    "title": "Dehydration: Prevention and Treatment",
+    "content": "Dehydration occurs when the body loses more fluids than it takes in. Symptoms include thirst, dry mouth, dark urine, dizziness, fatigue, and reduced urination. Causes include illness, diarrhea, vomiting, excessive sweating, or insufficient fluid intake. Prevention involves drinking adequate water daily (typically 8-10 glasses), more in hot weather or during exercise. Treatment includes drinking water and electrolyte solutions. Oral rehydration salts are effective for moderate dehydration. Eat water-rich foods like fruits and vegetables. Avoid alcohol and excessive caffeine as they promote fluid loss. Seek medical attention for severe dehydration showing confusion, rapid heartbeat, or extreme weakness.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-08T18:26:00.000000"
+  },
+  "medical_013_diabetes": {
+    "title": "Diabetes: Types, Symptoms, and Management",
+    "content": "Diabetes is a chronic condition affecting blood sugar levels. Type 1 diabetes is autoimmune; Type 2 is metabolic. Symptoms include increased thirst, frequent urination, fatigue, blurred vision, and slow wound healing. Type 1 requires insulin therapy. Type 2 management includes diet, exercise, and medications like metformin. Blood glucose monitoring is essential. Prevent complications through blood sugar control, regular exercise, healthy diet, and regular check-ups. Complications include neuropathy, nephropathy, and retinopathy. Seek immediate care for blood sugar extremes.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846351"
+  },
+  "medical_014_hypertension": {
+    "title": "Hypertension (High Blood Pressure): Control and Prevention",
+    "content": "Hypertension is elevated blood pressure (\u2265130/80 mmHg). Often asymptomatic, it increases heart disease and stroke risk. Causes include lifestyle factors, genetics, and underlying conditions. Management includes sodium reduction, weight loss, regular exercise, stress management, and limit alcohol. Medications like ACE inhibitors, beta-blockers, or diuretics help. Monitor blood pressure regularly. Lifestyle changes are first-line treatment. Avoid smoking. Maintain healthy diet rich in potassium and calcium. Regular monitoring and medication adherence prevent complications.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846381"
+  },
+  "medical_015_asthma": {
+    "title": "Asthma: Triggers, Symptoms, and Control",
+    "content": "Asthma is a chronic inflammatory airway disease causing breathing difficulty. Symptoms include wheezing, shortness of breath, chest tightness, and coughing (especially at night). Common triggers include allergens, exercise, cold air, stress, and pollutants. Management includes identifying triggers, using inhalers (controller and rescue), peak flow monitoring, and action plans. Keep rescue inhalers accessible. Regular exercise improves lung function. Allergy management helps if allergen-triggered. Monitor symptoms daily. Seek emergency care for severe attacks with difficulty speaking or blue lips.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846388"
+  },
+  "medical_016_arthritis": {
+    "title": "Arthritis: Types and Joint Pain Management",
+    "content": "Arthritis involves joint inflammation causing pain, stiffness, and reduced mobility. Osteoarthritis (degenerative) results from wear and tear. Rheumatoid arthritis is autoimmune. Management includes rest, ice/heat therapy, exercises, weight management, and anti-inflammatory medications. Physical therapy maintains mobility. Heat therapy relieves stiffness; cold reduces swelling. NSAIDs like ibuprofen help. Biologic medications help rheumatoid arthritis. Maintain healthy weight to reduce joint stress. Regular gentle exercise prevents stiffness. Advanced cases may require joint replacement.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846393"
+  },
+  "medical_017_anxiety": {
+    "title": "Anxiety Disorders: Symptoms and Treatment",
+    "content": "Anxiety disorders involve excessive worry, fear, or panic. Types include generalized anxiety, panic disorder, social anxiety, and phobias. Symptoms include rapid heartbeat, sweating, trembling, shortness of breath, and restlessness. Treatment includes therapy (CBT is highly effective), medications (SSRIs), lifestyle changes, and stress management. Relaxation techniques like deep breathing and meditation help. Regular exercise reduces anxiety. Limit caffeine and alcohol. Maintain regular sleep schedule. Seek professional help if anxiety interferes with daily functioning.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846397"
+  },
+  "medical_018_depression": {
+    "title": "Depression: Recognition and Management",
+    "content": "Depression is a mood disorder characterized by persistent sadness, loss of interest, and hopelessness. Symptoms include fatigue, sleep changes, appetite changes, difficulty concentrating, and suicidal thoughts. Risk factors include genetics, trauma, stress, and medical conditions. Treatment includes therapy (CBT, psychotherapy), medications (SSRIs, SNRIs), lifestyle changes, and support. Regular exercise, adequate sleep, healthy diet, and social connection help. Never ignore suicidal thoughts - seek emergency help immediately. Professional evaluation is essential for proper diagnosis and treatment.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846402"
+  },
+  "medical_019_migraines": {
+    "title": "Migraines: Triggers, Symptoms, and Relief",
+    "content": "Migraines are severe headaches often one-sided, throbbing, lasting 4-72 hours. May include aura (visual disturbances), nausea, and light sensitivity. Triggers include hormonal changes, stress, certain foods, sleep changes, and weather. Prevention includes identifying triggers, maintaining sleep schedule, stress management, and preventive medications. Relief includes dark quiet rest, cold/warm compress, hydration, and pain medications. Some find relief with caffeine. Preventive medications include beta-blockers or topiramate. Keep a migraine diary to identify patterns.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846407"
+  },
+  "medical_020_thyroid": {
+    "title": "Thyroid Disorders: Hypothyroidism and Hyperthyroidism",
+    "content": "Thyroid disorders affect metabolism and energy. Hypothyroidism (underactive): causes fatigue, weight gain, cold sensitivity, and depression. Hyperthyroidism (overactive): causes weight loss, anxiety, rapid heartbeat, heat sensitivity. Hashimoto's disease and Graves' disease are common causes. Management includes thyroid hormone replacement for hypothyroidism and anti-thyroid drugs or radioactive iodine for hyperthyroidism. Regular TSH monitoring ensures proper medication levels. Selenium and iodine support thyroid health. Symptoms improve with proper treatment.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846411"
+  },
+  "medical_021_pneumonia": {
+    "title": "Pneumonia: Bacterial, Viral, and Fungal Infections",
+    "content": "Pneumonia is lung infection causing inflammation and fluid buildup. Bacterial pneumonia (common, serious) requires antibiotics. Viral pneumonia (often from influenza) is self-limiting. Symptoms include cough, fever, chest pain, shortness of breath, and chills. Risk groups include elderly, young children, and immunocompromised. Treatment includes antibiotics, supportive care, rest, fluids, and oxygen if needed. Prevention includes vaccines (pneumococcal, flu), handwashing, and avoiding smoke. Seek urgent care for high fever, difficulty breathing, or persistent symptoms.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846415"
+  },
+  "medical_022_uti": {
+    "title": "Urinary Tract Infections (UTI): Causes and Treatment",
+    "content": "UTIs occur when bacteria infect urinary system. Symptoms include painful urination, frequency, urgency, cloudy urine, and lower abdominal pain. Women are more commonly affected. Causes include poor hygiene, sexual activity, urinary retention, and catheter use. Treatment includes antibiotics (first-line). Prevention includes hydration, regular urination, proper hygiene, and urinating after intercourse. Cranberry supplements may help prevention. Untreated UTIs can progress to kidney infection. Seek care for fever, back pain, or vomiting with UTI symptoms.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846421"
+  },
+  "medical_023_bronchitis": {
+    "title": "Bronchitis: Acute and Chronic Respiratory Infection",
+    "content": "Acute bronchitis involves airway inflammation from viral infection, lasting weeks. Symptoms include persistent cough, mucus production, fatigue, and chest discomfort. Often follows cold/flu. Treatment is supportive: rest, fluids, cough medicine, and decongestants. Antibiotics don't help viral cases. Chronic bronchitis is COPD involving persistent cough and mucus. Prevention includes avoiding smoke and pollutants. Use humidifier for moisture. Seek care if cough lasts beyond 3 weeks, produces blood, or causes difficulty breathing.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846425"
+  },
+  "medical_024_gastroenteritis": {
+    "title": "Gastroenteritis (Stomach Flu): Food Poisoning and Stomach Viruses",
+    "content": "Gastroenteritis involves stomach/intestine inflammation from viral or bacterial infection. Symptoms include diarrhea, vomiting, stomach cramps, and fever. Usually self-limiting, lasting 1-3 days. Treatment is supportive: rest, clear fluids, electrolyte solutions, bland diet. Avoid dairy, fiber, and fatty foods. Handwashing prevents spread. Most cases don't need antibiotics unless bacterial. Severe dehydration requires medical care. Seek emergency care for severe dehydration signs, bloody stools, or high fever.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846429"
+  },
+  "medical_025_anemia": {
+    "title": "Anemia: Iron Deficiency and Blood Cell Disorders",
+    "content": "Anemia occurs when red blood cells are insufficient for oxygen transport. Iron deficiency anemia is most common from poor diet, blood loss, or absorption issues. Symptoms include fatigue, weakness, shortness of breath, and dizziness. Other types include vitamin B12 deficiency and hemolytic anemia. Treatment depends on type: iron supplements, B12 injections, or addressing underlying causes. Dietary sources include red meat, leafy greens, and legumes. Regular monitoring ensures adequate levels. Severe cases may require transfusion.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846434"
+  },
+  "medical_026_eczema": {
+    "title": "Eczema (Atopic Dermatitis): Skin Irritation and Relief",
+    "content": "Eczema is chronic inflammatory skin condition causing itching, dryness, and redness. Often begins in childhood but can occur at any age. Triggers include soaps, detergents, stress, weather, and allergens. Management includes moisturizing frequently, using mild cleansers, avoiding triggers, and minimizing scratching. Topical corticosteroids reduce inflammation. Antihistamines help itching. Keep nails short to prevent damage from scratching. Humidifiers help. Severe cases may need phototherapy or systemic medications. Proper skincare routine is essential.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846438"
+  },
+  "medical_027_psoriasis": {
+    "title": "Psoriasis: Autoimmune Skin Condition",
+    "content": "Psoriasis is autoimmune condition causing thick, scaly skin plaques. Often on elbows, knees, scalp, and nails. Triggers include stress, infections, medications, and weather. Treatments include topical corticosteroids, vitamin D analogs, calcineurin inhibitors, and phototherapy. Systemic medications help severe cases. Moisturizing soothes skin. Stress management is important. UV therapy (controlled) helps. Nail involvement requires special attention. No cure, but remission is possible. Biologics target immune system effectively.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846443"
+  },
+  "medical_028_acne": {
+    "title": "Acne: Causes, Prevention, and Treatment",
+    "content": "Acne involves clogged pores, bacteria, inflammation causing pustules and blackheads. Hormones, excess oil, bacteria, and follicle blockage cause it. Common in teens but affects all ages. Treatment includes gentle washing, non-comedogenic products, benzoyl peroxide, salicylic acid, retinoids, and antibiotics. Oral contraceptives help hormonal acne. Severe cases need isotretinoin. Avoid touching face, minimize picking, use oil-free products, and manage stress. Diet modifications (reducing dairy/high-glycemic foods) may help. Consistency in routine matters.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846447"
+  },
+  "medical_029_cellulitis": {
+    "title": "Cellulitis: Bacterial Skin Infection",
+    "content": "Cellulitis is acute bacterial skin infection causing redness, warmth, swelling, and pain. Often streptococcal or staphylococcal. Entry points include cuts, insect bites, or surgical wounds. Symptoms progress rapidly. Treatment requires oral or IV antibiotics depending on severity. Elevate affected area. Apply warm compresses. Pain management with acetaminophen or ibuprofen. Keep area clean and dry. Prevent by maintaining skin integrity, treating wounds promptly, and managing predisposing conditions. Seek care immediately for rapid spread or systemic symptoms.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846452"
+  },
+  "medical_030_migraine_preventive": {
+    "title": "Migraine Prevention Strategies",
+    "content": "Preventing migraines involves lifestyle changes and medications. Identify and avoid triggers (food, stress, sleep changes, hormones). Maintain consistent sleep schedule. Regular exercise (avoid overexertion). Stress management through relaxation. Proper hydration. Limited caffeine. Preventive medications include beta-blockers, tricyclic antidepressants, anticonvulsants, or CGRP inhibitors. Biofeedback and relaxation training help. Magnesium and riboflavin supplements show promise. Keep headache diary to track patterns. Working with healthcare provider optimizes prevention.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846457"
+  },
+  "medical_031_gerd": {
+    "title": "GERD (Acid Reflux): Heartburn Management",
+    "content": "GERD occurs when stomach acid backs into esophagus, causing heartburn and discomfort. Triggers include fatty foods, spicy foods, chocolate, caffeine, alcohol, large meals, and lying down after eating. Symptoms include heartburn, regurgitation, dysphagia, and chronic cough. Management includes elevating head while sleeping, avoiding trigger foods, eating smaller meals, not eating before bed, and weight management. Antacids, H2 blockers, and PPIs reduce acid. Lifestyle modifications are first-line. Persistent symptoms need evaluation for complications.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846466"
+  },
+  "medical_032_kidney_stones": {
+    "title": "Kidney Stones: Prevention and Pain Management",
+    "content": "Kidney stones form from mineral crystals in kidneys, causing severe pain when passing. Symptoms include flank pain, hematuria, nausea, and urinary symptoms. Risk factors include dehydration, diet (high sodium, protein, oxalate), genetics, and medical conditions. Prevention includes hydration (clear urine indicates good hydration), dietary modifications, and medications. Small stones pass spontaneously with pain management. Larger stones may need medical intervention. Treatment includes NSAIDs, hydration, and sometimes surgical removal. Adequate hydration is best prevention.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846470"
+  },
+  "medical_033_menopause": {
+    "title": "Menopause: Hormonal Transition and Symptom Management",
+    "content": "Menopause marks end of menstruation, typically around age 50. Perimenopause (transition) lasts 4-10 years with irregular periods. Symptoms include hot flashes, night sweats, mood changes, sleep problems, vaginal dryness, and weight changes. Hormone replacement therapy (HRT) helps symptoms but carries risks. Non-hormonal options include SSRIs, SNRIs, clonidine, or gabapentin. Lifestyle: regular exercise, stress management, adequate sleep, cool environment. Phytoestrogens (soy, flax) may help. Bone density monitoring important due to osteoporosis risk.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846475"
+  },
+  "medical_034_osteoporosis": {
+    "title": "Osteoporosis: Bone Health and Fracture Prevention",
+    "content": "Osteoporosis is decreased bone density increasing fracture risk. Often asymptomatic until fracture occurs. Risk factors include age, female gender, low calcium/vitamin D, sedentary lifestyle, smoking, and alcohol. Prevention includes calcium intake (1000-1200 mg daily), vitamin D (600-800 IU), weight-bearing exercise, and avoiding smoking/excess alcohol. Medications include bisphosphonates. Bone density screening (DEXA) at age 65 for women and 70 for men. Early intervention prevents fractures and disability.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846479"
+  },
+  "medical_035_gout": {
+    "title": "Gout: Uric Acid Buildup and Joint Pain",
+    "content": "Gout is form of arthritis from uric acid crystal buildup in joints, commonly affecting big toe. Acute attacks involve intense pain, swelling, and redness. Triggers include purine-rich foods (red meat, seafood, alcohol), dehydration, and rapid weight loss. Treatment for acute attacks includes NSAIDs, colchicine, or corticosteroids. Long-term management includes urate-lowering medications (allopurinol). Dietary changes: limit purines, alcohol (especially beer), and fructose. Hydration helps prevent attacks. Regular monitoring of uric acid levels.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846484"
+  },
+  "medical_036_copd": {
+    "title": "COPD: Chronic Obstructive Pulmonary Disease",
+    "content": "COPD includes emphysema and chronic bronchitis causing progressive airway obstruction. Main cause is smoking. Symptoms include chronic cough, shortness of breath, mucus production, and wheezing. Smoking cessation is critical. Medications include bronchodilators and corticosteroid inhalers. Pulmonary rehabilitation improves function. Oxygen therapy in advanced stages. Vaccinations (flu, pneumococcal) prevent infections. Avoid air pollutants. Regular exercise improves capacity. Exacerbations require prompt medical treatment. Early diagnosis and management slow progression.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846488"
+  },
+  "medical_037_whooping_cough": {
+    "title": "Whooping Cough (Pertussis): Prevention and Treatment",
+    "content": "Pertussis is bacterial respiratory infection causing severe cough paroxysms with characteristic 'whoop'. Highly contagious. Vaccination (DTaP/Tdap) prevents disease. In vaccinated individuals, symptoms milder. Treatment includes macrolide antibiotics (azithromycin) if started early. Supportive care: cough management, nutrition, hydration. Monitor for complications (pneumonia, seizures). Infants most at risk for complications. Close contacts need prophylaxis. Disease reportable to health authorities. Vaccination during pregnancy protects newborns.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846493"
+  },
+  "medical_038_measles": {
+    "title": "Measles: Prevention Through Vaccination",
+    "content": "Measles is highly contagious viral disease with fever, cough, coryza, conjunctivitis, and Koplik spots preceding characteristic rash. MMR vaccine prevents disease. Unvaccinated individuals at high risk. Treatment is supportive: rest, fluids, fever management, and vitamin A supplementation. Complications include pneumonia, encephalitis. Immunocompromised individuals at severe risk. Disease is reportable. Isolation prevents spread. Post-exposure vaccination within 72 hours helps. Vaccination mandatory in most schools.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846498"
+  },
+  "medical_039_chickenpox": {
+    "title": "Chickenpox (Varicella): Symptoms and Complications",
+    "content": "Chickenpox is viral infection with fever and characteristic blister rash. Highly contagious. Varicella vaccine prevents disease. Treatment is supportive: fever management, calamine lotion, gentle bathing. Avoid scratching to prevent scarring. Antivirals (acyclovir) help if started early, especially in severe cases or high-risk individuals. Complications include bacterial superinfection, pneumonia, encephalitis. Immunocompromised and pregnant individuals at high risk. Once infected, lifelong immunity develops but shingles (reactivation) possible later.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846503"
+  },
+  "medical_040_shingles": {
+    "title": "Shingles (Herpes Zoster): Reactivation and Pain Management",
+    "content": "Shingles results from varicella-zoster virus reactivation causing painful vesicular rash along dermatome. Preceded by pain, tingling, or numbness. Antiviral medications (acyclovir, valacyclovir) effective if started within 72 hours. Pain management includes acetaminophen, NSAIDs, topical capsaicin, or gabapentin. Postherpetic neuralgia (persistent pain) affects many, treatable with medications. Shingles vaccine (Shingrix) prevents disease in older adults. Isolate fluid-containing lesions. Complications include vision loss if affects eye.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846507"
+  },
+  "medical_041_mono": {
+    "title": "Infectious Mononucleosis (Mono): Viral Infection",
+    "content": "Mono is viral infection from Epstein-Barr virus causing fever, sore throat, lymphadenopathy, and fatigue. Spread through saliva. Symptoms develop over weeks and last weeks to months. Treatment is supportive: rest, fluids, throat lozenges, fever management. NSAIDs help pain and fever. Avoid contact sports during acute illness due to splenomegaly risk. Antibiotics ineffective for viral infection. Symptoms gradually improve. Return to normal activities gradual. Severe cases or complicated mononucleosis needs hospitalization.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846511"
+  },
+  "medical_042_herpes": {
+    "title": "Herpes Simplex: Cold Sores and Management",
+    "content": "Herpes simplex virus (HSV) causes recurrent blisters on lips or genitals. Initial infection often asymptomatic or mild. Triggers include stress, immunity, UV exposure, or illness. Antiviral medications (acyclovir, valacyclovir) shorten duration if started early. Topical treatments reduce symptoms. Keep lesions clean and dry. Avoid touching and spreading virus. Don't share personal items. Sexual transmission possible during shedding. Regular suppressive therapy for frequent recurrences. No cure, but management reduces impact.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846519"
+  },
+  "medical_043_scabies": {
+    "title": "Scabies: Mite Infestation and Treatment",
+    "content": "Scabies is contagious skin infestation from Sarcoptes mite causing intense itching, especially at night. Burrows and rash visible on hands, wrists, genitals, and skin folds. Treatment includes topical scabicides (permethrin, sulfur) applied to entire body. Oral ivermectin for severe or crusted scabies. Wash all clothing and bedding in hot water. Treat all household members simultaneously. Symptoms persist 2-4 weeks after treatment. Avoid skin-to-skin contact during treatment. Sexual partners need treatment. Good personal hygiene prevents transmission.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846528"
+  },
+  "medical_044_ringworm": {
+    "title": "Ringworm (Tinea): Fungal Skin Infection",
+    "content": "Ringworm is contagious fungal infection (not a worm) causing ring-shaped rash on skin or scalp. Spread through contact or contaminated items. Symptoms vary by location. Scalp ringworm more common in children. Treatment includes topical antifungals (clotrimazole, miconazole) for localized infection. Oral antifungals (griseofulvin, terbinafine) for scalp or severe cases. Keep area clean and dry. Avoid scratching/spreading. Launder clothing/items. Prevent spread to others. Professional confirmation of diagnosis important.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846533"
+  },
+  "medical_045_candida": {
+    "title": "Yeast Infection (Candida): Fungal Overgrowth",
+    "content": "Candida overgrowth causes vaginal yeast infections, oral thrush, or skin infections. Risk factors include antibiotics, diabetes, HIV, or weak immunity. Vaginal symptoms: itching, discharge, burning. Oral: white patches, soreness. Treatment includes topical or oral antifungals (fluconazole). Prevent through probiotics, proper hygiene, and treating underlying conditions. Wear breathable clothing. Avoid irritants. Diabetes management important. Recurrent infections warrant investigation of underlying causes. Over-the-counter treatments effective for initial episodes.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846537"
+  },
+  "medical_046_lice": {
+    "title": "Lice Infestation: Head Lice Treatment and Prevention",
+    "content": "Head lice are parasitic insects causing itching and visible nits (eggs) on hair shafts. Spread through direct contact or shared items. Treatment with pediculicide shampoos (pyrethrin or permethrin) applied per instructions. Nit combing removes eggs. Wash all items in hot water, seal others in bags for 2 weeks. Treat household members and close contacts. Repeat treatment at 7-10 days if needed. School notification required. Prescription options for resistant cases. Prevention through avoiding shared grooming items.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846542"
+  },
+  "medical_047_hives": {
+    "title": "Hives (Urticaria): Allergic Reaction",
+    "content": "Hives are raised, itchy welts from allergic reaction or mast cell release. Causes include food allergies, medications, insect stings, or allergen contact. Acute hives resolve within 24 hours typically. Chronic hives (>6 weeks) require investigation. Treatment includes antihistamines (diphenhydramine, cetirizine). Avoid triggers once identified. Cool compress helps itching. Avoid scratching. Severe cases need corticosteroids. Epinephrine for anaphylaxis. Identify and eliminate triggers. Hypoallergenic products help sensitive skin.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846546"
+  },
+  "medical_048_sunburn": {
+    "title": "Sunburn: Prevention and Relief",
+    "content": "Sunburn is skin inflammation from UV radiation exposure. Prevention is primary: use SPF 30+ sunscreen, reapply every 2 hours, wear protective clothing, seek shade 10am-4pm. Symptoms include redness, pain, and peeling. Treatment includes cool compress, aloe vera, hydration, and NSAIDs. Avoid petroleum jelly. Don't pick peeling skin. Serious burns (blistering, fever) need medical attention. Cumulative sun exposure increases skin cancer risk. Prevent premature aging through consistent sun protection.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:42.846550"
+  },
+  "medical_049_diabetes": {
+    "title": "Diabetes: Types, Symptoms, and Management",
+    "content": "Diabetes is a chronic condition affecting blood sugar levels. Type 1 diabetes is autoimmune; Type 2 is metabolic. Symptoms include increased thirst, frequent urination, fatigue, blurred vision, and slow wound healing. Type 1 requires insulin therapy. Type 2 management includes diet, exercise, and medications like metformin. Blood glucose monitoring is essential. Prevent complications through blood sugar control, regular exercise, healthy diet, and regular check-ups. Complications include neuropathy, nephropathy, and retinopathy. Seek immediate care for blood sugar extremes.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819282"
+  },
+  "medical_050_hypertension": {
+    "title": "Hypertension (High Blood Pressure): Control and Prevention",
+    "content": "Hypertension is elevated blood pressure (\u2265130/80 mmHg). Often asymptomatic, it increases heart disease and stroke risk. Causes include lifestyle factors, genetics, and underlying conditions. Management includes sodium reduction, weight loss, regular exercise, stress management, and limit alcohol. Medications like ACE inhibitors, beta-blockers, or diuretics help. Monitor blood pressure regularly. Lifestyle changes are first-line treatment. Avoid smoking. Maintain healthy diet rich in potassium and calcium. Regular monitoring and medication adherence prevent complications.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819310"
+  },
+  "medical_051_asthma": {
+    "title": "Asthma: Triggers, Symptoms, and Control",
+    "content": "Asthma is a chronic inflammatory airway disease causing breathing difficulty. Symptoms include wheezing, shortness of breath, chest tightness, and coughing (especially at night). Common triggers include allergens, exercise, cold air, stress, and pollutants. Management includes identifying triggers, using inhalers (controller and rescue), peak flow monitoring, and action plans. Keep rescue inhalers accessible. Regular exercise improves lung function. Allergy management helps if allergen-triggered. Monitor symptoms daily. Seek emergency care for severe attacks with difficulty speaking or blue lips.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819316"
+  },
+  "medical_052_arthritis": {
+    "title": "Arthritis: Types and Joint Pain Management",
+    "content": "Arthritis involves joint inflammation causing pain, stiffness, and reduced mobility. Osteoarthritis (degenerative) results from wear and tear. Rheumatoid arthritis is autoimmune. Management includes rest, ice/heat therapy, exercises, weight management, and anti-inflammatory medications. Physical therapy maintains mobility. Heat therapy relieves stiffness; cold reduces swelling. NSAIDs like ibuprofen help. Biologic medications help rheumatoid arthritis. Maintain healthy weight to reduce joint stress. Regular gentle exercise prevents stiffness. Advanced cases may require joint replacement.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819321"
+  },
+  "medical_053_anxiety": {
+    "title": "Anxiety Disorders: Symptoms and Treatment",
+    "content": "Anxiety disorders involve excessive worry, fear, or panic. Types include generalized anxiety, panic disorder, social anxiety, and phobias. Symptoms include rapid heartbeat, sweating, trembling, shortness of breath, and restlessness. Treatment includes therapy (CBT is highly effective), medications (SSRIs), lifestyle changes, and stress management. Relaxation techniques like deep breathing and meditation help. Regular exercise reduces anxiety. Limit caffeine and alcohol. Maintain regular sleep schedule. Seek professional help if anxiety interferes with daily functioning.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819326"
+  },
+  "medical_054_depression": {
+    "title": "Depression: Recognition and Management",
+    "content": "Depression is a mood disorder characterized by persistent sadness, loss of interest, and hopelessness. Symptoms include fatigue, sleep changes, appetite changes, difficulty concentrating, and suicidal thoughts. Risk factors include genetics, trauma, stress, and medical conditions. Treatment includes therapy (CBT, psychotherapy), medications (SSRIs, SNRIs), lifestyle changes, and support. Regular exercise, adequate sleep, healthy diet, and social connection help. Never ignore suicidal thoughts - seek emergency help immediately. Professional evaluation is essential for proper diagnosis and treatment.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819329"
+  },
+  "medical_055_migraines": {
+    "title": "Migraines: Triggers, Symptoms, and Relief",
+    "content": "Migraines are severe headaches often one-sided, throbbing, lasting 4-72 hours. May include aura (visual disturbances), nausea, and light sensitivity. Triggers include hormonal changes, stress, certain foods, sleep changes, and weather. Prevention includes identifying triggers, maintaining sleep schedule, stress management, and preventive medications. Relief includes dark quiet rest, cold/warm compress, hydration, and pain medications. Some find relief with caffeine. Preventive medications include beta-blockers or topiramate. Keep a migraine diary to identify patterns.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819334"
+  },
+  "medical_056_thyroid": {
+    "title": "Thyroid Disorders: Hypothyroidism and Hyperthyroidism",
+    "content": "Thyroid disorders affect metabolism and energy. Hypothyroidism (underactive): causes fatigue, weight gain, cold sensitivity, and depression. Hyperthyroidism (overactive): causes weight loss, anxiety, rapid heartbeat, heat sensitivity. Hashimoto's disease and Graves' disease are common causes. Management includes thyroid hormone replacement for hypothyroidism and anti-thyroid drugs or radioactive iodine for hyperthyroidism. Regular TSH monitoring ensures proper medication levels. Selenium and iodine support thyroid health. Symptoms improve with proper treatment.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819340"
+  },
+  "medical_057_pneumonia": {
+    "title": "Pneumonia: Bacterial, Viral, and Fungal Infections",
+    "content": "Pneumonia is lung infection causing inflammation and fluid buildup. Bacterial pneumonia (common, serious) requires antibiotics. Viral pneumonia (often from influenza) is self-limiting. Symptoms include cough, fever, chest pain, shortness of breath, and chills. Risk groups include elderly, young children, and immunocompromised. Treatment includes antibiotics, supportive care, rest, fluids, and oxygen if needed. Prevention includes vaccines (pneumococcal, flu), handwashing, and avoiding smoke. Seek urgent care for high fever, difficulty breathing, or persistent symptoms.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819345"
+  },
+  "medical_058_uti": {
+    "title": "Urinary Tract Infections (UTI): Causes and Treatment",
+    "content": "UTIs occur when bacteria infect urinary system. Symptoms include painful urination, frequency, urgency, cloudy urine, and lower abdominal pain. Women are more commonly affected. Causes include poor hygiene, sexual activity, urinary retention, and catheter use. Treatment includes antibiotics (first-line). Prevention includes hydration, regular urination, proper hygiene, and urinating after intercourse. Cranberry supplements may help prevention. Untreated UTIs can progress to kidney infection. Seek care for fever, back pain, or vomiting with UTI symptoms.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819350"
+  },
+  "medical_059_bronchitis": {
+    "title": "Bronchitis: Acute and Chronic Respiratory Infection",
+    "content": "Acute bronchitis involves airway inflammation from viral infection, lasting weeks. Symptoms include persistent cough, mucus production, fatigue, and chest discomfort. Often follows cold/flu. Treatment is supportive: rest, fluids, cough medicine, and decongestants. Antibiotics don't help viral cases. Chronic bronchitis is COPD involving persistent cough and mucus. Prevention includes avoiding smoke and pollutants. Use humidifier for moisture. Seek care if cough lasts beyond 3 weeks, produces blood, or causes difficulty breathing.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819355"
+  },
+  "medical_060_gastroenteritis": {
+    "title": "Gastroenteritis (Stomach Flu): Food Poisoning and Stomach Viruses",
+    "content": "Gastroenteritis involves stomach/intestine inflammation from viral or bacterial infection. Symptoms include diarrhea, vomiting, stomach cramps, and fever. Usually self-limiting, lasting 1-3 days. Treatment is supportive: rest, clear fluids, electrolyte solutions, bland diet. Avoid dairy, fiber, and fatty foods. Handwashing prevents spread. Most cases don't need antibiotics unless bacterial. Severe dehydration requires medical care. Seek emergency care for severe dehydration signs, bloody stools, or high fever.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819359"
+  },
+  "medical_061_anemia": {
+    "title": "Anemia: Iron Deficiency and Blood Cell Disorders",
+    "content": "Anemia occurs when red blood cells are insufficient for oxygen transport. Iron deficiency anemia is most common from poor diet, blood loss, or absorption issues. Symptoms include fatigue, weakness, shortness of breath, and dizziness. Other types include vitamin B12 deficiency and hemolytic anemia. Treatment depends on type: iron supplements, B12 injections, or addressing underlying causes. Dietary sources include red meat, leafy greens, and legumes. Regular monitoring ensures adequate levels. Severe cases may require transfusion.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819364"
+  },
+  "medical_062_eczema": {
+    "title": "Eczema (Atopic Dermatitis): Skin Irritation and Relief",
+    "content": "Eczema is chronic inflammatory skin condition causing itching, dryness, and redness. Often begins in childhood but can occur at any age. Triggers include soaps, detergents, stress, weather, and allergens. Management includes moisturizing frequently, using mild cleansers, avoiding triggers, and minimizing scratching. Topical corticosteroids reduce inflammation. Antihistamines help itching. Keep nails short to prevent damage from scratching. Humidifiers help. Severe cases may need phototherapy or systemic medications. Proper skincare routine is essential.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819369"
+  },
+  "medical_063_psoriasis": {
+    "title": "Psoriasis: Autoimmune Skin Condition",
+    "content": "Psoriasis is autoimmune condition causing thick, scaly skin plaques. Often on elbows, knees, scalp, and nails. Triggers include stress, infections, medications, and weather. Treatments include topical corticosteroids, vitamin D analogs, calcineurin inhibitors, and phototherapy. Systemic medications help severe cases. Moisturizing soothes skin. Stress management is important. UV therapy (controlled) helps. Nail involvement requires special attention. No cure, but remission is possible. Biologics target immune system effectively.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819372"
+  },
+  "medical_064_acne": {
+    "title": "Acne: Causes, Prevention, and Treatment",
+    "content": "Acne involves clogged pores, bacteria, inflammation causing pustules and blackheads. Hormones, excess oil, bacteria, and follicle blockage cause it. Common in teens but affects all ages. Treatment includes gentle washing, non-comedogenic products, benzoyl peroxide, salicylic acid, retinoids, and antibiotics. Oral contraceptives help hormonal acne. Severe cases need isotretinoin. Avoid touching face, minimize picking, use oil-free products, and manage stress. Diet modifications (reducing dairy/high-glycemic foods) may help. Consistency in routine matters.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819378"
+  },
+  "medical_065_cellulitis": {
+    "title": "Cellulitis: Bacterial Skin Infection",
+    "content": "Cellulitis is acute bacterial skin infection causing redness, warmth, swelling, and pain. Often streptococcal or staphylococcal. Entry points include cuts, insect bites, or surgical wounds. Symptoms progress rapidly. Treatment requires oral or IV antibiotics depending on severity. Elevate affected area. Apply warm compresses. Pain management with acetaminophen or ibuprofen. Keep area clean and dry. Prevent by maintaining skin integrity, treating wounds promptly, and managing predisposing conditions. Seek care immediately for rapid spread or systemic symptoms.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819384"
+  },
+  "medical_066_migraine_preventive": {
+    "title": "Migraine Prevention Strategies",
+    "content": "Preventing migraines involves lifestyle changes and medications. Identify and avoid triggers (food, stress, sleep changes, hormones). Maintain consistent sleep schedule. Regular exercise (avoid overexertion). Stress management through relaxation. Proper hydration. Limited caffeine. Preventive medications include beta-blockers, tricyclic antidepressants, anticonvulsants, or CGRP inhibitors. Biofeedback and relaxation training help. Magnesium and riboflavin supplements show promise. Keep headache diary to track patterns. Working with healthcare provider optimizes prevention.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819389"
+  },
+  "medical_067_gerd": {
+    "title": "GERD (Acid Reflux): Heartburn Management",
+    "content": "GERD occurs when stomach acid backs into esophagus, causing heartburn and discomfort. Triggers include fatty foods, spicy foods, chocolate, caffeine, alcohol, large meals, and lying down after eating. Symptoms include heartburn, regurgitation, dysphagia, and chronic cough. Management includes elevating head while sleeping, avoiding trigger foods, eating smaller meals, not eating before bed, and weight management. Antacids, H2 blockers, and PPIs reduce acid. Lifestyle modifications are first-line. Persistent symptoms need evaluation for complications.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819393"
+  },
+  "medical_068_kidney_stones": {
+    "title": "Kidney Stones: Prevention and Pain Management",
+    "content": "Kidney stones form from mineral crystals in kidneys, causing severe pain when passing. Symptoms include flank pain, hematuria, nausea, and urinary symptoms. Risk factors include dehydration, diet (high sodium, protein, oxalate), genetics, and medical conditions. Prevention includes hydration (clear urine indicates good hydration), dietary modifications, and medications. Small stones pass spontaneously with pain management. Larger stones may need medical intervention. Treatment includes NSAIDs, hydration, and sometimes surgical removal. Adequate hydration is best prevention.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819397"
+  },
+  "medical_069_menopause": {
+    "title": "Menopause: Hormonal Transition and Symptom Management",
+    "content": "Menopause marks end of menstruation, typically around age 50. Perimenopause (transition) lasts 4-10 years with irregular periods. Symptoms include hot flashes, night sweats, mood changes, sleep problems, vaginal dryness, and weight changes. Hormone replacement therapy (HRT) helps symptoms but carries risks. Non-hormonal options include SSRIs, SNRIs, clonidine, or gabapentin. Lifestyle: regular exercise, stress management, adequate sleep, cool environment. Phytoestrogens (soy, flax) may help. Bone density monitoring important due to osteoporosis risk.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819401"
+  },
+  "medical_070_osteoporosis": {
+    "title": "Osteoporosis: Bone Health and Fracture Prevention",
+    "content": "Osteoporosis is decreased bone density increasing fracture risk. Often asymptomatic until fracture occurs. Risk factors include age, female gender, low calcium/vitamin D, sedentary lifestyle, smoking, and alcohol. Prevention includes calcium intake (1000-1200 mg daily), vitamin D (600-800 IU), weight-bearing exercise, and avoiding smoking/excess alcohol. Medications include bisphosphonates. Bone density screening (DEXA) at age 65 for women and 70 for men. Early intervention prevents fractures and disability.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819404"
+  },
+  "medical_071_gout": {
+    "title": "Gout: Uric Acid Buildup and Joint Pain",
+    "content": "Gout is form of arthritis from uric acid crystal buildup in joints, commonly affecting big toe. Acute attacks involve intense pain, swelling, and redness. Triggers include purine-rich foods (red meat, seafood, alcohol), dehydration, and rapid weight loss. Treatment for acute attacks includes NSAIDs, colchicine, or corticosteroids. Long-term management includes urate-lowering medications (allopurinol). Dietary changes: limit purines, alcohol (especially beer), and fructose. Hydration helps prevent attacks. Regular monitoring of uric acid levels.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819408"
+  },
+  "medical_072_copd": {
+    "title": "COPD: Chronic Obstructive Pulmonary Disease",
+    "content": "COPD includes emphysema and chronic bronchitis causing progressive airway obstruction. Main cause is smoking. Symptoms include chronic cough, shortness of breath, mucus production, and wheezing. Smoking cessation is critical. Medications include bronchodilators and corticosteroid inhalers. Pulmonary rehabilitation improves function. Oxygen therapy in advanced stages. Vaccinations (flu, pneumococcal) prevent infections. Avoid air pollutants. Regular exercise improves capacity. Exacerbations require prompt medical treatment. Early diagnosis and management slow progression.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819412"
+  },
+  "medical_073_whooping_cough": {
+    "title": "Whooping Cough (Pertussis): Prevention and Treatment",
+    "content": "Pertussis is bacterial respiratory infection causing severe cough paroxysms with characteristic 'whoop'. Highly contagious. Vaccination (DTaP/Tdap) prevents disease. In vaccinated individuals, symptoms milder. Treatment includes macrolide antibiotics (azithromycin) if started early. Supportive care: cough management, nutrition, hydration. Monitor for complications (pneumonia, seizures). Infants most at risk for complications. Close contacts need prophylaxis. Disease reportable to health authorities. Vaccination during pregnancy protects newborns.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819417"
+  },
+  "medical_074_measles": {
+    "title": "Measles: Prevention Through Vaccination",
+    "content": "Measles is highly contagious viral disease with fever, cough, coryza, conjunctivitis, and Koplik spots preceding characteristic rash. MMR vaccine prevents disease. Unvaccinated individuals at high risk. Treatment is supportive: rest, fluids, fever management, and vitamin A supplementation. Complications include pneumonia, encephalitis. Immunocompromised individuals at severe risk. Disease is reportable. Isolation prevents spread. Post-exposure vaccination within 72 hours helps. Vaccination mandatory in most schools.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819426"
+  },
+  "medical_075_chickenpox": {
+    "title": "Chickenpox (Varicella): Symptoms and Complications",
+    "content": "Chickenpox is viral infection with fever and characteristic blister rash. Highly contagious. Varicella vaccine prevents disease. Treatment is supportive: fever management, calamine lotion, gentle bathing. Avoid scratching to prevent scarring. Antivirals (acyclovir) help if started early, especially in severe cases or high-risk individuals. Complications include bacterial superinfection, pneumonia, encephalitis. Immunocompromised and pregnant individuals at high risk. Once infected, lifelong immunity develops but shingles (reactivation) possible later.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819433"
+  },
+  "medical_076_shingles": {
+    "title": "Shingles (Herpes Zoster): Reactivation and Pain Management",
+    "content": "Shingles results from varicella-zoster virus reactivation causing painful vesicular rash along dermatome. Preceded by pain, tingling, or numbness. Antiviral medications (acyclovir, valacyclovir) effective if started within 72 hours. Pain management includes acetaminophen, NSAIDs, topical capsaicin, or gabapentin. Postherpetic neuralgia (persistent pain) affects many, treatable with medications. Shingles vaccine (Shingrix) prevents disease in older adults. Isolate fluid-containing lesions. Complications include vision loss if affects eye.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819437"
+  },
+  "medical_077_mono": {
+    "title": "Infectious Mononucleosis (Mono): Viral Infection",
+    "content": "Mono is viral infection from Epstein-Barr virus causing fever, sore throat, lymphadenopathy, and fatigue. Spread through saliva. Symptoms develop over weeks and last weeks to months. Treatment is supportive: rest, fluids, throat lozenges, fever management. NSAIDs help pain and fever. Avoid contact sports during acute illness due to splenomegaly risk. Antibiotics ineffective for viral infection. Symptoms gradually improve. Return to normal activities gradual. Severe cases or complicated mononucleosis needs hospitalization.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819442"
+  },
+  "medical_078_herpes": {
+    "title": "Herpes Simplex: Cold Sores and Management",
+    "content": "Herpes simplex virus (HSV) causes recurrent blisters on lips or genitals. Initial infection often asymptomatic or mild. Triggers include stress, immunity, UV exposure, or illness. Antiviral medications (acyclovir, valacyclovir) shorten duration if started early. Topical treatments reduce symptoms. Keep lesions clean and dry. Avoid touching and spreading virus. Don't share personal items. Sexual transmission possible during shedding. Regular suppressive therapy for frequent recurrences. No cure, but management reduces impact.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819446"
+  },
+  "medical_079_scabies": {
+    "title": "Scabies: Mite Infestation and Treatment",
+    "content": "Scabies is contagious skin infestation from Sarcoptes mite causing intense itching, especially at night. Burrows and rash visible on hands, wrists, genitals, and skin folds. Treatment includes topical scabicides (permethrin, sulfur) applied to entire body. Oral ivermectin for severe or crusted scabies. Wash all clothing and bedding in hot water. Treat all household members simultaneously. Symptoms persist 2-4 weeks after treatment. Avoid skin-to-skin contact during treatment. Sexual partners need treatment. Good personal hygiene prevents transmission.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819450"
+  },
+  "medical_080_ringworm": {
+    "title": "Ringworm (Tinea): Fungal Skin Infection",
+    "content": "Ringworm is contagious fungal infection (not a worm) causing ring-shaped rash on skin or scalp. Spread through contact or contaminated items. Symptoms vary by location. Scalp ringworm more common in children. Treatment includes topical antifungals (clotrimazole, miconazole) for localized infection. Oral antifungals (griseofulvin, terbinafine) for scalp or severe cases. Keep area clean and dry. Avoid scratching/spreading. Launder clothing/items. Prevent spread to others. Professional confirmation of diagnosis important.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819454"
+  },
+  "medical_081_candida": {
+    "title": "Yeast Infection (Candida): Fungal Overgrowth",
+    "content": "Candida overgrowth causes vaginal yeast infections, oral thrush, or skin infections. Risk factors include antibiotics, diabetes, HIV, or weak immunity. Vaginal symptoms: itching, discharge, burning. Oral: white patches, soreness. Treatment includes topical or oral antifungals (fluconazole). Prevent through probiotics, proper hygiene, and treating underlying conditions. Wear breathable clothing. Avoid irritants. Diabetes management important. Recurrent infections warrant investigation of underlying causes. Over-the-counter treatments effective for initial episodes.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819459"
+  },
+  "medical_082_lice": {
+    "title": "Lice Infestation: Head Lice Treatment and Prevention",
+    "content": "Head lice are parasitic insects causing itching and visible nits (eggs) on hair shafts. Spread through direct contact or shared items. Treatment with pediculicide shampoos (pyrethrin or permethrin) applied per instructions. Nit combing removes eggs. Wash all items in hot water, seal others in bags for 2 weeks. Treat household members and close contacts. Repeat treatment at 7-10 days if needed. School notification required. Prescription options for resistant cases. Prevention through avoiding shared grooming items.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819466"
+  },
+  "medical_083_hives": {
+    "title": "Hives (Urticaria): Allergic Reaction",
+    "content": "Hives are raised, itchy welts from allergic reaction or mast cell release. Causes include food allergies, medications, insect stings, or allergen contact. Acute hives resolve within 24 hours typically. Chronic hives (>6 weeks) require investigation. Treatment includes antihistamines (diphenhydramine, cetirizine). Avoid triggers once identified. Cool compress helps itching. Avoid scratching. Severe cases need corticosteroids. Epinephrine for anaphylaxis. Identify and eliminate triggers. Hypoallergenic products help sensitive skin.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819470"
+  },
+  "medical_084_sunburn": {
+    "title": "Sunburn: Prevention and Relief",
+    "content": "Sunburn is skin inflammation from UV radiation exposure. Prevention is primary: use SPF 30+ sunscreen, reapply every 2 hours, wear protective clothing, seek shade 10am-4pm. Symptoms include redness, pain, and peeling. Treatment includes cool compress, aloe vera, hydration, and NSAIDs. Avoid petroleum jelly. Don't pick peeling skin. Serious burns (blistering, fever) need medical attention. Cumulative sun exposure increases skin cancer risk. Prevent premature aging through consistent sun protection.",
+    "source": "medical_guidelines",
+    "timestamp": "2025-12-09T01:15:59.819474"
+  },
+  "medical_expanded_085_bipolar_disorder": {
+    "title": "Bipolar Disorder: Mood Episodes and Management",
+    "content": "Bipolar disorder is characterized by alternating manic/hypomanic and depressive episodes. Manic episodes: increased energy, decreased need for sleep, racing thoughts, risky behavior. Depressive episodes: persistent sadness, hopelessness, fatigue. Type 1: includes full manic episodes. Type 2: hypomanic episodes (less severe). Cyclothymia: milder mood fluctuations. Treatment includes mood stabilizers (lithium), anticonvulsants, antipsychotics, and psychotherapy. Regular sleep schedule crucial. Avoid alcohol and drugs. Medication compliance essential. Crisis helpline: 988. Professional monitoring prevents episodes.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943023"
+  },
+  "medical_expanded_086_adhd": {
+    "title": "ADHD (Attention-Deficit/Hyperactivity Disorder): Symptoms and Treatment",
+    "content": "ADHD affects attention, impulse control, and executive function. Symptoms: difficulty concentrating, impulsivity, hyperactivity, disorganization, procrastination. Appears in childhood; often continues into adulthood. Affects academic, professional, and social functioning. Diagnosis requires comprehensive evaluation. Treatment includes stimulant medications (methylphenidate, amphetamines), non-stimulants (atomoxetine), behavioral therapy, and lifestyle changes. Cognitive behavioral therapy helps coping strategies. Regular exercise improves symptoms. Structured routines and time management essential. Professional assessment important for accurate diagnosis.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943045"
+  },
+  "medical_expanded_087_ocd": {
+    "title": "Obsessive-Compulsive Disorder (OCD): Intrusive Thoughts and Compulsions",
+    "content": "OCD involves obsessions (unwanted intrusive thoughts) and compulsions (repetitive behaviors). Common obsessions: fear of contamination, harm, symmetry, taboo thoughts. Compulsions: excessive cleaning, checking, arranging, counting. Significantly impairs functioning. Causes: genetics, brain chemistry, trauma. Treatment: cognitive behavioral therapy (ERP - exposure and response prevention) highly effective. SSRIs (sertraline, fluoxetine, paroxetine) help. Combined therapy and medication most effective. Avoid reassurance-seeking. Professional mental health evaluation essential. Recovery possible with proper treatment.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943051"
+  },
+  "medical_expanded_088_ptsd": {
+    "title": "Post-Traumatic Stress Disorder (PTSD): Trauma Recovery",
+    "content": "PTSD develops after experiencing/witnessing traumatic events. Symptoms: flashbacks, nightmares, avoidance, hypervigilance, emotional numbing, negative thoughts. Duration >1 month and significant impairment required for diagnosis. Risk factors: severity of trauma, prior mental health issues, lack of support. Treatment: trauma-focused CBT (most effective), EMDR (eye movement desensitization), prolonged exposure. SSRIs, SNRIs help. Support groups beneficial. Gradual trauma processing reduces symptoms. Professional trauma therapist essential. Recovery possible but requires proper treatment.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943055"
+  },
+  "medical_expanded_089_schizophrenia": {
+    "title": "Schizophrenia: Psychotic Symptoms and Management",
+    "content": "Schizophrenia causes psychotic symptoms: hallucinations (especially auditory), delusions, disorganized speech/behavior, reduced emotional expression, social withdrawal. Negative symptoms: apathy, anhedonia, flat affect. Cognitive symptoms: poor working memory, executive dysfunction. Typically emerges in late teens/early 20s. Genetic and environmental factors involved. Treatment: antipsychotic medications (first or second generation), psychosocial therapies, family support. Consistency with medication crucial. Avoid drugs and stress triggers. Regular monitoring essential. Early intervention improves outcomes significantly.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943060"
+  },
+  "medical_expanded_090_heart_attack": {
+    "title": "Heart Attack (Myocardial Infarction): Emergency Recognition",
+    "content": "Heart attack occurs when blood flow to heart muscle is blocked. Symptoms: chest pain/pressure, shortness of breath, arm/jaw/back pain, nausea, cold sweats. Can be subtle, especially in women. **CALL 911 IMMEDIATELY**. Don't delay seeking help. Time is critical (first hours determine outcomes). EKG and troponin tests confirm diagnosis. Treatment: aspirin, antiplatelet drugs, anticoagulants, revascularization (angioplasty/stent/bypass). Recovery includes cardiac rehab, lifestyle changes, medications. Prevention: manage blood pressure, cholesterol, diabetes; exercise; healthy diet; stress management.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943064"
+  },
+  "medical_expanded_091_stroke": {
+    "title": "Stroke: Acute Brain Attack Prevention and Recovery",
+    "content": "Stroke occurs when blood flow to brain is blocked (ischemic) or bleeds (hemorrhagic). Symptoms (FAST test): Face drooping, Arm weakness, Speech difficulty, Time to call 911. Other: sudden severe headache, vision loss, dizziness, loss of balance. **CALL 911 IMMEDIATELY** - time is critical (thrombolysis within 4.5 hours). Risk factors: hypertension, atrial fibrillation, smoking, diabetes, high cholesterol. Prevention: blood pressure control, anticoagulation if indicated, aspirin, healthy lifestyle. Recovery: rehabilitation, speech/physical therapy, lifestyle modifications essential.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943068"
+  },
+  "medical_expanded_092_arrhythmia": {
+    "title": "Cardiac Arrhythmias: Irregular Heartbeat Management",
+    "content": "Arrhythmias are irregular heartbeats. Types: atrial fibrillation (afib) - most common, tachycardia (fast), bradycardia (slow), premature beats. Symptoms: palpitations, dizziness, shortness of breath, chest discomfort, fainting. Causes: heart disease, hypertension, thyroid disease, caffeine, stress, medications. Diagnosis: EKG, Holter monitor, echocardiogram. Treatment: medications (beta-blockers, calcium channel blockers, antiarrhythmics), ablation, pacemaker. Lifestyle: limit caffeine, stress management, exercise. Afib requires anticoagulation to prevent stroke.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943072"
+  },
+  "medical_expanded_093_heart_failure": {
+    "title": "Heart Failure: Weakened Heart Function Management",
+    "content": "Heart failure means heart can't pump enough blood. Types: systolic (reduced ejection fraction), diastolic (preserved ejection fraction). Symptoms: shortness of breath, fatigue, leg swelling, rapid/irregular heartbeat. Causes: previous heart attack, hypertension, cardiomyopathy, valve disease. Diagnosis: echocardiogram, BNP test. Treatment: ACE inhibitors, beta-blockers, diuretics, aldosterone antagonists, ARNI drugs. Lifestyle: sodium restriction, fluid restriction, exercise as tolerated. Prognosis improved with early diagnosis and comprehensive management.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943076"
+  },
+  "medical_expanded_094_cholesterol": {
+    "title": "High Cholesterol: Prevention and Management",
+    "content": "Cholesterol elevated in blood increases heart disease/stroke risk. Types: LDL (bad) - increases plaque, HDL (good) - protective, triglycerides. Typically no symptoms; found through blood test. Risk factors: genetics, age, gender, diet, inactivity, smoking, obesity, diabetes. Treatment: diet (reduce saturated fats, increase fiber), exercise, weight loss, medications (statins most common), quit smoking. Target LDL varies by risk. Regular monitoring essential. Lifestyle changes first-line; medications if needed. Prevention of cardiovascular disease critical.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943080"
+  },
+  "medical_expanded_095_tuberculosis": {
+    "title": "Tuberculosis (TB): Infectious Disease Treatment",
+    "content": "TB is bacterial infection (Mycobacterium tuberculosis) spread by respiratory droplets. Active TB: chronic cough >3 weeks, chest pain, hemoptysis, night sweats, fever, weight loss. Latent TB: infected but not contagious. Diagnosis: TB test, chest X-ray, sputum smear. Treatment: 6-month antibiotic regimen (isoniazid, rifampicin, pyrazinamide, ethambutol). **Must complete full course**. Cure rates >90% with adherence. Isolation precautions during treatment. Regular monitoring. HIV+ individuals higher risk. Prevention: vaccination (BCG), treat latent TB.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943084"
+  },
+  "medical_expanded_096_cystic_fibrosis": {
+    "title": "Cystic Fibrosis: Genetic Respiratory Disease",
+    "content": "Cystic fibrosis is genetic disorder affecting mucus production in lungs and pancreas. Symptoms: persistent cough with mucus, frequent lung infections, shortness of breath, poor weight gain (in children), pancreatic insufficiency. Diagnosis: newborn screening, sweat chloride test, genetic testing. Prognosis improving with modern therapies. Treatment: airway clearance (chest physiotherapy), inhaled medications, pancreatic enzyme supplements, antibiotics for infections, nutrition management. Gene therapy emerging. Multidisciplinary care essential. Genetic counseling for families recommended.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943088"
+  },
+  "medical_expanded_097_emphysema": {
+    "title": "Emphysema: Progressive Lung Damage from Smoking",
+    "content": "Emphysema destroys lung alveoli, causing airflow obstruction. Primarily from smoking (also rare genetic alpha-1 antitrypsin deficiency). Symptoms: shortness of breath, chronic cough, wheezing, barrel chest, weight loss. Irreversible but progression can be slowed. Diagnosis: spirometry, CT scan. Treatment: smoking cessation (critical), bronchodilators, corticosteroids, oxygen therapy, pulmonary rehabilitation. Lung volume reduction surgery for severe cases. Prevent infections with vaccines. Avoid air pollution and respiratory irritants. Progressive disease; focus on quality of life.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943092"
+  },
+  "medical_expanded_098_thyroid_cancer": {
+    "title": "Thyroid Cancer: Types and Treatment Approaches",
+    "content": "Thyroid cancer types: papillary (most common, good prognosis), follicular (intermediate), medullary, anaplastic (aggressive). Symptoms: neck lump, throat pain, difficulty swallowing, hoarseness, enlarged lymph nodes. Diagnosis: ultrasound, fine needle aspiration, thyroid function tests. Treatment: thyroidectomy, radioactive iodine therapy, TSH suppression therapy. Papillary cancer 10-year survival >90%. Anaplastic much poorer. Post-treatment monitoring with thyroglobulin, ultrasound. Hormone replacement needed after surgery. Prognosis depends on type and stage.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943096"
+  },
+  "medical_expanded_099_crohns_disease": {
+    "title": "Crohn's Disease: Inflammatory Bowel Disease",
+    "content": "Crohn's is inflammatory bowel disease affecting entire GI tract (mouth to anus). Symptoms: abdominal pain, diarrhea (bloody), weight loss, fever, rectal bleeding. Complications: fistulas, strictures, malabsorption, increased cancer risk. Causes: genetics, immune dysfunction, environmental factors. Diagnosis: colonoscopy, biopsy, imaging. Treatment: anti-inflammatories (mesalamine), immunosuppressants, biologics (TNF inhibitors), antibiotics. Surgery if complications. Dietary modifications (low fiber during flares). Stress management helps. Requires ongoing management and specialist care.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943100"
+  },
+  "medical_expanded_100_ulcerative_colitis": {
+    "title": "Ulcerative Colitis: Colon and Rectum Inflammation",
+    "content": "Ulcerative colitis is inflammatory bowel disease limited to colon and rectum. Symptoms: bloody diarrhea, abdominal pain, urgency, weight loss, fever. Complications: toxic megacolon, perforation, increased cancer risk. Causes: genetics, immune dysfunction, environmental triggers. Diagnosis: colonoscopy with biopsy. Treatment: anti-inflammatories, immunosuppressants, biologics (TNF inhibitors). Colectomy curative if medical management fails. Dietary modifications during flares. Stress and certain foods trigger flares. Requires ongoing specialist management and monitoring.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943104"
+  },
+  "medical_expanded_101_ibs": {
+    "title": "Irritable Bowel Syndrome (IBS): Functional Disorder",
+    "content": "IBS is functional disorder causing abdominal pain, altered bowel habits. Types: IBS-D (diarrhea), IBS-C (constipation), IBS-M (mixed). No structural abnormalities. Symptoms: cramping, bloating, mucus in stool, worse after eating, relieved by defecation. Triggers: foods, stress, hormones. Rome IV criteria used for diagnosis. Treatment: dietary modifications (high fiber for IBS-C, low FODMAP for IBS-D), stress management, gut-directed hypnotherapy, medications (antispasmodics, loperamide, linaclotide). Probiotics may help some. Reassurance that not serious but manageable.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943108"
+  },
+  "medical_expanded_102_celiac_disease": {
+    "title": "Celiac Disease: Gluten Sensitivity and Management",
+    "content": "Celiac disease is autoimmune disorder triggered by gluten. Symptoms: diarrhea, bloating, abdominal pain, anemia, osteoporosis, dermatitis herpetiformis, neurological symptoms. Intestinal damage leads to malabsorption. Diagnosis: serology (tissue transglutaminase antibodies), endoscopy with biopsy. Lifelong treatment: strict gluten-free diet. Intestinal healing occurs over months. May need nutritional supplementation (iron, B12, calcium, vitamin D). Increased risk of certain cancers and lymphoma if untreated. Educational support and specialist dietitian help. Cross-contamination prevention important.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943112"
+  },
+  "medical_expanded_103_hiv_aids": {
+    "title": "HIV/AIDS: Transmission, Testing, and Modern Treatment",
+    "content": "HIV attacks immune system; AIDS is advanced stage (CD4 <200). Transmission: sexual contact, blood exposure, mother-to-child. Initial symptoms: fever, fatigue, rash (acute retroviral syndrome). Often asymptomatic for years. Testing: antibody test, antigen test, nucleic acid test. Treatment: antiretroviral therapy (ART) suppresses viral load. Undetectable viral load means untransmittable (U=U). PrEP/PEP prevent infection. CD4 and viral load monitoring essential. Modern ART allows near-normal lifespan. Adherence critical to prevent resistance. Psychological support, nutritional counseling important.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943119"
+  },
+  "medical_expanded_104_hepatitis_b": {
+    "title": "Hepatitis B: Viral Liver Infection",
+    "content": "Hepatitis B is viral infection transmitted sexually, blood exposure, mother-to-child. Acute: jaundice, abdominal pain, fatigue, nausea (resolves in weeks-months). Chronic (5-10%): progressive liver damage, cirrhosis, liver cancer risk. Diagnosis: HBsAg, HBsAb, HBcore antibody. Treatment: observation for acute; antiviral medications for chronic (tenofovir, entecavir). Interferon for some patients. Preventable by vaccination (highly effective). Screen close contacts. Monitor liver function. Avoid alcohol. Prognosis improving with modern antivirals.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943123"
+  },
+  "medical_expanded_105_hepatitis_c": {
+    "title": "Hepatitis C: Curable Viral Liver Disease",
+    "content": "Hepatitis C is blood-borne virus causing liver infection. Acute: often asymptomatic or mild (jaundice, fatigue). Chronic (75-85%): fibrosis, cirrhosis, liver cancer. Transmission: blood exposure, needle sharing, healthcare exposure. Diagnosis: antibody test, viral RNA test (confirms active infection). Treatment: direct-acting antivirals (DAAs) cure >95% with 8-12 week course (sofosbuvir/velpatasvir). No vaccine available. Screening for people at risk. Liver monitoring before/after treatment. Prognosis excellent with modern treatment. Prevention: safer practices, needle exchange programs.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943127"
+  },
+  "medical_expanded_106_malaria": {
+    "title": "Malaria: Parasitic Disease Prevention and Treatment",
+    "content": "Malaria is parasitic disease transmitted by mosquitoes. Symptoms: fever, chills, fatigue, muscle pain, nausea (cyclical pattern). Severe: cerebral malaria, organ failure, death if untreated. Types: P. falciparum (most severe), vivax, ovale, malariae. Diagnosis: blood smear microscopy, rapid diagnostic test. Treatment: antimalarial drugs (artemisinin-based combinations most effective). Prevention: insecticide-treated nets, insect repellent, protective clothing, antimalarial medications (if traveling). Seasonal transmission in tropical regions. Early treatment critical. Prognosis excellent if treated promptly.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943131"
+  },
+  "medical_expanded_107_breast_cancer": {
+    "title": "Breast Cancer: Detection and Treatment Options",
+    "content": "Breast cancer is most common cancer in women. Risk factors: age, family history, BRCA mutations, hormonal factors, obesity, alcohol. Screening: mammography, clinical exams. Diagnosis: imaging, biopsy. Types: ductal carcinoma in situ (DCIS), invasive ductal/lobular. Staging determines treatment. Treatment: surgery (lumpectomy/mastectomy), radiation, chemotherapy, hormonal therapy, targeted therapy (HER2+). Hormone receptor status and HER2 status guide treatment. Prognosis varies by type, stage, age. Survivorship support important. Reconstruction options available. Regular follow-up essential.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943140"
+  },
+  "medical_expanded_108_lung_cancer": {
+    "title": "Lung Cancer: Smoking-Related and Non-Smoking Types",
+    "content": "Lung cancer leading cause of cancer death. Types: small cell (aggressive), non-small cell (more common). Smoking major risk factor but non-smokers develop it. Symptoms: persistent cough, hemoptysis, chest pain, shortness of breath (often late). Diagnosis: CT scan, biopsy, molecular testing. Staging (TNM) determines treatment. Treatment: surgery, radiation, chemotherapy, targeted therapy (EGFR, ALK mutations), immunotherapy. Prognosis depends on type, stage, mutations. Palliative care important even with treatment. Smoking cessation critical. Clinical trials offer newer options.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943144"
+  },
+  "medical_expanded_109_colorectal_cancer": {
+    "title": "Colorectal Cancer: Screening and Prevention",
+    "content": "Colorectal cancer affects colon/rectum. Risk factors: age>45, family history, polyps, IBD, obesity, smoking. Prevention: screening crucial (colonoscopy, FIT test, CT colonography). Adenomatous polyps removed during colonoscopy prevent cancer. Symptoms: change in bowel habits, bloody stool, abdominal pain, weight loss (often late). Diagnosis: colonoscopy, biopsy. Staging guides treatment. Treatment: surgery (primary), chemotherapy (advanced), targeted therapy (KRAS, MSI status). Prognosis improves with early detection. Lifestyle: high fiber, exercise, maintain healthy weight.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943148"
+  },
+  "medical_expanded_110_lower_back_pain": {
+    "title": "Lower Back Pain: Causes and Management Strategies",
+    "content": "Lower back pain extremely common, affecting 80% of people. Causes: muscle strain, herniated disc, facet joint arthritis, spinal stenosis, poor posture, weak core, deconditioning. Symptoms: dull ache to sharp pain, stiffness, muscle spasm. Red flags: fever, weight loss, incontinence, progressive neurological symptoms (seek urgent care). Most acute back pain resolves in 4-6 weeks with conservative care. Treatment: rest, ice/heat, NSAIDs, muscle relaxants, physical therapy, core strengthening. Chiropractic, acupuncture may help some. Surgery only for specific conditions (severe stenosis, instability). Prevention: good posture, proper lifting, core strength, flexibility.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943152"
+  },
+  "medical_expanded_111_sciatica": {
+    "title": "Sciatica: Nerve Pain and Relief Strategies",
+    "content": "Sciatica is pain from sciatic nerve compression, usually from herniated disc or piriformis syndrome. Symptoms: sharp, burning pain radiating from lower back through leg, numbness, tingling, weakness. Often one-sided. Severity varies from mild to disabling. Diagnosis: clinical exam, MRI if nerve damage suspected. Treatment: rest initially, NSAIDs, physical therapy, stretching (especially piriformis), ice/heat. Epidural steroid injections help severe cases. Surgery (discectomy) if conservative fails or severe neurological deficit. Recovery: most resolve within weeks to months. Prevention: core strength, proper posture, safe lifting.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943156"
+  },
+  "medical_expanded_112_knee_pain": {
+    "title": "Knee Pain: Common Causes and Treatments",
+    "content": "Knee pain common from arthritis, ligament injuries, meniscal tears, patellar problems. Osteoarthritis: age-related cartilage wear. ACL/MCL injuries: sports-related, swelling, instability. Meniscus tears: clicking, locking, swelling. Patellofemoral pain: anterior knee pain. Treatment: RICE (rest, ice, compression, elevation), NSAIDs, physical therapy, bracing. Injections: corticosteroids (temporary), hyaluronic acid (osteoarthritis). Surgery: arthroscopy (repair), ACL reconstruction, knee replacement. Prevention: strong quadriceps/hamstrings, proper technique, weight management. Prognosis depends on cause and severity.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943160"
+  },
+  "medical_expanded_113_melanoma": {
+    "title": "Melanoma: Skin Cancer Prevention and Early Detection",
+    "content": "Melanoma is most serious skin cancer. Risk factors: UV exposure, fair skin, family history, atypical moles, prior melanoma. ABCDE signs: Asymmetry, Border irregularity, Color variation, Diameter >6mm, Evolving (changing). Diagnosis: dermatoscopy, biopsy. Staging (Breslow thickness, ulceration) determines prognosis. Treatment: surgical excision (wide margins), lymph node biopsy (staging), immunotherapy, targeted therapy (BRAF mutations), chemotherapy. Prevention: sunscreen (SPF 30+), protective clothing, avoid tanning beds, self-exams, professional skin checks. Early detection crucial (5-year survival: stage 1 ~99%, stage 4 ~20%).",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943164"
+  },
+  "medical_expanded_114_sleep_apnea": {
+    "title": "Sleep Apnea: Breathing Interruptions During Sleep",
+    "content": "Sleep apnea: repeated breathing stops during sleep. Obstructive (OSA): airway collapses (most common). Central: brain doesn't signal breathing. Mixed: both types. Symptoms: loud snoring, gasping awake, daytime sleepiness, poor concentration, morning headaches. Risk factors: obesity, male, age, smoking, alcohol, sedatives. Complications: hypertension, arrhythmia, stroke, heart attack, sudden death. Diagnosis: sleep study (polysomnography). Treatment: CPAP (continuous positive airway pressure - gold standard), oral appliances, positional therapy, weight loss, avoid triggers. Surgery (uvulopalatopharyngoplasty) for some. Untreated serious; treatment improves health significantly.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943168"
+  },
+  "medical_expanded_115_pcos": {
+    "title": "PCOS (Polycystic Ovary Syndrome): Hormonal Disorder",
+    "content": "PCOS is endocrine disorder affecting reproductive-age women. Symptoms: irregular periods, infertility, hirsutism (excessive hair), acne, male pattern baldness, weight gain. Caused by insulin resistance and hormonal imbalance. Diagnosis: clinical signs + ultrasound (ovarian cysts) + lab abnormalities. Treatment: lifestyle (weight loss helps), metformin (improves insulin sensitivity), hormonal contraceptives (regular periods), anti-androgens (spironolactone). Fertility: ovulation induction, assisted reproduction. Increased risk: type 2 diabetes, cardiovascular disease. Management improves outcomes. Mental health support important (depression/anxiety common).",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943172"
+  },
+  "medical_expanded_116_endometriosis": {
+    "title": "Endometriosis: Uterine Tissue Growth Outside Uterus",
+    "content": "Endometriosis: tissue similar to uterine lining grows outside uterus. Symptoms: severe period pain, chronic pelvic pain, painful intercourse, infertility, bowel/urinary symptoms. Severity varies; pain doesn't correlate with tissue amount. Diagnosis: laparoscopy (gold standard), ultrasound. Treatment: NSAIDs (first-line), hormonal contraceptives, progestins (norethindrone, medroxyprogesterone), GnRH agonists (severe pain). Excision surgery when medical therapy fails or fertility needed. Fertility: surgery, assisted reproduction. Requires multidisciplinary approach. Support groups helpful. Affects quality of life significantly.",
+    "source": "medical_guidelines_kaggle_inspired",
+    "timestamp": "2025-12-09T01:27:51.943176"
+  }
+}
