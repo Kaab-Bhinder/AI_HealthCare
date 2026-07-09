@@ -1,5 +1,7 @@
 import os
 import json
+import base64
+import requests
 from datetime import datetime
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
@@ -313,6 +315,75 @@ def get_conversation(conversation_id):
         if DEBUG_AI:
             print(f"[DEBUG] Error retrieving conversation: {e}")
         return add_cors_headers(jsonify({"messages": []})), 200
+def transcribe_with_gemini(audio_b64, mime_type='audio/wav'):
+    """Transcribe base64-encoded audio using Gemini's multimodal endpoint.
+
+    Works for audio recorded in any browser (the client always uploads WAV),
+    so it fixes voice input for browsers without the Web Speech API (Firefox).
+    Returns the transcript string, or '' if nothing could be transcribed.
+    """
+    if not GEMINI_API_KEY:
+        raise RuntimeError("GEMINI_API_KEY not configured")
+
+    url = (
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        f"gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
+    )
+    body = {
+        "contents": [{
+            "parts": [
+                {"text": "Transcribe this audio verbatim. Return ONLY the spoken "
+                         "words with no commentary, labels, or quotation marks. "
+                         "If there is no discernible speech, return an empty string."},
+                {"inline_data": {"mime_type": mime_type, "data": audio_b64}},
+            ]
+        }],
+        "generationConfig": {"temperature": 0},
+    }
+    resp = requests.post(url, json=body, timeout=60)
+    resp.raise_for_status()
+    data = resp.json()
+    try:
+        text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+    except (KeyError, IndexError):
+        text = ""
+    # Gemini sometimes wraps in quotes or says it can't hear anything.
+    text = text.strip().strip('"').strip()
+    lowered = text.lower()
+    if lowered in ("", "no discernible speech", "(no speech detected)") or \
+       "no discernible speech" in lowered or "no audible speech" in lowered:
+        return ""
+    return text
+
+
+@app.route('/api/voice/transcribe', methods=['POST', 'OPTIONS'])
+def voice_transcribe():
+    """Speech-to-text for all browsers. Body: { audio: <base64>, mime_type }."""
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    try:
+        data = request.get_json(silent=True) or {}
+        audio_b64 = data.get('audio', '')
+        mime_type = data.get('mime_type', 'audio/wav')
+        if not audio_b64:
+            return add_cors_headers(jsonify({"error": "audio required"})), 400
+
+        # Guard against oversized uploads (~10 MB of base64).
+        if len(audio_b64) > 10_000_000:
+            return add_cors_headers(jsonify({"error": "audio too large"})), 413
+
+        text = transcribe_with_gemini(audio_b64, mime_type)
+        if DEBUG_AI:
+            print(f"[DEBUG] Voice transcript: {text[:80]!r}")
+        return add_cors_headers(jsonify({"text": text})), 200
+    except requests.HTTPError as e:
+        print(f"[ERROR] Transcribe (Gemini HTTP): {e}")
+        return add_cors_headers(jsonify({"error": "Transcription service error"})), 502
+    except Exception as e:
+        print(f"[ERROR] Transcribe: {e}")
+        return add_cors_headers(jsonify({"error": str(e)})), 500
+
+
 @app.route('/health', methods=['GET', 'OPTIONS'])
 def health():
     if request.method == 'OPTIONS':

@@ -108,29 +108,38 @@ Open browser: `http://localhost:3000` → Navigate to `/consult` → Chat works!
 ### How to Use Voice
 
 **Speaking to the AI:**
-1. Click and **hold** the 🎤 microphone button in the input area
+1. Click the 🎤 microphone button in the input area
 2. Speak clearly about your symptoms or question
-3. Release the button when done
-4. Your speech is converted to text and sent automatically
+3. Click the button again to stop
+4. Your audio is transcribed and sent automatically
 
 **Hearing Responses:**
 1. When the AI responds, look for the 🔊 speaker icon on the message
 2. Click it to hear the response read aloud
 3. Click again to stop playback
 
+### How voice input works (cross-browser)
+Speech-to-text records the microphone with the browser-native `MediaRecorder`
+API, re-encodes the audio to WAV in the browser, and transcribes it on the
+backend with Gemini. Because it does **not** rely on the Web Speech API
+(`webkitSpeechRecognition`, which Firefox lacks), voice input works in every
+modern browser — not just Chrome/Safari.
+
 ### Browser Compatibility
-| Browser | Support | Notes |
-|---------|---------|-------|
-| Chrome | ✅ Full | Recommended |
-| Firefox | ✅ Full | Works well |
-| Safari | ✅ Full | Uses webkit prefix |
-| Edge | ✅ Full | Same as Chrome |
-| Mobile | ✅ Most | Depends on OS |
+| Browser | Voice input (speech-to-text) | Voice output (text-to-speech) |
+|---------|------------------------------|-------------------------------|
+| Chrome  | ✅ Full | ✅ Full |
+| Firefox | ✅ Full (server transcription) | ✅ Full |
+| Safari  | ✅ Full | ✅ Full |
+| Edge    | ✅ Full | ✅ Full |
+| Mobile  | ✅ Most (needs mic permission over HTTPS) | ✅ Most |
+
+> Note: microphone access requires a secure context — `localhost` in
+> development, or HTTPS in production.
 
 ### Configuration
-You can customize voice settings in `frontend/components/VoiceChat.jsx`:
+You can customize text-to-speech in `frontend/components/VoiceChat.jsx`:
 ```javascript
-recognitionRef.current.lang = 'en-US'        // Change language
 utterance.rate = 1                            // Adjust speed (0.1-10)
 utterance.pitch = 1                           // Adjust pitch (0-2)
 utterance.volume = 1                          // Adjust volume (0-1)

@@ -415,7 +415,7 @@ export default function Chat() {
           </button>
         </div>
         <p className="text-xs text-gray-500 mt-3 text-center">
-          🎤 <strong>Hold microphone</strong> to speak • 💬 <strong>Type</strong> to chat • 🔊 <strong>Hover & click speaker</strong> on AI messages to hear responses
+          🎤 <strong>Click microphone</strong> to speak (click again to stop) • 💬 <strong>Type</strong> to chat • 🔊 <strong>Hover & click speaker</strong> on AI messages to hear responses
         </p>
       </div>
       {showBooking && (
