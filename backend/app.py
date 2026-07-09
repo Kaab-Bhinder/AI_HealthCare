@@ -6,7 +6,10 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from rag_simple import retrieve_context, add_to_knowledge_base, search_knowledge_base
+# Semantic (vector) retrieval, with automatic keyword fallback inside the engine.
+from rag_engine import retrieve_context, search_knowledge_base
+# Adding documents still writes to the shared documents.json knowledge base.
+from rag_simple import add_to_knowledge_base
 try:
     from db import connect_mongodb, init_collections, find_doctors_by_symptom, get_available_slots, book_appointment, get_doctor_details, get_all_doctors, update_doctor, delete_doctor, get_all_bookings, get_doctor_stats, cancel_booking
     MONGO_AVAILABLE = True
@@ -159,15 +162,17 @@ def get_llm_response(message, conversation_id):
     if DEBUG_AI:
         print(f"[DEBUG] Building prompt with {len(prior_messages)} messages")
     
-    # Try to retrieve relevant context from knowledge base
+    # Try to retrieve relevant context from knowledge base (semantic search)
     context = ""
     knowledge_found = False
+    sources = []
     try:
-        context, knowledge_found = retrieve_context(message, limit=3)
+        context, knowledge_found, sources = retrieve_context(message, limit=3)
         if context and DEBUG_AI:
-            print(f"[DEBUG] Retrieved knowledge base context ({len(context)} chars)")
+            titles = ", ".join(s["title"] for s in sources)
+            print(f"[DEBUG] Retrieved {len(sources)} docs ({len(context)} chars): {titles}")
         if not knowledge_found and DEBUG_AI:
-            print(f"[DEBUG] No matching knowledge found in knowledge base")
+            print(f"[DEBUG] No relevant knowledge cleared the similarity threshold")
     except Exception as e:
         if DEBUG_AI:
             print(f"[DEBUG] RAG retrieval failed: {e}")
@@ -195,7 +200,7 @@ def get_llm_response(message, conversation_id):
                 reply = clean_markdown(reply)
                 if DEBUG_AI:
                     print(f"[DEBUG] Gemini response: {reply[:100]}...")
-                return reply, "gemini-2.5-flash"
+                return reply, "gemini-2.5-flash", sources
             else:
                 if DEBUG_AI:
                     print(f"[DEBUG] Gemini returned empty reply")
@@ -211,9 +216,9 @@ def get_llm_response(message, conversation_id):
         try:
             if DEBUG_AI:
                 if knowledge_found:
-                    print(f"[DEBUG] Calling OpenAI (fallback) with RAG context ({language})")
+                    print(f"[DEBUG] Calling OpenAI (fallback) with RAG context")
                 else:
-                    print(f"[DEBUG] Calling OpenAI (fallback) without knowledge base ({language})")
+                    print(f"[DEBUG] Calling OpenAI (fallback) without knowledge base")
             response = openai_llm.invoke(final_message)
             if hasattr(response, 'content'):
                 reply = str(response.content).strip()
@@ -223,16 +228,16 @@ def get_llm_response(message, conversation_id):
                 reply = clean_markdown(reply)
                 if DEBUG_AI:
                     print(f"[DEBUG] OpenAI response: {reply[:100]}...")
-                return reply, "gpt-4o-mini"
+                return reply, "gpt-4o-mini", sources
         except Exception as e:
             if DEBUG_AI:
                 print(f"[DEBUG] OpenAI error: {e}")
     else:
         if DEBUG_AI:
             print("[DEBUG] OpenAI LLM not configured")
-    
+
     print("[ERROR] No LLM available or all LLMs failed")
-    return None, None
+    return None, None, []
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = CORS_ORIGIN
     response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS, GET, PUT, DELETE'
@@ -253,21 +258,22 @@ def chat():
         if DEBUG_AI:
             print(f"\n[DEBUG] Chat request: {message[:100]}...")
         
-        reply, model = get_llm_response(message, conversation_id)
+        reply, model, sources = get_llm_response(message, conversation_id)
         if not reply:
             if DEBUG_AI:
                 print("[DEBUG] No reply from LLM")
             return add_cors_headers(jsonify({"error": "AI unavailable"})), 502
-        
+
         entry = {
             "timestamp": datetime.utcnow().isoformat() + "Z",
             "conversationId": conversation_id,
             "model": model,
             "userMessage": message,
-            "assistantReply": reply
+            "assistantReply": reply,
+            "sources": sources
         }
         save_chat(entry)
-        return add_cors_headers(jsonify({"reply": reply})), 200
+        return add_cors_headers(jsonify({"reply": reply, "sources": sources})), 200
     except Exception as e:
         print(f"[ERROR] Chat endpoint: {e}")
         return add_cors_headers(jsonify({"error": str(e)})), 500
@@ -543,5 +549,11 @@ if __name__ == '__main__':
     print(f"[DEBUG] Gemini configured: {bool(GEMINI_API_KEY)}")
     print(f"[DEBUG] OpenAI configured: {bool(OPENAI_API_KEY)}")
     print(f"[DEBUG] Appointment booking: {'✓ Enabled' if MONGO_AVAILABLE else '✗ Disabled'}")
-    print(f"[DEBUG] RAG System: ✓ Enabled (using SimpleRAG)")
+    try:
+        from rag_engine import get_engine
+        _eng = get_engine()
+        _mode = "Semantic (Gemini embeddings)" if _eng.ready else "Keyword fallback"
+        print(f"[DEBUG] RAG System: ✓ Enabled ({_mode}, {len(_eng.doc_ids)} docs)")
+    except Exception as e:
+        print(f"[DEBUG] RAG System: keyword fallback ({e})")
     app.run(host='0.0.0.0', port=FLASK_PORT, debug=False)

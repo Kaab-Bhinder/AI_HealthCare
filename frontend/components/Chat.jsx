@@ -153,7 +153,8 @@ export default function Chat() {
         return
       }
       const replyText = (j && (j.reply || j.partial || j.debug)) || 'AI unavailable, please try again later.'
-      setMessages(ms => [...ms, { id: Date.now()+1, from: 'assistant', text: replyText }])
+      const sources = (j && Array.isArray(j.sources)) ? j.sources : []
+      setMessages(ms => [...ms, { id: Date.now()+1, from: 'assistant', text: replyText, sources }])
     }).catch(err => {
       setTyping(false)
       setMessages(ms => [...ms, { id: Date.now()+1, from: 'assistant', text: 'AI unavailable, please try again later.' }])
@@ -308,6 +309,25 @@ export default function Chat() {
             )}
             <div className={`max-w-[75%] rounded-2xl px-5 py-4 shadow-md ${m.from === 'user' ? 'bg-gradient-to-br from-healthcare-500 to-healthcare-600 text-white rounded-br-none' : 'bg-white text-healthcare-800 border border-healthcare-200 rounded-bl-none'}`}>
               {m.from === 'assistant' ? renderFormattedText(m.text) : <div className="text-sm leading-relaxed">{m.text}</div>}
+              {m.from === 'assistant' && Array.isArray(m.sources) && m.sources.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-healthcare-100">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[11px] font-semibold text-gray-400 flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                      Based on
+                    </span>
+                    {m.sources.map((s, si) => (
+                      <span
+                        key={si}
+                        title={s.score != null ? `Relevance: ${Math.round(s.score * 100)}%` : undefined}
+                        className="text-[11px] font-medium bg-healthcare-50 text-healthcare-700 border border-healthcare-200 rounded-full px-2.5 py-0.5"
+                      >
+                        {s.title}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             {m.from === 'user' && (
               <div className="ml-4 flex items-end flex-shrink-0">
@@ -360,7 +380,8 @@ export default function Chat() {
                     return
                   }
                   if (j?.reply) {
-                    setMessages(ms => [...ms, { id: Date.now(), from: 'assistant', text: j.reply }])
+                    const sources = Array.isArray(j.sources) ? j.sources : []
+                    setMessages(ms => [...ms, { id: Date.now(), from: 'assistant', text: j.reply, sources }])
                   }
                 }).catch(err => {
                   setTyping(false)
