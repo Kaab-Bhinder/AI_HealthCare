@@ -16,7 +16,9 @@ back to the keyword search in rag_simple.py so the app never breaks.
 """
 
 import os
+import re
 import json
+import time
 import pickle
 import hashlib
 from pathlib import Path
@@ -27,9 +29,13 @@ import numpy as np
 from rag_simple import get_rag as _get_keyword_rag
 
 # Embedding model + tuning knobs
-EMBED_MODEL = "models/text-embedding-004"
+EMBED_MODEL = os.getenv("RAG_EMBED_MODEL", "models/gemini-embedding-001")
 # Cosine similarity below this is treated as "not relevant" -> no context injected.
-RELEVANCE_THRESHOLD = float(os.getenv("RAG_RELEVANCE_THRESHOLD", "0.62"))
+RELEVANCE_THRESHOLD = float(os.getenv("RAG_RELEVANCE_THRESHOLD", "0.78"))
+# Free-tier embedding quota is ~100 requests/minute. We embed in batches and
+# pause between them so the one-time index build never trips the rate limit.
+EMBED_BATCH_SIZE = int(os.getenv("RAG_EMBED_BATCH_SIZE", "80"))
+EMBED_BATCH_PAUSE = float(os.getenv("RAG_EMBED_BATCH_PAUSE", "61"))
 DEBUG_AI = os.getenv("DEBUG_AI", "false").lower() == "true"
 
 
@@ -62,6 +68,54 @@ class SemanticRAG:
                 model=EMBED_MODEL, google_api_key=api_key
             )
         return self._embeddings
+
+    def _embed_documents_throttled(self, embeddings, texts):
+        """
+        Embed all documents in rate-limit-friendly batches. Returns a list of
+        vectors, or None if a batch permanently fails. On a 429 (quota) it waits
+        the delay the API suggests and retries that batch.
+        """
+        all_vecs = []
+        n = len(texts)
+        batches = [texts[i:i + EMBED_BATCH_SIZE] for i in range(0, n, EMBED_BATCH_SIZE)]
+        print(f"[DEBUG] RAG: embedding {n} documents in {len(batches)} batch(es) "
+              f"(one-time, cached afterwards)...")
+
+        for bi, batch in enumerate(batches):
+            attempts = 0
+            while True:
+                attempts += 1
+                try:
+                    all_vecs.extend(embeddings.embed_documents(batch))
+                    if DEBUG_AI:
+                        print(f"[DEBUG] RAG: embedded batch {bi + 1}/{len(batches)} "
+                              f"({len(batch)} docs)")
+                    break
+                except Exception as e:
+                    msg = str(e)
+                    is_rate = "429" in msg or "quota" in msg.lower() or "rate" in msg.lower()
+                    if is_rate and attempts <= 5:
+                        wait = self._parse_retry_delay(msg) or EMBED_BATCH_PAUSE
+                        print(f"[WARNING] RAG: rate limited on batch {bi + 1}, "
+                              f"waiting {wait:.0f}s then retrying...")
+                        time.sleep(wait + 1)
+                        continue
+                    print(f"[ERROR] RAG: batch {bi + 1} failed: {e}")
+                    return None
+
+            # Pause between batches (not after the last) to respect the quota.
+            if bi < len(batches) - 1:
+                if DEBUG_AI:
+                    print(f"[DEBUG] RAG: pausing {EMBED_BATCH_PAUSE:.0f}s to respect quota...")
+                time.sleep(EMBED_BATCH_PAUSE)
+
+        return all_vecs
+
+    @staticmethod
+    def _parse_retry_delay(msg):
+        """Pull the suggested retry delay (seconds) out of a Gemini 429 message."""
+        m = re.search(r"retry in ([0-9.]+)s", msg) or re.search(r"seconds: ([0-9]+)", msg)
+        return float(m.group(1)) if m else None
 
     # ---- knowledge base loading ------------------------------------------
     def _load_documents(self):
@@ -134,12 +188,9 @@ class SemanticRAG:
             })
             texts.append(self._doc_text(doc))
 
-        try:
-            print(f"[DEBUG] RAG: embedding {len(texts)} documents "
-                  f"(one-time, cached afterwards)...")
-            vectors = embeddings.embed_documents(texts)
-        except Exception as e:
-            print(f"[ERROR] RAG: embedding failed ({e}); falling back to keyword search")
+        vectors = self._embed_documents_throttled(embeddings, texts)
+        if vectors is None:
+            print("[ERROR] RAG: embedding failed; falling back to keyword search")
             self.ready = False
             return
 
@@ -188,19 +239,28 @@ class SemanticRAG:
         q = self._normalize(np.array([qvec], dtype=np.float32))[0]
         scores = self.matrix @ q  # cosine similarity (both normalized)
 
-        top_idx = np.argsort(scores)[::-1][:limit]
+        # Over-fetch, then dedupe by title (the KB contains some duplicate docs)
+        # keeping the highest-scoring copy, before trimming to `limit`.
+        order = np.argsort(scores)[::-1][: max(limit * 4, limit)]
         results = []
-        for idx in top_idx:
+        seen_titles = set()
+        for idx in order:
             score = float(scores[idx])
             if score < RELEVANCE_THRESHOLD:
                 continue
             meta = self.doc_meta[idx]
+            title_key = meta["title"].strip().lower()
+            if title_key in seen_titles:
+                continue
+            seen_titles.add(title_key)
             results.append({
                 "doc_id": meta["doc_id"],
                 "title": meta["title"],
                 "content": meta["content"],
                 "score": round(score, 4),
             })
+            if len(results) >= limit:
+                break
         return results
 
     def _keyword_fallback(self, query, limit):
