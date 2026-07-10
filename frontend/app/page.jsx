@@ -1,77 +1,113 @@
 import Link from 'next/link'
+import {
+  ArrowRight, Sparkles, Stethoscope, CalendarClock, ShieldCheck, Mic,
+  BookOpen, Zap, MessageCircle, Search, HeartPulse, Clock, Quote, ChevronRight,
+} from 'lucide-react'
+
+const features = [
+  { icon: Stethoscope, title: 'AI Symptom Insight', desc: 'Describe how you feel and get calm, structured guidance grounded in a medical knowledge base.' },
+  { icon: Search, title: 'Semantic Retrieval', desc: 'Answers are backed by real documents found through meaning — not keywords — and cited for trust.' },
+  { icon: Mic, title: 'Voice in Any Browser', desc: 'Speak your symptoms and hear responses back. Works everywhere, not just Chrome.' },
+  { icon: CalendarClock, title: 'Doctor Appointments', desc: 'Find the right specialist and book a time slot that works for you in a few taps.' },
+  { icon: ShieldCheck, title: 'Privacy First', desc: 'No personal health data is stored. Your conversation stays yours.' },
+  { icon: Zap, title: 'Instant & 24/7', desc: 'Thoughtful guidance in seconds, any time of day, powered by Google Gemini.' },
+]
+
+const steps = [
+  { icon: MessageCircle, title: 'Describe', desc: 'Tell us your symptoms in your own words — or just speak.' },
+  { icon: Sparkles, title: 'Understand', desc: 'The assistant retrieves relevant knowledge and explains clearly.' },
+  { icon: BookOpen, title: 'Learn', desc: 'See cited sources and practical, evidence-guided next steps.' },
+  { icon: CalendarClock, title: 'Book', desc: 'Connect with a qualified doctor when you need one.' },
+]
+
+const stats = [
+  { value: '117', label: 'Conditions in knowledge base' },
+  { value: '< 2s', label: 'Typical response time' },
+  { value: '100%', label: 'Browsers voice-enabled' },
+  { value: '24/7', label: 'Always available' },
+]
+
+const faqs = [
+  { q: 'Is this a replacement for a real doctor?', a: 'No. Auravia offers initial guidance and triage only. Always consult a qualified professional for diagnosis and treatment.' },
+  { q: 'How does it stay accurate?', a: 'Answers are grounded in a curated medical knowledge base using semantic retrieval, and every response shows the sources it drew from.' },
+  { q: 'Is my health information safe?', a: 'Yes. This build stores no personal health data. For production use, HIPAA-grade controls would be added.' },
+  { q: 'Can I really book appointments?', a: 'Yes — search by symptom, pick a specialist, choose a slot, and confirm. Bookings appear in the admin dashboard.' },
+]
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-healthcare-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden px-6 py-24 sm:px-0">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <div className="inline-block bg-healthcare-100 text-healthcare-700 px-4 py-2 rounded-full text-sm font-bold dark:bg-slate-800 dark:text-healthcare-300">
-                  ✨ Powered by Advanced AI
-                </div>
-                <h1 className="text-5xl lg:text-6xl font-black text-healthcare-900 leading-tight dark:text-slate-100">
-                  Your Personal Health Assistant
-                </h1>
-                <p className="text-xl text-gray-600 leading-relaxed max-w-xl dark:text-slate-300">
-                  Get instant health guidance, understand your symptoms, and book appointments with qualified doctors—all in one place.
-                </p>
-              </div>
+    <div className="overflow-hidden">
+      {/* ===== Hero ===== */}
+      <section className="relative">
+        <div className="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
+        <div className="absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-brand-300/30 blur-3xl dark:bg-brand-500/20" />
+        <div className="absolute top-40 -left-20 -z-10 h-80 w-80 rounded-full bg-teal-200/40 blur-3xl dark:bg-teal-500/10" />
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link 
-                  href="/consult" 
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-healthcare-500 to-healthcare-600 px-8 py-4 text-white font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105 active:scale-95 text-lg"
-                >
-                  🚀 Start Free Consultation
+        <div className="mx-auto max-w-6xl px-6 pt-20 pb-24 lg:pt-28">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
+            <div className="animate-fade-up">
+              <span className="chip">
+                <Sparkles className="h-3.5 w-3.5 text-brand-500" />
+                AI-guided care, made calm
+              </span>
+              <h1 className="mt-6 font-display text-5xl sm:text-6xl font-semibold leading-[1.05] tracking-tight text-ink-900 dark:text-white">
+                Understand your health,{' '}
+                <span className="text-gradient">without the worry</span>.
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-500 dark:text-ink-300">
+                Auravia listens to your symptoms, explains what they might mean in clear language,
+                and helps you book a doctor — grounded in real medical knowledge, available any time.
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                <Link href="/consult" className="btn-primary text-base">
+                  Start free consultation
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link 
-                  href="#features" 
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white border-2 border-healthcare-500 px-8 py-4 text-healthcare-600 font-bold hover:bg-healthcare-50 transition-all dark:bg-slate-800 dark:hover:bg-slate-700"
-                >
-                  📖 Learn More
+                <Link href="#how" className="btn-ghost text-base">
+                  See how it works
                 </Link>
               </div>
-
-              {/* Trust Badges */}
-              <div className="flex gap-6 text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">✓</span>
-                  <span className="text-gray-700 dark:text-slate-300"><strong>24/7</strong> Available</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">🔒</span>
-                  <span className="text-gray-700 dark:text-slate-300"><strong>100%</strong> Secure</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">⚡</span>
-                  <span className="text-gray-700 dark:text-slate-300"><strong>Instant</strong> Guidance</span>
-                </div>
+              <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-500 dark:text-ink-400">
+                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand-500" /> Privacy-first</span>
+                <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-brand-500" /> 24/7 available</span>
+                <span className="flex items-center gap-2"><HeartPulse className="h-4 w-4 text-brand-500" /> Evidence-guided</span>
               </div>
             </div>
 
-            {/* Right Illustration */}
-            <div className="relative hidden lg:flex items-center justify-center">
-              <div className="relative w-full h-full max-w-md">
-                <div className="absolute inset-0 bg-gradient-to-br from-healthcare-200 to-blue-200 rounded-3xl blur-3xl opacity-30"></div>
-                <div className="relative bg-gradient-to-br from-healthcare-100 to-blue-50 rounded-3xl p-8 border-2 border-healthcare-200 shadow-2xl dark:from-slate-800 dark:to-slate-800 dark:border-slate-700">
-                  <div className="space-y-4">
-                    <div className="bg-white rounded-2xl p-4 shadow-md dark:bg-slate-800">
-                      <p className="text-sm text-gray-600 dark:text-slate-400">AI Assistant</p>
-                      <p className="font-semibold text-healthcare-700 mt-1">What can I help with today?</p>
+            {/* Product preview card */}
+            <div className="relative animate-fade-up [animation-delay:120ms]">
+              <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-gradient-to-br from-brand-200/50 to-teal-100/40 blur-2xl dark:from-brand-500/20 dark:to-teal-500/10" />
+              <div className="card p-5 sm:p-6">
+                <div className="flex items-center gap-2 pb-4 border-b border-ink-100 dark:border-white/10">
+                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 text-white">
+                    <Stethoscope className="h-4 w-4" />
+                  </span>
+                  <div className="leading-tight">
+                    <div className="text-sm font-semibold text-ink-900 dark:text-white">Auravia Assistant</div>
+                    <div className="text-[11px] text-brand-500 flex items-center gap-1">
+                      <span className="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse" /> Online
                     </div>
-                    <div className="bg-healthcare-500 rounded-2xl p-4 text-white ml-auto w-3/4">
-                      <p className="text-sm">I have a persistent headache...</p>
+                  </div>
+                </div>
+                <div className="space-y-3 pt-4">
+                  <div className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-md bg-gradient-to-br from-brand-500 to-brand-600 px-4 py-2.5 text-sm text-white shadow-soft">
+                    I&apos;ve had a pounding headache since morning.
+                  </div>
+                  <div className="w-fit max-w-[88%] rounded-2xl rounded-bl-md bg-ink-50 dark:bg-white/5 px-4 py-3 text-sm text-ink-700 dark:text-ink-200">
+                    That sounds draining. A few things often help: rest in a quiet, dim room, hydrate
+                    steadily, and consider an over-the-counter pain reliever.
+                    <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                      <span className="text-[10px] font-medium text-ink-400 flex items-center gap-1"><BookOpen className="h-3 w-3" /> Based on</span>
+                      <span className="chip !py-0.5 !text-[10px]">Headache</span>
+                      <span className="chip !py-0.5 !text-[10px]">Migraine relief</span>
                     </div>
-                    <div className="bg-white rounded-2xl p-4 shadow-md space-y-2 dark:bg-slate-800">
-                      <p className="text-sm text-gray-600 dark:text-slate-400">Consider these factors:</p>
-                      <ul className="text-xs space-y-1">
-                        <li>✓ Rest & hydration</li>
-                        <li>✓ See a doctor if persistent</li>
-                      </ul>
+                  </div>
+                  <div className="flex items-center gap-2 pt-1">
+                    <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-50 dark:bg-white/5 text-brand-500">
+                      <Mic className="h-4 w-4" />
+                    </span>
+                    <div className="flex-1 h-9 rounded-full bg-ink-50 dark:bg-white/5 border border-ink-100 dark:border-white/10 flex items-center px-4 text-xs text-ink-400">
+                      Describe your symptoms…
                     </div>
                   </div>
                 </div>
@@ -81,150 +117,123 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-24 px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-black text-healthcare-900 dark:text-slate-100">
-              Why Choose Our Platform?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto dark:text-slate-300">
-              Everything you need for better healthcare management
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature Card 1 */}
-            <div className="group bg-white rounded-2xl p-8 border-2 border-healthcare-100 hover:border-healthcare-500 shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 dark:bg-slate-800 dark:border-slate-700">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform">🩺</div>
-              <h3 className="text-2xl font-bold text-healthcare-800 mb-3 dark:text-slate-100">AI Symptom Analysis</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-slate-300">
-                Describe your symptoms and get instant guidance. Our AI analyzes patterns to provide reliable information.
-              </p>
+      {/* ===== Stats strip ===== */}
+      <section className="border-y border-ink-200/70 dark:border-white/10 bg-white/50 dark:bg-white/[0.02] backdrop-blur">
+        <div className="mx-auto max-w-6xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((s) => (
+            <div key={s.label} className="text-center">
+              <div className="font-display text-3xl sm:text-4xl font-semibold text-gradient">{s.value}</div>
+              <div className="mt-1 text-xs sm:text-sm text-ink-500 dark:text-ink-400">{s.label}</div>
             </div>
-
-            {/* Feature Card 2 */}
-            <div className="group bg-white rounded-2xl p-8 border-2 border-healthcare-100 hover:border-healthcare-500 shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 dark:bg-slate-800 dark:border-slate-700">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform">👨‍⚕️</div>
-              <h3 className="text-2xl font-bold text-healthcare-800 mb-3 dark:text-slate-100">Doctor Appointments</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-slate-300">
-                Book appointments with qualified doctors at your convenience. Get expert consultation for proper diagnosis.
-              </p>
-            </div>
-
-            {/* Feature Card 3 */}
-            <div className="group bg-white rounded-2xl p-8 border-2 border-healthcare-100 hover:border-healthcare-500 shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 dark:bg-slate-800 dark:border-slate-700">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform">🔒</div>
-              <h3 className="text-2xl font-bold text-healthcare-800 mb-3 dark:text-slate-100">Privacy Protected</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-slate-300">
-                Your health data is secure. We don't store personal information—complete privacy for demo purposes.
-              </p>
-            </div>
-
-            {/* Feature Card 4 */}
-            <div className="group bg-white rounded-2xl p-8 border-2 border-healthcare-100 hover:border-healthcare-500 shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 dark:bg-slate-800 dark:border-slate-700">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform">⚡</div>
-              <h3 className="text-2xl font-bold text-healthcare-800 mb-3 dark:text-slate-100">Instant Response</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-slate-300">
-                No waiting. Get immediate guidance 24/7. Our AI responds in seconds with helpful information.
-              </p>
-            </div>
-
-            {/* Feature Card 5 */}
-            <div className="group bg-white rounded-2xl p-8 border-2 border-healthcare-100 hover:border-healthcare-500 shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 dark:bg-slate-800 dark:border-slate-700">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform">📚</div>
-              <h3 className="text-2xl font-bold text-healthcare-800 mb-3 dark:text-slate-100">Medical Knowledge Base</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-slate-300">
-                Access comprehensive medical information on symptoms, conditions, and preventive care.
-              </p>
-            </div>
-
-            {/* Feature Card 6 */}
-            <div className="group bg-white rounded-2xl p-8 border-2 border-healthcare-100 hover:border-healthcare-500 shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 dark:bg-slate-800 dark:border-slate-700">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform">📱</div>
-              <h3 className="text-2xl font-bold text-healthcare-800 mb-3 dark:text-slate-100">Easy to Use</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-slate-300">
-                Simple, intuitive interface designed for everyone. No technical knowledge required.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-24 px-6 bg-gradient-to-r from-healthcare-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-        <div className="mx-auto max-w-6xl">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-black text-healthcare-900 dark:text-slate-100">
-              How It Works
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { number: '1', title: 'Describe', desc: 'Tell us about your symptoms' },
-              { number: '2', title: 'Analyze', desc: 'AI analyzes & provides guidance' },
-              { number: '3', title: 'Explore', desc: 'Learn about conditions & care' },
-              { number: '4', title: 'Book', desc: 'Schedule with a doctor' }
-            ].map((step, idx) => (
-              <div key={idx} className="relative">
-                {idx < 3 && (
-                  <div className="hidden md:block absolute top-12 left-[60%] w-[calc(100%-60%)] h-1 bg-gradient-to-r from-healthcare-400 to-transparent"></div>
-                )}
-                <div className="bg-white rounded-2xl p-8 text-center border-2 border-healthcare-200 relative z-10 dark:bg-slate-800 dark:border-slate-700">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-healthcare-500 to-healthcare-600 flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
-                    {step.number}
-                  </div>
-                  <h3 className="text-xl font-bold text-healthcare-800 mb-2 dark:text-slate-100">{step.title}</h3>
-                  <p className="text-gray-600 dark:text-slate-300">{step.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-6">
-        <div className="mx-auto max-w-4xl">
-          <div className="bg-gradient-to-r from-healthcare-600 to-healthcare-700 rounded-3xl p-12 text-center text-white space-y-6 shadow-2xl">
-            <h2 className="text-4xl font-black">Ready to Take Control?</h2>
-            <p className="text-xl text-healthcare-100 max-w-2xl mx-auto">
-              Start your health journey today. Get instant guidance and book appointments with professionals.
-            </p>
-            <Link 
-              href="/consult" 
-              className="inline-flex items-center justify-center gap-2 bg-white text-healthcare-600 px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 active:scale-95"
-            >
-              🚀 Start Free Consultation Now
-            </Link>
-            <p className="text-sm text-healthcare-100">
-              No credit card required • Completely free • Available 24/7
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-24 px-6 bg-gray-50 dark:bg-slate-900">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="text-4xl font-black text-healthcare-900 text-center mb-16 dark:text-slate-100">
-            Frequently Asked Questions
+      {/* ===== Features ===== */}
+      <section id="features" className="mx-auto max-w-6xl px-6 py-24">
+        <div className="max-w-2xl">
+          <span className="chip"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> Why Auravia</span>
+          <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">
+            Care that feels considered
           </h2>
+          <p className="mt-4 text-lg text-ink-500 dark:text-ink-300">
+            Every detail is designed to be calm, clear, and trustworthy — from grounded answers to gentle guidance.
+          </p>
+        </div>
 
-          <div className="space-y-6">
-            {[
-              { q: 'Is this AI doctor a replacement for real doctors?', a: 'No. This is a triage tool for initial guidance only. Always consult a healthcare professional for proper diagnosis.' },
-              { q: 'Is my health information safe?', a: 'Yes. This is a demo that doesn\'t store personal health data. For production, implement HIPAA compliance.' },
-              { q: 'Can I really book appointments?', a: 'Yes! You can book appointments with our network of doctors. Availability varies by location and specialty.' },
-              { q: 'How quickly do I get responses?', a: 'Instant! Our AI responds within seconds to any query, 24/7.' }
-            ].map((faq, idx) => (
-              <div key={idx} className="bg-white rounded-xl p-6 border-l-4 border-healthcare-500 dark:bg-slate-800">
-                <h3 className="text-lg font-bold text-healthcare-800 mb-2 dark:text-slate-100">{faq.q}</h3>
-                <p className="text-gray-600 dark:text-slate-300">{faq.a}</p>
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((f) => (
+            <div
+              key={f.title}
+              className="group card p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+            >
+              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-300 ring-1 ring-brand-100 dark:ring-white/10 transition-colors group-hover:bg-brand-500 group-hover:text-white">
+                <f.icon className="h-6 w-6" strokeWidth={2} />
+              </div>
+              <h3 className="mt-5 text-lg font-semibold text-ink-900 dark:text-white">{f.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-500 dark:text-ink-400">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== How it works ===== */}
+      <section id="how" className="relative border-y border-ink-200/70 dark:border-white/10 bg-white/40 dark:bg-white/[0.02]">
+        <div className="mx-auto max-w-6xl px-6 py-24">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="chip"><Zap className="h-3.5 w-3.5 text-brand-500" /> How it works</span>
+            <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">
+              From worry to clarity in four steps
+            </h2>
+          </div>
+          <div className="mt-16 grid gap-8 md:grid-cols-4">
+            {steps.map((s, i) => (
+              <div key={s.title} className="relative">
+                {i < steps.length - 1 && (
+                  <ChevronRight className="hidden md:block absolute top-6 -right-4 h-6 w-6 text-ink-300 dark:text-white/20" />
+                )}
+                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
+                  <s.icon className="h-6 w-6" />
+                </div>
+                <div className="mt-5 flex items-center gap-2">
+                  <span className="text-xs font-semibold text-brand-500">0{i + 1}</span>
+                  <h3 className="text-lg font-semibold text-ink-900 dark:text-white">{s.title}</h3>
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-ink-500 dark:text-ink-400">{s.desc}</p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ===== Quote / reassurance ===== */}
+      <section className="mx-auto max-w-4xl px-6 py-24 text-center">
+        <Quote className="mx-auto h-10 w-10 text-brand-300" />
+        <p className="mt-6 font-display text-2xl sm:text-3xl font-medium leading-snug text-ink-800 dark:text-ink-100">
+          &ldquo;Health questions can be frightening. Auravia answers them the way a calm, careful
+          friend would — clearly, kindly, and with sources you can trust.&rdquo;
+        </p>
+        <p className="mt-6 text-sm text-ink-400">Designed for reassurance, built for trust.</p>
+      </section>
+
+      {/* ===== CTA ===== */}
+      <section className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="relative overflow-hidden rounded-4xl bg-gradient-to-br from-brand-600 to-brand-700 px-8 py-16 text-center shadow-lift">
+          <div className="absolute inset-0 bg-grid opacity-20" />
+          <div className="absolute -top-16 -right-10 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
+          <div className="relative">
+            <h2 className="font-display text-4xl font-semibold text-white">Ready when you are</h2>
+            <p className="mx-auto mt-4 max-w-xl text-brand-50/90">
+              Start a free consultation now — no sign-up, no cost. Just calm, clear health guidance.
+            </p>
+            <Link
+              href="/consult"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-brand-700 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+            >
+              Start free consultation
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FAQ ===== */}
+      <section className="mx-auto max-w-3xl px-6 pb-28">
+        <div className="text-center mb-12">
+          <h2 className="font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">
+            Questions, answered
+          </h2>
+        </div>
+        <div className="space-y-4">
+          {faqs.map((f) => (
+            <details key={f.q} className="group card p-6 [&_summary]:cursor-pointer">
+              <summary className="flex items-center justify-between gap-4 list-none">
+                <span className="font-semibold text-ink-900 dark:text-white">{f.q}</span>
+                <ChevronRight className="h-5 w-5 shrink-0 text-brand-500 transition-transform group-open:rotate-90" />
+              </summary>
+              <p className="mt-4 text-sm leading-relaxed text-ink-500 dark:text-ink-400">{f.a}</p>
+            </details>
+          ))}
         </div>
       </section>
     </div>

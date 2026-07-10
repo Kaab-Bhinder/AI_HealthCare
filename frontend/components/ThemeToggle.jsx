@@ -29,7 +29,7 @@ export default function ThemeToggle() {
 
   // Avoid rendering the wrong icon before we know the theme (prevents flicker).
   if (!mounted) {
-    return <div className="h-10 w-10" aria-hidden="true" />
+    return <div className="h-9 w-9" aria-hidden="true" />
   }
 
   const isDark = theme === 'dark'
@@ -39,17 +39,15 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Light mode' : 'Dark mode'}
-      className="h-10 w-10 rounded-full flex items-center justify-center bg-white/20 hover:bg-white/30 text-white transition-all transform hover:scale-110 active:scale-95"
+      className="h-9 w-9 rounded-full grid place-items-center border border-ink-200 dark:border-white/15 bg-white/60 dark:bg-white/5 text-ink-500 dark:text-ink-300 hover:text-brand-600 hover:border-brand-300 transition-all"
     >
       {isDark ? (
-        // Sun icon
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="4" />
           <path strokeLinecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41" />
         </svg>
       ) : (
-        // Moon icon
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
         </svg>
       )}

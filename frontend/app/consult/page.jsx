@@ -1,79 +1,92 @@
 import Link from 'next/link'
 import Chat from '../../components/Chat'
+import { ArrowLeft, Lightbulb, Activity, ShieldAlert, Sparkles } from 'lucide-react'
+
+const tips = [
+  'Describe symptoms clearly, with when they started and how severe they feel.',
+  'Mention your age and any chronic conditions if relevant.',
+  'For emergencies, call your local emergency number immediately.',
+  'Book an appointment for an in-depth, in-person consultation.',
+]
+
+const common = ['Headache', 'Fever', 'Cough', 'Sore throat', 'Nausea', 'Fatigue']
+
 export default function Consult() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-healthcare-50 to-white dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-6 py-8">
-        {/* Header */}
+        {/* Page header */}
         <div className="mb-8">
-          <Link href="/" className="text-healthcare-600 dark:text-healthcare-300 hover:text-healthcare-700 font-semibold text-sm mb-4 inline-block">← Back Home</Link>
-          <div className="flex items-center gap-3">
-            <div className="text-4xl">💬</div>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-brand-600 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back home
+          </Link>
+          <div className="mt-4 flex items-center gap-3">
+            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
+              <Sparkles className="h-5 w-5" />
+            </span>
             <div>
-              <h2 className="text-3xl font-bold text-healthcare-800 dark:text-slate-100">AI Consultation</h2>
-              <p className="text-gray-600 dark:text-slate-400 text-sm mt-1">Get instant health guidance & book appointments with doctors</p>
+              <h1 className="font-display text-3xl font-semibold tracking-tight text-ink-900 dark:text-white">
+                AI Consultation
+              </h1>
+              <p className="text-sm text-ink-500 dark:text-ink-400">
+                Calm health guidance & doctor appointments
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Main Layout */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+        {/* Layout */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
           {/* Sidebar */}
-          <aside className="lg:col-span-1 space-y-4">
-            {/* Quick Tips Card */}
-            <div className="rounded-2xl border-2 border-healthcare-200 dark:border-slate-700 bg-gradient-to-br from-healthcare-50 to-blue-50 dark:from-slate-800 dark:to-slate-800 p-6 shadow-md">
-              <h3 className="font-bold text-healthcare-700 dark:text-healthcare-300 mb-4 flex items-center gap-2">
-                <span className="text-2xl">💡</span>
-                Quick Tips
+          <aside className="lg:col-span-1 space-y-5">
+            <div className="card p-6">
+              <h3 className="flex items-center gap-2 font-semibold text-ink-900 dark:text-white">
+                <Lightbulb className="h-5 w-5 text-brand-500" /> Quick tips
               </h3>
-              <ul className="text-sm text-gray-700 dark:text-slate-300 space-y-3">
-                <li className="flex gap-2">
-                  <span className="text-healthcare-600 font-bold">1.</span>
-                  <span>Describe symptoms clearly with onset and severity.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-healthcare-600 font-bold">2.</span>
-                  <span>Mention age and chronic conditions if relevant.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-healthcare-600 font-bold">3.</span>
-                  <span>For emergencies, call 911 immediately.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-healthcare-600 font-bold">4.</span>
-                  <span>Book appointments for in-depth consultation.</span>
-                </li>
+              <ul className="mt-4 space-y-3">
+                {tips.map((t, i) => (
+                  <li key={i} className="flex gap-2.5 text-sm text-ink-600 dark:text-ink-300">
+                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-50 dark:bg-brand-500/15 text-[11px] font-semibold text-brand-600 dark:text-brand-300">
+                      {i + 1}
+                    </span>
+                    <span className="leading-relaxed">{t}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Common Symptoms Card */}
-            <div className="rounded-2xl border-2 border-purple-200 dark:border-slate-700 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-slate-800 dark:to-slate-800 p-6 shadow-md">
-              <h3 className="font-bold text-purple-700 dark:text-purple-300 mb-4 flex items-center gap-2">
-                <span className="text-2xl">🩺</span>
-                Common Symptoms
+            <div className="card p-6">
+              <h3 className="flex items-center gap-2 font-semibold text-ink-900 dark:text-white">
+                <Activity className="h-5 w-5 text-brand-500" /> Common symptoms
               </h3>
-              <div className="space-y-2 text-sm">
-                <div className="bg-white dark:bg-slate-900 dark:text-slate-200 rounded-lg px-3 py-2 hover:bg-purple-100 dark:hover:bg-slate-700 cursor-pointer transition-all">Headache</div>
-                <div className="bg-white dark:bg-slate-900 dark:text-slate-200 rounded-lg px-3 py-2 hover:bg-purple-100 dark:hover:bg-slate-700 cursor-pointer transition-all">Fever</div>
-                <div className="bg-white dark:bg-slate-900 dark:text-slate-200 rounded-lg px-3 py-2 hover:bg-purple-100 dark:hover:bg-slate-700 cursor-pointer transition-all">Cough</div>
-                <div className="bg-white dark:bg-slate-900 dark:text-slate-200 rounded-lg px-3 py-2 hover:bg-purple-100 dark:hover:bg-slate-700 cursor-pointer transition-all">Sore Throat</div>
-                <div className="bg-white dark:bg-slate-900 dark:text-slate-200 rounded-lg px-3 py-2 hover:bg-purple-100 dark:hover:bg-slate-700 cursor-pointer transition-all">Nausea</div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {common.map((c) => (
+                  <span
+                    key={c}
+                    className="rounded-full border border-ink-200 dark:border-white/10 bg-ink-50 dark:bg-white/5 px-3 py-1 text-xs font-medium text-ink-600 dark:text-ink-300"
+                  >
+                    {c}
+                  </span>
+                ))}
               </div>
             </div>
 
-            {/* Info Card */}
-            <div className="rounded-2xl border-2 border-yellow-200 dark:border-slate-700 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-slate-800 dark:to-slate-800 p-6 shadow-md">
-              <h3 className="font-bold text-yellow-700 dark:text-yellow-400 mb-3 flex items-center gap-2">
-                <span className="text-2xl">⚠️</span>
-                Important
+            <div className="rounded-3xl border border-accent-300/60 dark:border-accent-500/30 bg-accent-50/80 dark:bg-accent-500/5 p-6">
+              <h3 className="flex items-center gap-2 font-semibold text-accent-600 dark:text-accent-400">
+                <ShieldAlert className="h-5 w-5" /> Important
               </h3>
-              <p className="text-xs text-gray-700 dark:text-slate-300 leading-relaxed">
-                This AI assistant provides general guidance only. Not a substitute for professional medical advice, diagnosis, or treatment. Always consult a healthcare provider for proper evaluation.
+              <p className="mt-3 text-xs leading-relaxed text-ink-600 dark:text-ink-300">
+                Auravia provides general guidance only — not a substitute for professional medical
+                advice, diagnosis, or treatment. Always consult a healthcare provider for a proper
+                evaluation.
               </p>
             </div>
           </aside>
 
-          {/* Chat Area */}
+          {/* Chat */}
           <section className="lg:col-span-3">
             <Chat />
           </section>

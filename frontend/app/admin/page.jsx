@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
+import { Activity, Lock, LogOut, Stethoscope, CalendarClock, BarChart3, ShieldCheck, Check, X } from 'lucide-react'
 export default function AdminPage() {
   const [password, setPassword] = useState('')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -152,45 +153,50 @@ export default function AdminPage() {
   if (!mounted) return null
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-healthcare-600 via-healthcare-700 to-purple-900 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md">
-          <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-10 space-y-8">
+          <div className="card p-9 sm:p-10">
+            {/* Brand */}
+            <div className="text-center mb-8">
+              <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
+                <Lock className="h-6 w-6" />
+              </span>
+              <h1 className="mt-5 font-display text-2xl font-semibold text-ink-900 dark:text-white">Admin Access</h1>
+              <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">Sign in to manage doctors & bookings</p>
+            </div>
+
             {/* Login Form */}
-            <form onSubmit={handleLogin} className="space-y-6">
-              <div className="relative">
-                <label className="block text-sm font-bold text-healthcare-800 dark:text-slate-100 mb-3">Admin Password</label>
+            <form onSubmit={handleLogin} className="space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-ink-700 dark:text-ink-200 mb-2">Password</label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="w-full px-5 py-4 border-2 border-healthcare-200 dark:bg-slate-900 dark:border-slate-600 dark:text-slate-100 dark:placeholder-slate-500 rounded-xl focus:outline-none focus:border-healthcare-500 focus:ring-2 focus:ring-healthcare-200 text-base transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-ink-200 dark:border-white/15 bg-white dark:bg-white/5 text-ink-800 dark:text-ink-100 placeholder-ink-400 dark:placeholder-ink-500 focus:outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-500/10 transition-all"
                   autoFocus
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-healthcare-500 to-healthcare-600 text-white py-4 rounded-xl hover:shadow-lg font-bold transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50 text-lg"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-brand-500 to-brand-600 text-white py-3.5 font-semibold shadow-soft hover:shadow-lift hover:-translate-y-0.5 transition-all disabled:opacity-50"
               >
-                {loading ? '⏳ Logging in...' : '🔓 Login to Dashboard'}
+                {loading ? 'Signing in…' : 'Sign in to dashboard'}
               </button>
             </form>
 
-            {/* Password Hint */}
-            <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/40 dark:to-blue-900/20 border-2 border-blue-300 dark:border-slate-700 rounded-xl p-5 space-y-2">
-              <p className="text-sm font-bold text-blue-900 dark:text-blue-300 flex items-center gap-2">
-                <span className="text-lg">💡</span> Demo Credentials
-              </p>
-              <div className="bg-white dark:bg-slate-800 rounded-lg px-4 py-2 font-mono font-bold text-blue-600 dark:text-blue-300 text-center">
+            {/* Demo hint */}
+            <div className="mt-6 rounded-xl border border-ink-200 dark:border-white/10 bg-ink-50 dark:bg-white/5 p-4">
+              <p className="text-xs font-medium text-ink-500 dark:text-ink-400">Demo credentials</p>
+              <div className="mt-2 rounded-lg bg-white dark:bg-ink-900 border border-ink-100 dark:border-white/10 px-3 py-2 font-mono text-sm text-brand-600 dark:text-brand-300 text-center">
                 admin123
               </div>
-              <p className="text-xs text-blue-800 dark:text-blue-300 text-center">For demo purposes only</p>
             </div>
 
-            {/* Footer Note */}
-            <div className="text-center text-xs text-gray-600 dark:text-slate-400 border-t border-gray-200 dark:border-slate-700 pt-6">
-              <p>Secure admin access • Healthcare professionals only</p>
+            <div className="mt-6 text-center text-xs text-ink-400 border-t border-ink-100 dark:border-white/10 pt-5 flex items-center justify-center gap-1.5">
+              <ShieldCheck className="h-3.5 w-3.5" /> Secure admin access
             </div>
           </div>
         </div>
@@ -198,23 +204,22 @@ export default function AdminPage() {
     )
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-healthcare-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-gradient-to-r from-healthcare-600 to-healthcare-700 shadow-xl">
-        <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="h-12 w-12 rounded-xl bg-white flex items-center justify-center text-healthcare-600 font-bold text-xl shadow-lg">⚙️</div>
-            <div>
-              <h1 className="text-2xl font-black text-white">Admin Dashboard</h1>
-              <p className="text-healthcare-100 text-xs font-semibold mt-1">Healthcare Management</p>
+      <header className="sticky top-0 z-40 border-b border-ink-200/70 dark:border-white/10 bg-white/70 dark:bg-ink-950/70 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
+              <Activity className="h-5 w-5" strokeWidth={2.5} />
+            </span>
+            <div className="leading-none">
+              <h1 className="font-display text-lg font-semibold text-ink-900 dark:text-white">Admin Dashboard</h1>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-ink-400 mt-1">Auravia Management</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="/"
-              className="px-6 py-3 rounded-full bg-healthcare-500 text-white hover:bg-healthcare-400 font-bold transition-all transform hover:scale-105 active:scale-95"
-            >
-              🏠 Home
+          <div className="flex items-center gap-2">
+            <a href="/" className="px-4 py-2 rounded-full text-sm font-medium text-ink-500 dark:text-ink-300 hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-white/5 transition-colors">
+              Home
             </a>
             <button
               onClick={() => {
@@ -222,9 +227,9 @@ export default function AdminPage() {
                 sessionStorage.removeItem('admin_password')
                 setPassword('')
               }}
-              className="px-6 py-3 rounded-full bg-white text-healthcare-600 hover:bg-healthcare-50 font-bold transition-all transform hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 text-sm font-semibold shadow-soft hover:shadow-lift transition-all"
             >
-              🚪 Logout
+              <LogOut className="h-4 w-4" /> Logout
             </button>
           </div>
         </div>
@@ -232,22 +237,24 @@ export default function AdminPage() {
 
       <main className="max-w-7xl mx-auto px-6 py-10">
         {/* Tab Navigation */}
-        <div className="flex gap-3 mb-10 overflow-x-auto pb-4">
-          {['doctors', 'bookings', 'stats'].map(tab => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-3 rounded-full font-bold whitespace-nowrap transition-all transform ${
-                activeTab === tab
-                  ? 'bg-gradient-to-r from-healthcare-500 to-healthcare-600 text-white shadow-lg scale-105'
-                  : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-healthcare-50 border-2 border-gray-200 dark:border-slate-700'
-              }`}
-            >
-              {tab === 'doctors' && '👨‍⚕️ Doctors'}
-              {tab === 'bookings' && '📅 Bookings'}
-              {tab === 'stats' && '📊 Statistics'}
-            </button>
-          ))}
+        <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+          {['doctors', 'bookings', 'stats'].map(tab => {
+            const Icon = tab === 'doctors' ? Stethoscope : tab === 'bookings' ? CalendarClock : BarChart3
+            const label = tab === 'doctors' ? 'Doctors' : tab === 'bookings' ? 'Bookings' : 'Statistics'
+            return (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${
+                  activeTab === tab
+                    ? 'bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-soft'
+                    : 'bg-white dark:bg-ink-900 text-ink-600 dark:text-ink-300 border border-ink-200 dark:border-white/10 hover:border-brand-300 hover:text-brand-600'
+                }`}
+              >
+                <Icon className="h-4 w-4" /> {label}
+              </button>
+            )
+          })}
         </div>
 
         {/* Doctors Tab */}
@@ -420,13 +427,15 @@ export default function AdminPage() {
 
       {/* Notification */}
       {notification.show && (
-        <div className={`fixed bottom-8 right-8 px-8 py-5 rounded-full shadow-2xl text-white font-bold animate-bounce-gentle flex items-center gap-3 ${
-          notification.type === 'success' 
-            ? 'bg-gradient-to-r from-green-400 to-green-500' 
-            : 'bg-gradient-to-r from-red-400 to-red-500'
+        <div className={`fixed bottom-8 right-8 z-[60] pl-4 pr-6 py-4 rounded-2xl shadow-lift text-white font-semibold animate-fade-up flex items-center gap-3 ${
+          notification.type === 'success'
+            ? 'bg-gradient-to-r from-brand-500 to-brand-600'
+            : 'bg-gradient-to-r from-rose-500 to-red-500'
         }`}>
-          <span className="text-2xl">{notification.type === 'success' ? '✓' : '✕'}</span>
-          <span>{notification.message}</span>
+          <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20">
+            {notification.type === 'success' ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
+          </span>
+          <span className="text-sm">{notification.message}</span>
         </div>
       )}
     </div>
