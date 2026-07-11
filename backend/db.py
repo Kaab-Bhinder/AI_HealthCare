@@ -541,3 +541,39 @@ def ensure_indexes():
         db.appointments.create_index('patient_id')
     except Exception as e:
         print(f"[WARNING] ensure_indexes: {e}")
+
+
+def save_chat_message(entry):
+    """Persist one chat turn (linked to a patient when signed in)."""
+    if db is None:
+        return
+    try:
+        db.chats.insert_one(dict(entry))
+    except Exception as e:
+        print(f"[ERROR] save_chat_message: {e}")
+
+
+def get_patient_conversations(patient_id):
+    """Return a patient's saved conversations (newest first), each with messages."""
+    if db is None:
+        return []
+    try:
+        msgs = list(db.chats.find({'patient_id': patient_id}).sort('timestamp', 1))
+        convos = {}
+        for m in msgs:
+            cid = m.get('conversationId', 'default')
+            c = convos.setdefault(cid, {
+                'conversationId': cid,
+                'title': (m.get('userMessage') or 'Conversation')[:70],
+                'started': m.get('timestamp'), 'messages': [],
+            })
+            if m.get('userMessage'):
+                c['messages'].append({'role': 'user', 'content': m['userMessage']})
+            if m.get('assistantReply'):
+                c['messages'].append({'role': 'assistant', 'content': m['assistantReply'],
+                                      'sources': m.get('sources', [])})
+            c['last'] = m.get('timestamp')
+        return sorted(convos.values(), key=lambda c: c.get('last', ''), reverse=True)
+    except Exception as e:
+        print(f"[ERROR] get_patient_conversations: {e}")
+        return []

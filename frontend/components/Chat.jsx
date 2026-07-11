@@ -9,6 +9,15 @@ import {
 } from 'lucide-react'
 import VoiceChat from './VoiceChat'
 
+// Attach the signed-in user's token so the backend can link chats/bookings to
+// their account (works fine for guests too — header is simply omitted).
+function authHeaders() {
+  try {
+    const t = localStorage.getItem('auravia_token')
+    return t ? { Authorization: `Bearer ${t}` } : {}
+  } catch { return {} }
+}
+
 // Tailwind-styled renderers for the markdown in AI answers (dark-mode aware).
 const mdComponents = {
   p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
@@ -123,7 +132,7 @@ export default function Chat() {
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000'
     fetch(`${backendUrl}/api/chat`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeaders() },
       body: JSON.stringify({ message: userMsg.text, conversationId })
     }).then(async res => {
       setTyping(false)
@@ -430,7 +439,7 @@ export default function Chat() {
                 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000'
                 fetch(`${backendUrl}/api/chat`, {
                   method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
+                  headers: { 'Content-Type': 'application/json', ...authHeaders() },
                   body: JSON.stringify({ message: userMsg.text, conversationId })
                 }).then(async res => {
                   setTyping(false)

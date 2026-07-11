@@ -280,6 +280,12 @@ def chat():
             "sources": sources
         }
         save_chat(entry)
+        # Persist to the patient's account (so they can revisit it after login).
+        if MONGO_AVAILABLE:
+            user = auth._current_user_from_request()
+            if user and user.get('role') == 'patient':
+                entry['patient_id'] = str(user['_id'])
+                dbmod.save_chat_message(entry)
         return add_cors_headers(jsonify({"reply": reply, "sources": sources})), 200
     except Exception as e:
         print(f"[ERROR] Chat endpoint: {e}")
@@ -492,6 +498,15 @@ def my_appointments(current_user=None):
         return add_cors_headers(jsonify({})), 200
     appts = get_appointments_for_patient(str(current_user['_id']))
     return add_cors_headers(jsonify({"appointments": appts})), 200
+
+
+@app.route('/api/me/chats', methods=['GET', 'OPTIONS'])
+@auth.require_auth('patient')
+def my_chats(current_user=None):
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    convos = dbmod.get_patient_conversations(str(current_user['_id'])) if MONGO_AVAILABLE else []
+    return add_cors_headers(jsonify({"conversations": convos})), 200
 
 
 # ==========================================================================
