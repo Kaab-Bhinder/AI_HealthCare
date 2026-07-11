@@ -73,8 +73,10 @@ export default function ScrollyHero() {
         {CHAPTERS.map((c, i) => (
           <div key={i} aria-hidden={i !== idx}
             className={`absolute inset-0 transition-opacity duration-[900ms] ease-out ${i === idx ? 'opacity-100' : 'opacity-0'}`}>
+            {/* blur-[8px] softens the close-up photos into atmosphere; scale-110
+                hides the transparent edge fringe that CSS blur creates. */}
             <SmartImage src={c.img} eager={i === 0} fallbackClassName={c.fallback}
-              className="absolute inset-0 h-full w-full object-cover scale-105" />
+              className="absolute inset-0 h-full w-full object-cover scale-110 blur-[8px]" />
             <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/45 to-ink-950/40" />
             <div className="absolute inset-0 bg-gradient-to-r from-ink-950/70 via-ink-950/25 to-transparent" />
           </div>
