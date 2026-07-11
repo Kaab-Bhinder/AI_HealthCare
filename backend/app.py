@@ -613,109 +613,62 @@ def book_appointment_endpoint():
     except Exception as e:
         print(f"[ERROR] Book appointment: {e}")
         return add_cors_headers(jsonify({"error": str(e)})), 500
-ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')
-@app.route('/api/admin/verify', methods=['POST', 'OPTIONS'])
-def verify_admin():
-    if request.method == 'OPTIONS':
-        return add_cors_headers(jsonify({})), 200
-    try:
-        data = request.get_json()
-        password = data.get('password', '')
-        if password == ADMIN_PASSWORD:
-            return add_cors_headers(jsonify({"success": True})), 200
-        else:
-            return add_cors_headers(jsonify({"success": False, "error": "Invalid password"})), 401
-    except Exception as e:
-        return add_cors_headers(jsonify({"error": str(e)})), 500
+# ==========================================================================
+# Admin — protected by a real admin ACCOUNT (JWT), not a shared password.
+# ==========================================================================
 @app.route('/api/admin/doctors', methods=['GET', 'OPTIONS'])
-def admin_get_doctors():
+@auth.require_auth('admin')
+def admin_get_doctors(current_user=None):
     if request.method == 'OPTIONS':
         return add_cors_headers(jsonify({})), 200
-    try:
-        password = request.headers.get('X-Admin-Password', '')
-        if password != ADMIN_PASSWORD:
-            return add_cors_headers(jsonify({"error": "Unauthorized"})), 401
-        doctors = get_all_doctors()
-        return add_cors_headers(jsonify({"doctors": doctors})), 200
-    except Exception as e:
-        print(f"[ERROR] Get doctors: {e}")
-        return add_cors_headers(jsonify({"error": str(e)})), 500
+    return add_cors_headers(jsonify({"doctors": get_all_doctors()})), 200
+
+
 @app.route('/api/admin/doctors/<doctor_id>', methods=['PUT', 'OPTIONS'])
-def admin_update_doctor(doctor_id):
+@auth.require_auth('admin')
+def admin_update_doctor(doctor_id, current_user=None):
     if request.method == 'OPTIONS':
         return add_cors_headers(jsonify({})), 200
-    try:
-        password = request.headers.get('X-Admin-Password', '')
-        if password != ADMIN_PASSWORD:
-            return add_cors_headers(jsonify({"error": "Unauthorized"})), 401
-        data = request.get_json()
-        success = update_doctor(doctor_id, data)
-        if success:
-            doctor = get_doctor_details(doctor_id)
-            return add_cors_headers(jsonify({"success": True, "doctor": doctor})), 200
-        else:
-            return add_cors_headers(jsonify({"success": False, "error": "Failed to update"})), 500
-    except Exception as e:
-        print(f"[ERROR] Update doctor: {e}")
-        return add_cors_headers(jsonify({"error": str(e)})), 500
+    data = request.get_json() or {}
+    if update_doctor(doctor_id, data):
+        return add_cors_headers(jsonify({"success": True, "doctor": get_doctor_details(doctor_id)})), 200
+    return add_cors_headers(jsonify({"success": False, "error": "Failed to update"})), 500
+
+
 @app.route('/api/admin/doctors/<doctor_id>', methods=['DELETE', 'OPTIONS'])
-def admin_delete_doctor(doctor_id):
+@auth.require_auth('admin')
+def admin_delete_doctor(doctor_id, current_user=None):
     if request.method == 'OPTIONS':
         return add_cors_headers(jsonify({})), 200
-    try:
-        password = request.headers.get('X-Admin-Password', '')
-        if password != ADMIN_PASSWORD:
-            return add_cors_headers(jsonify({"error": "Unauthorized"})), 401
-        success = delete_doctor(doctor_id)
-        if success:
-            return add_cors_headers(jsonify({"success": True, "message": f"Doctor {doctor_id} deleted"})), 200
-        else:
-            return add_cors_headers(jsonify({"success": False, "error": "Failed to delete"})), 500
-    except Exception as e:
-        print(f"[ERROR] Delete doctor: {e}")
-        return add_cors_headers(jsonify({"error": str(e)})), 500
+    if delete_doctor(doctor_id):
+        return add_cors_headers(jsonify({"success": True, "message": f"Doctor {doctor_id} deleted"})), 200
+    return add_cors_headers(jsonify({"success": False, "error": "Failed to delete"})), 500
+
+
 @app.route('/api/admin/bookings', methods=['GET', 'OPTIONS'])
-def admin_get_bookings():
+@auth.require_auth('admin')
+def admin_get_bookings(current_user=None):
     if request.method == 'OPTIONS':
         return add_cors_headers(jsonify({})), 200
-    try:
-        password = request.headers.get('X-Admin-Password', '')
-        if password != ADMIN_PASSWORD:
-            return add_cors_headers(jsonify({"error": "Unauthorized"})), 401
-        bookings = get_all_bookings()
-        return add_cors_headers(jsonify({"bookings": bookings})), 200
-    except Exception as e:
-        print(f"[ERROR] Get bookings: {e}")
-        return add_cors_headers(jsonify({"error": str(e)})), 500
+    return add_cors_headers(jsonify({"bookings": get_all_bookings()})), 200
+
+
 @app.route('/api/admin/stats', methods=['GET', 'OPTIONS'])
-def admin_get_stats():
+@auth.require_auth('admin')
+def admin_get_stats(current_user=None):
     if request.method == 'OPTIONS':
         return add_cors_headers(jsonify({})), 200
-    try:
-        password = request.headers.get('X-Admin-Password', '')
-        if password != ADMIN_PASSWORD:
-            return add_cors_headers(jsonify({"error": "Unauthorized"})), 401
-        stats = get_doctor_stats()
-        return add_cors_headers(jsonify({"stats": stats})), 200
-    except Exception as e:
-        print(f"[ERROR] Get stats: {e}")
-        return add_cors_headers(jsonify({"error": str(e)})), 500
+    return add_cors_headers(jsonify({"stats": get_doctor_stats()})), 200
+
+
 @app.route('/api/admin/bookings/<slot_id>', methods=['DELETE', 'OPTIONS'])
-def admin_cancel_booking(slot_id):
+@auth.require_auth('admin')
+def admin_cancel_booking(slot_id, current_user=None):
     if request.method == 'OPTIONS':
         return add_cors_headers(jsonify({})), 200
-    try:
-        password = request.headers.get('X-Admin-Password', '')
-        if password != ADMIN_PASSWORD:
-            return add_cors_headers(jsonify({"error": "Unauthorized"})), 401
-        success = cancel_booking(slot_id)
-        if success:
-            return add_cors_headers(jsonify({"success": True, "message": "Booking cancelled"})), 200
-        else:
-            return add_cors_headers(jsonify({"success": False, "error": "Failed to cancel"})), 500
-    except Exception as e:
-        print(f"[ERROR] Cancel booking: {e}")
-        return add_cors_headers(jsonify({"error": str(e)})), 500
+    if cancel_booking(slot_id):
+        return add_cors_headers(jsonify({"success": True, "message": "Booking cancelled"})), 200
+    return add_cors_headers(jsonify({"success": False, "error": "Failed to cancel"})), 500
 
 # RAG Knowledge Base Endpoints
 @app.route('/api/rag/search', methods=['POST', 'OPTIONS'])

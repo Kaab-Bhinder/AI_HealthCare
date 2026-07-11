@@ -1,443 +1,225 @@
 "use client"
-import { useState, useEffect } from 'react'
-import { Activity, Lock, LogOut, Stethoscope, CalendarClock, BarChart3, ShieldCheck, Check, X } from 'lucide-react'
-export default function AdminPage() {
-  const [password, setPassword] = useState('')
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [activeTab, setActiveTab] = useState('doctors')
+import { useEffect, useState } from 'react'
+import {
+  Users, CalendarClock, BarChart3, Plus, Stethoscope, Star, Trash2, Loader2,
+  Check, X, UserPlus, Activity,
+} from 'lucide-react'
+import { useAuth, RequireRole } from '../../lib/auth'
+import { DoctorAvatar } from '../../components/Organic'
+
+const TABS = [
+  { k: 'overview', label: 'Overview', icon: BarChart3 },
+  { k: 'doctors', label: 'Doctors', icon: Stethoscope },
+  { k: 'bookings', label: 'Bookings', icon: CalendarClock },
+]
+
+function AdminPanel() {
+  const { apiFetch } = useAuth()
+  const [tab, setTab] = useState('overview')
   const [doctors, setDoctors] = useState([])
   const [bookings, setBookings] = useState([])
   const [stats, setStats] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [notification, setNotification] = useState({ show: false, message: '', type: 'success' })
-  const [mounted, setMounted] = useState(false)
-  const backendUrl = 'http://localhost:5000'
-  useEffect(() => {
-    setMounted(true)
-    // Hide the main layout header on admin page
-    const header = document.querySelector('header')
-    if (header) header.style.display = 'none'
-    // Cleanup: show header when leaving admin page
-    return () => {
-      const header = document.querySelector('header')
-      if (header) header.style.display = 'block'
-    }
-  }, [])
-  useEffect(() => {
-    const savedPassword = sessionStorage.getItem('admin_password')
-    if (savedPassword) {
-      setPassword(savedPassword)
-      setIsAuthenticated(true)
-      loadAllData(savedPassword)
-    }
-  }, [])
-  const loadAllData = (pwd) => {
-    console.log('🔄 Loading admin data...')
-    const headers = {
-      'X-Admin-Password': pwd,
-      'Content-Type': 'application/json'
-    }
-    fetch(`${backendUrl}/api/admin/doctors`, { headers })
-      .then(r => {
-        console.log('📡 Doctors response:', r.status)
-        if (!r.ok) throw new Error(`API error: ${r.status}`)
-        return r.json()
-      })
-      .then(data => {
-        console.log('✅ Doctors loaded:', data.doctors?.length || 0)
-        setDoctors(data.doctors || [])
-      })
-      .catch(e => {
-        console.error('❌ Doctor error:', e)
-        showNotification('Failed to load doctors: ' + e.message, 'error')
-      })
-    fetch(`${backendUrl}/api/admin/bookings`, { headers })
-      .then(r => {
-        if (!r.ok) throw new Error(`API error: ${r.status}`)
-        return r.json()
-      })
-      .then(data => {
-        console.log('✅ Bookings loaded:', data.bookings?.length || 0)
-        setBookings(data.bookings || [])
-      })
-      .catch(e => {
-        console.error('❌ Booking error:', e)
-        showNotification('Failed to load bookings: ' + e.message, 'error')
-      })
-    fetch(`${backendUrl}/api/admin/stats`, { headers })
-      .then(r => {
-        if (!r.ok) throw new Error(`API error: ${r.status}`)
-        return r.json()
-      })
-      .then(data => {
-        console.log('✅ Stats loaded:', data.stats?.length || 0)
-        setStats(data.stats || [])
-      })
-      .catch(e => {
-        console.error('❌ Stats error:', e)
-        showNotification('Failed to load stats: ' + e.message, 'error')
-      })
-  }
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      const res = await fetch(`${backendUrl}/api/admin/verify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password })
-      })
-      const data = await res.json()
-      if (data.success) {
-        setIsAuthenticated(true)
-        sessionStorage.setItem('admin_password', password)
-        showNotification('Logged in!', 'success')
-        loadAllData(password)
-      } else {
-        showNotification('Invalid password', 'error')
-      }
-    } catch (err) {
-      console.error('Login error:', err)
-      showNotification('Login failed', 'error')
-    }
-    setLoading(false)
-  }
-  const showNotification = (message, type = 'success') => {
-    setNotification({ show: true, message, type })
-    setTimeout(() => setNotification({ show: false, message: '', type: 'success' }), 3000)
-  }
-  const handleDeleteDoctor = async (doctorId, doctorName) => {
-    if (!confirm(`Delete Dr. ${doctorName}?`)) return
-    setLoading(true)
-    try {
-      const res = await fetch(`${backendUrl}/api/admin/doctors/${doctorId}`, {
-        method: 'DELETE',
-        headers: {
-          'X-Admin-Password': password,
-          'Content-Type': 'application/json'
-        }
-      })
-      if (res.ok) {
-        showNotification('✓ Doctor deleted', 'success')
-        loadAllData(password)
-      } else {
-        showNotification('Failed to delete', 'error')
-      }
-    } catch (err) {
-      showNotification('Error: ' + err.message, 'error')
-    }
-    setLoading(false)
-  }
-  const handleCancelBooking = async (slotId) => {
-    if (!confirm('Cancel this booking?')) return
-    setLoading(true)
-    try {
-      const res = await fetch(`${backendUrl}/api/admin/bookings/${slotId}`, {
-        method: 'DELETE',
-        headers: {
-          'X-Admin-Password': password,
-          'Content-Type': 'application/json'
-        }
-      })
-      if (res.ok) {
-        showNotification('✓ Booking cancelled', 'success')
-        loadAllData(password)
-      } else {
-        showNotification('Failed to cancel', 'error')
-      }
-    } catch (err) {
-      showNotification('Error: ' + err.message, 'error')
-    }
-    setLoading(false)
-  }
-  if (!mounted) return null
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <div className="card p-9 sm:p-10">
-            {/* Brand */}
-            <div className="text-center mb-8">
-              <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
-                <Lock className="h-6 w-6" />
-              </span>
-              <h1 className="mt-5 font-display text-2xl font-semibold text-ink-900 dark:text-white">Admin Access</h1>
-              <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">Sign in to manage doctors & bookings</p>
-            </div>
+  const [toast, setToast] = useState(null)
+  const [showAdd, setShowAdd] = useState(false)
 
-            {/* Login Form */}
-            <form onSubmit={handleLogin} className="space-y-5">
-              <div>
-                <label className="block text-sm font-medium text-ink-700 dark:text-ink-200 mb-2">Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                  className="w-full px-4 py-3 rounded-xl border border-ink-200 dark:border-white/15 bg-white dark:bg-white/5 text-ink-800 dark:text-ink-100 placeholder-ink-400 dark:placeholder-ink-500 focus:outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-500/10 transition-all"
-                  autoFocus
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-brand-500 to-brand-600 text-white py-3.5 font-semibold shadow-soft hover:shadow-lift hover:-translate-y-0.5 transition-all disabled:opacity-50"
-              >
-                {loading ? 'Signing in…' : 'Sign in to dashboard'}
-              </button>
-            </form>
-
-            {/* Demo hint */}
-            <div className="mt-6 rounded-xl border border-ink-200 dark:border-white/10 bg-ink-50 dark:bg-white/5 p-4">
-              <p className="text-xs font-medium text-ink-500 dark:text-ink-400">Demo credentials</p>
-              <div className="mt-2 rounded-lg bg-white dark:bg-ink-900 border border-ink-100 dark:border-white/10 px-3 py-2 font-mono text-sm text-brand-600 dark:text-brand-300 text-center">
-                admin123
-              </div>
-            </div>
-
-            <div className="mt-6 text-center text-xs text-ink-400 border-t border-ink-100 dark:border-white/10 pt-5 flex items-center justify-center gap-1.5">
-              <ShieldCheck className="h-3.5 w-3.5" /> Secure admin access
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+  const load = () => {
+    apiFetch('/api/admin/doctors').then((r) => r.json()).then((d) => setDoctors(d.doctors || [])).catch(() => {})
+    apiFetch('/api/admin/bookings').then((r) => r.json()).then((d) => setBookings(d.bookings || [])).catch(() => {})
+    apiFetch('/api/admin/stats').then((r) => r.json()).then((d) => setStats(d.stats || [])).catch(() => {})
   }
+  useEffect(() => { load() }, [])
+
+  const flash = (message, type = 'success') => { setToast({ message, type }); setTimeout(() => setToast(null), 3000) }
+
+  const deleteDoctor = async (id) => {
+    if (!confirm('Remove this doctor and their appointments?')) return
+    const r = await apiFetch(`/api/admin/doctors/${id}`, { method: 'DELETE' })
+    if (r.ok) { flash('Doctor removed'); load() } else { flash('Could not remove', 'error') }
+  }
+
+  const totalBooked = stats.reduce((s, x) => s + (x.booked_slots || 0), 0)
+  const totalSlots = stats.reduce((s, x) => s + (x.total_slots || 0), 0)
+
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-ink-200/70 dark:border-white/10 bg-white/70 dark:bg-ink-950/70 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
-              <Activity className="h-5 w-5" strokeWidth={2.5} />
-            </span>
-            <div className="leading-none">
-              <h1 className="font-display text-lg font-semibold text-ink-900 dark:text-white">Admin Dashboard</h1>
-              <p className="text-[10px] uppercase tracking-[0.18em] text-ink-400 mt-1">Auravia Management</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <a href="/" className="px-4 py-2 rounded-full text-sm font-medium text-ink-500 dark:text-ink-300 hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-white/5 transition-colors">
-              Home
-            </a>
-            <button
-              onClick={() => {
-                setIsAuthenticated(false)
-                sessionStorage.removeItem('admin_password')
-                setPassword('')
-              }}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 text-sm font-semibold shadow-soft hover:shadow-lift transition-all"
-            >
-              <LogOut className="h-4 w-4" /> Logout
-            </button>
+    <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="flex items-center gap-3">
+          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift"><Activity className="h-5 w-5" strokeWidth={2.5} /></span>
+          <div>
+            <h1 className="font-display text-2xl font-semibold text-ink-900 dark:text-white">Admin</h1>
+            <p className="text-sm text-ink-400">Manage doctors, bookings & analytics</p>
           </div>
         </div>
-      </header>
+        <button onClick={() => setShowAdd(true)} className="btn-primary text-sm"><Plus className="h-4 w-4" /> Add doctor</button>
+      </div>
 
-      <main className="max-w-7xl mx-auto px-6 py-10">
-        {/* Tab Navigation */}
-        <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
-          {['doctors', 'bookings', 'stats'].map(tab => {
-            const Icon = tab === 'doctors' ? Stethoscope : tab === 'bookings' ? CalendarClock : BarChart3
-            const label = tab === 'doctors' ? 'Doctors' : tab === 'bookings' ? 'Bookings' : 'Statistics'
-            return (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${
-                  activeTab === tab
-                    ? 'bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-soft'
-                    : 'bg-white dark:bg-ink-900 text-ink-600 dark:text-ink-300 border border-ink-200 dark:border-white/10 hover:border-brand-300 hover:text-brand-600'
-                }`}
-              >
-                <Icon className="h-4 w-4" /> {label}
-              </button>
-            )
-          })}
+      {/* Tabs */}
+      <div className="mt-8 flex gap-2 overflow-x-auto pb-1">
+        {TABS.map((t) => (
+          <button key={t.k} onClick={() => setTab(t.k)}
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${tab === t.k ? 'bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-soft' : 'bg-white dark:bg-ink-900 text-ink-600 dark:text-ink-300 border border-cream-300 dark:border-white/10 hover:border-brand-300'}`}>
+            <t.icon className="h-4 w-4" /> {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Overview */}
+      {tab === 'overview' && (
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Stat icon={Stethoscope} label="Doctors" value={doctors.length} />
+          <Stat icon={CalendarClock} label="Booked visits" value={totalBooked} />
+          <Stat icon={Users} label="Total slots" value={totalSlots} />
+          <Stat icon={BarChart3} label="Occupancy" value={totalSlots ? `${Math.round((totalBooked / totalSlots) * 100)}%` : '0%'} />
         </div>
+      )}
 
-        {/* Doctors Tab */}
-        {activeTab === 'doctors' && (
-          <div className="animate-fade-in">
-            <div className="bg-white dark:bg-slate-800 rounded-3xl border-2 border-healthcare-200 dark:border-slate-700 shadow-lg overflow-hidden">
-              <div className="bg-gradient-to-r from-healthcare-100 to-blue-50 dark:from-slate-700 dark:to-slate-800 p-8 border-b border-healthcare-200 dark:border-slate-700">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-3xl font-black text-healthcare-800 dark:text-slate-100">Manage Doctors</h2>
-                    <p className="text-gray-600 dark:text-slate-400 mt-2">{doctors.length} doctors in the system</p>
-                  </div>
-                  <div className="text-5xl">👨‍⚕️</div>
+      {/* Doctors */}
+      {tab === 'doctors' && (
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {doctors.map((d) => (
+            <div key={d._id} className="card p-5">
+              <div className="flex items-center gap-3">
+                <DoctorAvatar name={d.name} photo={d.photo} className="h-12 w-12 rounded-2xl text-xs" />
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-ink-900 dark:text-white truncate">{d.name}</p>
+                  <p className="text-xs text-brand-600 dark:text-brand-300">{d.specialty}</p>
                 </div>
+                <button onClick={() => deleteDoctor(d._id)} className="grid h-8 w-8 place-items-center rounded-full text-ink-400 hover:text-coral-600 hover:bg-coral-50 dark:hover:bg-white/5 transition-colors"><Trash2 className="h-4 w-4" /></button>
               </div>
-              <div className="p-8">
-                {doctors.length === 0 ? (
-                  <div className="text-center py-12 space-y-4">
-                    <div className="text-5xl">📭</div>
-                    <p className="text-gray-500 dark:text-slate-400 text-lg font-semibold">No doctors yet</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {doctors.map(doctor => (
-                      <div key={doctor._id} className="group flex items-center justify-between p-6 border-2 border-healthcare-100 dark:border-slate-700 rounded-2xl hover:border-healthcare-500 hover:bg-healthcare-50 dark:hover:bg-slate-700/50 transition-all">
-                        <div className="flex-1">
-                          <p className="font-bold text-lg text-healthcare-800 dark:text-slate-100">{doctor.name}</p>
-                          <p className="text-sm text-gray-600 dark:text-slate-300 mt-1 font-semibold">{doctor.specialty}</p>
-                          <p className="text-xs text-gray-500 dark:text-slate-400 mt-2">⭐ {doctor.rating} • {doctor.experience_years} years exp • {doctor.qualifications}</p>
-                        </div>
-                        <button
-                          onClick={() => handleDeleteDoctor(doctor._id, doctor.name)}
-                          className="ml-6 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full font-bold hover:shadow-lg transition-all transform hover:scale-105 active:scale-95"
-                        >
-                          🗑️ Delete
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
+              <div className="mt-3 flex items-center gap-3 text-xs text-ink-400">
+                <span className="inline-flex items-center gap-1 text-amber-500"><Star className="h-3.5 w-3.5 fill-current" /> {d.rating}</span>
+                <span>{d.experience_years}y exp</span>
+                <span className="capitalize">{d.gender}</span>
               </div>
             </div>
-          </div>
-        )}
+          ))}
+          {doctors.length === 0 && <p className="text-ink-400">No doctors yet.</p>}
+        </div>
+      )}
 
-        {/* Bookings Tab */}
-        {activeTab === 'bookings' && (
-          <div className="animate-fade-in">
-            <div className="bg-white dark:bg-slate-800 rounded-3xl border-2 border-healthcare-200 dark:border-slate-700 shadow-lg overflow-hidden">
-              <div className="bg-gradient-to-r from-healthcare-100 to-blue-50 dark:from-slate-700 dark:to-slate-800 p-8 border-b border-healthcare-200 dark:border-slate-700">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-3xl font-black text-healthcare-800 dark:text-slate-100">All Bookings</h2>
-                    <p className="text-gray-600 dark:text-slate-400 mt-2">{bookings.length} appointments scheduled</p>
-                  </div>
-                  <div className="text-5xl">📅</div>
-                </div>
-              </div>
-              <div className="p-8 overflow-x-auto">
-                {bookings.length === 0 ? (
-                  <div className="text-center py-12 space-y-4">
-                    <div className="text-5xl">📭</div>
-                    <p className="text-gray-500 dark:text-slate-400 text-lg font-semibold">No bookings yet</p>
-                  </div>
-                ) : (
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="bg-gradient-to-r from-healthcare-100 to-blue-50 dark:from-slate-700/50 dark:to-slate-700/50 border-b-2 border-healthcare-200 dark:border-slate-700">
-                        <th className="text-left py-4 px-4 font-bold text-healthcare-800 dark:text-slate-100">Doctor</th>
-                        <th className="text-left py-4 px-4 font-bold text-healthcare-800 dark:text-slate-100">Patient Email</th>
-                        <th className="text-left py-4 px-4 font-bold text-healthcare-800 dark:text-slate-100">Phone</th>
-                        <th className="text-left py-4 px-4 font-bold text-healthcare-800 dark:text-slate-100">Appointment</th>
-                        <th className="text-center py-4 px-4 font-bold text-healthcare-800 dark:text-slate-100">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {bookings.map(booking => (
-                        <tr key={booking._id} className="border-b border-gray-200 dark:border-slate-700 hover:bg-healthcare-50 dark:hover:bg-slate-700/50 transition-all">
-                          <td className="py-4 px-4 font-semibold text-healthcare-700 dark:text-slate-200">{booking.doctor_name || 'Unknown'}</td>
-                          <td className="py-4 px-4 text-gray-600 dark:text-slate-300">{booking.patient_email}</td>
-                          <td className="py-4 px-4 text-gray-600 dark:text-slate-300">{booking.patient_phone}</td>
-                          <td className="py-4 px-4 text-xs text-gray-600 dark:text-slate-300">
-                            {booking.slot_time ? new Date(booking.slot_time).toLocaleString() : 'N/A'}
-                          </td>
-                          <td className="py-4 px-4 text-center">
-                            <button
-                              onClick={() => handleCancelBooking(booking.slot_id)}
-                              className="px-4 py-2 bg-red-500 text-white rounded-full text-xs font-bold hover:bg-red-600 transition-all"
-                            >
-                              Cancel
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
+      {/* Bookings */}
+      {tab === 'bookings' && (
+        <div className="mt-8 space-y-3">
+          {bookings.map((b) => (
+            <div key={b._id} className="card p-4 flex items-center gap-4">
+              <span className="grid h-11 w-11 place-items-center rounded-2xl bg-brand-50 dark:bg-brand-500/10 text-brand-600"><CalendarClock className="h-5 w-5" /></span>
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-ink-900 dark:text-white truncate">{b.patient_name || b.patient_email || 'Patient'}</p>
+                <p className="text-xs text-ink-400">with {b.doctor_name || 'Doctor'} · {b.slot_time ? new Date(b.slot_time).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : ''}</p>
               </div>
             </div>
-          </div>
-        )}
+          ))}
+          {bookings.length === 0 && <p className="text-ink-400">No bookings yet.</p>}
+        </div>
+      )}
 
-        {/* Stats Tab */}
-        {activeTab === 'stats' && (
-          <div className="animate-fade-in">
-            <div className="bg-white dark:bg-slate-800 rounded-3xl border-2 border-healthcare-200 dark:border-slate-700 shadow-lg overflow-hidden">
-              <div className="bg-gradient-to-r from-healthcare-100 to-blue-50 dark:from-slate-700 dark:to-slate-800 p-8 border-b border-healthcare-200 dark:border-slate-700">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-3xl font-black text-healthcare-800 dark:text-slate-100">System Statistics</h2>
-                    <p className="text-gray-600 dark:text-slate-400 mt-2">Real-time analytics & insights</p>
-                  </div>
-                  <div className="text-5xl">📊</div>
-                </div>
-              </div>
-              <div className="p-8">
-                {stats.length === 0 ? (
-                  <div className="text-center py-12 space-y-4">
-                    <div className="text-5xl">📭</div>
-                    <p className="text-gray-500 dark:text-slate-400 text-lg font-semibold">No statistics available</p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {stats.map(stat => (
-                      <div key={stat.doctor_id} className="bg-gradient-to-br from-white to-healthcare-50 dark:from-slate-800 dark:to-slate-800 rounded-2xl p-6 border-2 border-healthcare-100 dark:border-slate-700 hover:border-healthcare-500 transition-all group">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <p className="font-black text-healthcare-700 dark:text-slate-100 text-lg">{stat.doctor_name}</p>
-                            <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">Doctor Analytics</p>
-                          </div>
-                          <div className="text-3xl group-hover:scale-125 transition-transform">👨‍⚕️</div>
-                        </div>
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center">
-                            <span className="text-gray-600 dark:text-slate-300 font-semibold">Total Slots:</span>
-                            <span className="text-2xl font-black text-healthcare-600">{stat.total_slots}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-gray-600 dark:text-slate-300 font-semibold">Available:</span>
-                            <span className="text-2xl font-black text-green-600">{stat.available_slots}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-gray-600 dark:text-slate-300 font-semibold">Booked:</span>
-                            <span className="text-2xl font-black text-orange-600">{stat.booked_slots}</span>
-                          </div>
-                        </div>
-                        {stat.total_slots > 0 && (
-                          <div className="mt-4 space-y-2">
-                            <div className="flex justify-between text-xs text-gray-600 dark:text-slate-300">
-                              <span>Occupancy Rate</span>
-                              <span className="font-bold">{Math.round((stat.booked_slots / stat.total_slots) * 100)}%</span>
-                            </div>
-                            <div className="w-full h-3 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                              <div
-                                className="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full transition-all"
-                                style={{ width: `${(stat.booked_slots / stat.total_slots) * 100}%` }}
-                              ></div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-      </main>
+      {showAdd && <AddDoctorModal onClose={() => setShowAdd(false)} onCreated={() => { setShowAdd(false); load(); flash('Doctor added') }} />}
 
-      {/* Notification */}
-      {notification.show && (
-        <div className={`fixed bottom-8 right-8 z-[60] pl-4 pr-6 py-4 rounded-2xl shadow-lift text-white font-semibold animate-fade-up flex items-center gap-3 ${
-          notification.type === 'success'
-            ? 'bg-gradient-to-r from-brand-500 to-brand-600'
-            : 'bg-gradient-to-r from-rose-500 to-red-500'
-        }`}>
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20">
-            {notification.type === 'success' ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
-          </span>
-          <span className="text-sm">{notification.message}</span>
+      {toast && (
+        <div className={`fixed bottom-8 right-8 z-[60] pl-4 pr-6 py-4 rounded-2xl shadow-lift text-white font-semibold flex items-center gap-3 animate-fade-up ${toast.type === 'success' ? 'bg-gradient-to-r from-brand-500 to-brand-600' : 'bg-gradient-to-r from-rose-500 to-red-500'}`}>
+          <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20">{toast.type === 'success' ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}</span>
+          <span className="text-sm">{toast.message}</span>
         </div>
       )}
     </div>
   )
+}
+
+function Stat({ icon: Icon, label, value }) {
+  return (
+    <div className="card p-5">
+      <div className="flex items-center gap-2 text-ink-400"><Icon className="h-4 w-4" /> <span className="text-xs font-medium uppercase tracking-wide">{label}</span></div>
+      <p className="mt-2 font-display text-3xl font-semibold text-ink-900 dark:text-white">{value}</p>
+    </div>
+  )
+}
+
+const SPECIALTIES = ['General Practitioner', 'Internal Medicine', 'Neurology', 'ENT Specialist', 'Cardiology', 'Dermatology', 'Pediatrics', 'Orthopedics', 'Psychiatry', 'Gastroenterology', 'Pulmonology']
+
+function AddDoctorModal({ onClose, onCreated }) {
+  const { apiFetch } = useAuth()
+  const [f, setF] = useState({ name: '', email: '', specialty: 'General Practitioner', gender: 'female', experience_years: 5, phone: '', password: 'doctor123' })
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const [created, setCreated] = useState(null)
+  const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }))
+
+  const submit = async (e) => {
+    e.preventDefault(); setBusy(true); setError('')
+    try {
+      const r = await apiFetch('/api/admin/doctors/create', { method: 'POST', body: JSON.stringify(f) })
+      const d = await r.json()
+      if (!r.ok) throw new Error(d.error || 'Failed to add doctor')
+      setCreated(d.login)
+    } catch (err) { setError(err.message) } finally { setBusy(false) }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 bg-ink-900/50 backdrop-blur-sm grid place-items-center p-4">
+      <div className="w-full max-w-lg card p-0 overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-cream-200 dark:border-white/10">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white"><UserPlus className="h-5 w-5" /></span>
+            <h2 className="font-display text-lg font-semibold text-ink-900 dark:text-white">Add a doctor</h2>
+          </div>
+          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full text-ink-400 hover:bg-cream-100 dark:hover:bg-white/10"><X className="h-5 w-5" /></button>
+        </div>
+
+        {created ? (
+          <div className="p-8 text-center">
+            <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-500 text-white"><Check className="h-7 w-7" /></span>
+            <h3 className="mt-4 font-display text-xl font-semibold text-ink-900 dark:text-white">Doctor added</h3>
+            <p className="mt-2 text-sm text-ink-500 dark:text-ink-400">Their login was created:</p>
+            <div className="mt-3 rounded-xl bg-cream-100 dark:bg-white/5 border border-cream-300 dark:border-white/10 p-3 font-mono text-sm text-brand-700 dark:text-brand-300">
+              {created.email}<br />{created.password}
+            </div>
+            <button onClick={onCreated} className="btn-primary mt-6">Done</button>
+          </div>
+        ) : (
+          <form onSubmit={submit} className="p-6 space-y-4">
+            {error && <div className="rounded-xl border border-coral-200 bg-coral-50 dark:bg-coral-500/10 px-4 py-3 text-sm text-coral-600 dark:text-coral-300">{error}</div>}
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Input label="Full name" value={f.name} onChange={set('name')} placeholder="Dr. Jane Doe" required />
+              <Input label="Login email" type="email" value={f.email} onChange={set('email')} placeholder="jane@auravia.health" required />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Select label="Specialty" value={f.specialty} onChange={set('specialty')} options={SPECIALTIES} />
+              <Select label="Gender" value={f.gender} onChange={set('gender')} options={['female', 'male']} />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Input label="Experience (years)" type="number" value={f.experience_years} onChange={set('experience_years')} />
+              <Input label="Phone" value={f.phone} onChange={set('phone')} placeholder="555-0100" />
+            </div>
+            <Input label="Temp password" value={f.password} onChange={set('password')} />
+            <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 text-white font-semibold py-3 shadow-soft hover:shadow-lift transition-all disabled:opacity-50">
+              {busy ? <><Loader2 className="h-4 w-4 animate-spin" /> Adding…</> : <>Create doctor + login</>}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function Input({ label, ...props }) {
+  return (
+    <label className="block">
+      <span className="text-sm font-medium text-ink-700 dark:text-ink-200">{label}</span>
+      <input {...props} className="mt-1.5 w-full rounded-xl border border-cream-300 dark:border-white/15 bg-white dark:bg-white/5 text-ink-800 dark:text-ink-100 px-3 py-2.5 focus:outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-500/10 placeholder-ink-400 transition-all" />
+    </label>
+  )
+}
+function Select({ label, options, ...props }) {
+  return (
+    <label className="block">
+      <span className="text-sm font-medium text-ink-700 dark:text-ink-200">{label}</span>
+      <select {...props} className="mt-1.5 w-full rounded-xl border border-cream-300 dark:border-white/15 bg-white dark:bg-white/5 text-ink-800 dark:text-ink-100 px-3 py-2.5 focus:outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-500/10 transition-all capitalize">
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </label>
+  )
+}
+
+export default function Page() {
+  return <RequireRole role="admin"><AdminPanel /></RequireRole>
 }
