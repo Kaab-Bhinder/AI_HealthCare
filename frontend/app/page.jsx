@@ -1,232 +1,233 @@
 import Link from 'next/link'
 import {
-  ArrowRight, Sparkles, Stethoscope, CalendarClock, ShieldCheck, Mic,
-  BookOpen, Zap, MessageCircle, Search, HeartPulse, Clock, Quote, ChevronRight,
+  ArrowRight, Sparkles, Stethoscope, HeartPulse, Brain, Baby, Bone, Wind, Ear, Pill,
+  Mic, ShieldCheck, Clock, Star, CalendarCheck, ChevronRight, Quote, MessageCircle, Search, BookOpen,
 } from 'lucide-react'
+import { Blob, Leaf, Wave, DoctorAvatar } from '../components/Organic'
 
-const features = [
-  { icon: Stethoscope, title: 'AI Symptom Insight', desc: 'Describe how you feel and get calm, structured guidance grounded in a medical knowledge base.' },
-  { icon: Search, title: 'Semantic Retrieval', desc: 'Answers are backed by real documents found through meaning — not keywords — and cited for trust.' },
-  { icon: Mic, title: 'Voice in Any Browser', desc: 'Speak your symptoms and hear responses back. Works everywhere, not just Chrome.' },
-  { icon: CalendarClock, title: 'Doctor Appointments', desc: 'Find the right specialist and book a time slot that works for you in a few taps.' },
-  { icon: ShieldCheck, title: 'Privacy First', desc: 'No personal health data is stored. Your conversation stays yours.' },
-  { icon: Zap, title: 'Instant & 24/7', desc: 'Thoughtful guidance in seconds, any time of day, powered by Google Gemini.' },
+const specialties = [
+  { icon: Stethoscope, name: 'General', tint: 'from-brand-400 to-brand-600' },
+  { icon: Brain, name: 'Neurology', tint: 'from-brand-400 to-brand-600' },
+  { icon: HeartPulse, name: 'Cardiology', tint: 'from-coral-400 to-coral-500' },
+  { icon: Baby, name: 'Pediatrics', tint: 'from-brand-400 to-brand-600' },
+  { icon: Bone, name: 'Orthopedics', tint: 'from-brand-400 to-brand-600' },
+  { icon: Wind, name: 'Pulmonology', tint: 'from-brand-400 to-brand-600' },
+  { icon: Ear, name: 'ENT', tint: 'from-coral-400 to-coral-500' },
+  { icon: Pill, name: 'Dermatology', tint: 'from-brand-400 to-brand-600' },
+]
+
+const doctors = [
+  { name: 'Dr. Sarah Johnson', specialty: 'General Practitioner', rating: 4.8, photo: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=320&h=320&fit=crop&crop=faces&auto=format' },
+  { name: 'Dr. Michael Chen', specialty: 'Internal Medicine', rating: 4.9, photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=320&h=320&fit=crop&crop=faces&auto=format' },
+  { name: 'Dr. Emily Rodriguez', specialty: 'Neurology', rating: 4.7, photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=320&h=320&fit=crop&crop=faces&auto=format' },
+  { name: 'Dr. Aisha Khan', specialty: 'Cardiology', rating: 4.9, photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=320&h=320&fit=crop&crop=faces&auto=format' },
 ]
 
 const steps = [
-  { icon: MessageCircle, title: 'Describe', desc: 'Tell us your symptoms in your own words — or just speak.' },
-  { icon: Sparkles, title: 'Understand', desc: 'The assistant retrieves relevant knowledge and explains clearly.' },
-  { icon: BookOpen, title: 'Learn', desc: 'See cited sources and practical, evidence-guided next steps.' },
-  { icon: CalendarClock, title: 'Book', desc: 'Connect with a qualified doctor when you need one.' },
-]
-
-const stats = [
-  { value: '117', label: 'Conditions in knowledge base' },
-  { value: '< 2s', label: 'Typical response time' },
-  { value: '100%', label: 'Browsers voice-enabled' },
-  { value: '24/7', label: 'Always available' },
+  { icon: MessageCircle, title: 'Describe', desc: 'Tell us how you feel — type or just speak.' },
+  { icon: Search, title: 'We match', desc: 'AI finds the right specialty and the best-fit doctor.' },
+  { icon: CalendarCheck, title: 'Book', desc: 'Pick the earliest or preferred slot in seconds.' },
 ]
 
 const faqs = [
-  { q: 'Is this a replacement for a real doctor?', a: 'No. Auravia offers initial guidance and triage only. Always consult a qualified professional for diagnosis and treatment.' },
-  { q: 'How does it stay accurate?', a: 'Answers are grounded in a curated medical knowledge base using semantic retrieval, and every response shows the sources it drew from.' },
-  { q: 'Is my health information safe?', a: 'Yes. This build stores no personal health data. For production use, HIPAA-grade controls would be added.' },
-  { q: 'Can I really book appointments?', a: 'Yes — search by symptom, pick a specialist, choose a slot, and confirm. Bookings appear in the admin dashboard.' },
+  { q: 'Is this a replacement for a real doctor?', a: 'No. Auravia offers initial guidance and triage, then connects you to a qualified professional for diagnosis and care.' },
+  { q: 'How does the doctor matching work?', a: 'You describe your symptoms; our AI identifies the right specialty and ranks doctors by fit, rating, and earliest availability — honouring your gender and time preferences.' },
+  { q: 'Is my information private?', a: 'Yes. Your data stays yours, and every request is protected. No personal health data is sold or shared.' },
+  { q: 'What if it is an emergency?', a: 'If we detect emergency signs, we surface an immediate ambulance call. For emergencies always call your local number right away.' },
 ]
 
 export default function Home() {
   return (
     <div className="overflow-hidden">
-      {/* ===== Hero ===== */}
+      {/* ===================== HERO ===================== */}
       <section className="relative">
-        <div className="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
-        <div className="absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-brand-300/30 blur-3xl dark:bg-brand-500/20" />
-        <div className="absolute top-40 -left-20 -z-10 h-80 w-80 rounded-full bg-teal-200/40 blur-3xl dark:bg-teal-500/10" />
+        <Blob className="absolute -top-24 -right-24 w-[34rem] h-[34rem] text-brand-200/50 dark:text-brand-500/15" />
+        <Blob className="absolute top-40 -left-40 w-[28rem] h-[28rem] text-coral-200/50 dark:text-coral-500/10" />
+        <Leaf className="absolute top-24 right-[42%] w-16 text-brand-300/50 rotate-12 hidden lg:block" />
+        <Leaf className="absolute bottom-10 left-[8%] w-14 text-brand-300/40 -rotate-45 hidden lg:block" />
 
-        <div className="mx-auto max-w-6xl px-6 pt-20 pb-24 lg:pt-28">
-          <div className="grid items-center gap-16 lg:grid-cols-2">
+        <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-28 lg:pt-24">
+          <div className="grid items-center gap-16 lg:grid-cols-[1.05fr_1fr]">
+            {/* Copy */}
             <div className="animate-fade-up">
-              <span className="chip">
-                <Sparkles className="h-3.5 w-3.5 text-brand-500" />
-                AI-guided care, made calm
-              </span>
-              <h1 className="mt-6 font-display text-5xl sm:text-6xl font-semibold leading-[1.05] tracking-tight text-ink-900 dark:text-white">
-                Understand your health,{' '}
-                <span className="text-gradient">without the worry</span>.
+              <span className="chip"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> AI-guided care, made calm</span>
+              <h1 className="mt-6 font-display text-5xl sm:text-6xl font-semibold leading-[1.03] tracking-tight text-ink-900 dark:text-white">
+                Feel unwell?{' '}
+                <span className="relative whitespace-nowrap">
+                  <span className="text-gradient">Meet the right</span>
+                </span>{' '}
+                <br className="hidden sm:block" />doctor in minutes.
               </h1>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-500 dark:text-ink-300">
-                Auravia listens to your symptoms, explains what they might mean in clear language,
-                and helps you book a doctor — grounded in real medical knowledge, available any time.
+              <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-500 dark:text-ink-300">
+                Describe your symptoms in your own words. Auravia understands them, matches you to
+                the right specialist, and books your visit — calmly and clearly.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <Link href="/consult" className="btn-primary text-base">
-                  Start free consultation
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link href="#how" className="btn-ghost text-base">
-                  See how it works
-                </Link>
+                <Link href="/consult" className="btn-primary text-base">Start free consultation <ArrowRight className="h-4 w-4" /></Link>
+                <Link href="/register" className="btn-ghost text-base">Create account</Link>
               </div>
-              <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-500 dark:text-ink-400">
-                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand-500" /> Privacy-first</span>
-                <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-brand-500" /> 24/7 available</span>
-                <span className="flex items-center gap-2"><HeartPulse className="h-4 w-4 text-brand-500" /> Evidence-guided</span>
+              <div className="mt-9 flex items-center gap-4">
+                <div className="flex -space-x-3">
+                  {doctors.map((d) => (
+                    <DoctorAvatar key={d.name} name={d.name} photo={d.photo} className="h-10 w-10 rounded-full ring-2 ring-cream-50 dark:ring-[#17140f] text-xs" />
+                  ))}
+                </div>
+                <p className="text-sm text-ink-500 dark:text-ink-400"><span className="font-semibold text-ink-800 dark:text-white">12 specialists</span> across 11 fields, ready to help.</p>
               </div>
             </div>
 
-            {/* Product preview card */}
-            <div className="relative animate-fade-up [animation-delay:120ms]">
-              <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-gradient-to-br from-brand-200/50 to-teal-100/40 blur-2xl dark:from-brand-500/20 dark:to-teal-500/10" />
-              <div className="card p-5 sm:p-6">
-                <div className="flex items-center gap-2 pb-4 border-b border-ink-100 dark:border-white/10">
-                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 text-white">
-                    <Stethoscope className="h-4 w-4" />
-                  </span>
+            {/* Overlapping floating cards */}
+            <div className="relative animate-fade-up [animation-delay:120ms] min-h-[26rem]">
+              {/* main consult card */}
+              <div className="relative z-10 rounded-[2rem] bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-card p-5 sm:p-6 rotate-[-2deg]">
+                <div className="flex items-center gap-2 pb-4 border-b border-cream-200 dark:border-white/10">
+                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white"><Stethoscope className="h-4 w-4" /></span>
                   <div className="leading-tight">
                     <div className="text-sm font-semibold text-ink-900 dark:text-white">Auravia Assistant</div>
-                    <div className="text-[11px] text-brand-500 flex items-center gap-1">
-                      <span className="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse" /> Online
-                    </div>
+                    <div className="text-[11px] text-brand-500 flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-brand-500" /> Online</div>
                   </div>
                 </div>
                 <div className="space-y-3 pt-4">
-                  <div className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-md bg-gradient-to-br from-brand-500 to-brand-600 px-4 py-2.5 text-sm text-white shadow-soft">
-                    I&apos;ve had a pounding headache since morning.
+                  <div className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-md bg-gradient-to-br from-brand-500 to-brand-600 px-4 py-2.5 text-sm text-white">I&apos;ve had a pounding headache and blurry vision.</div>
+                  <div className="w-fit max-w-[90%] rounded-2xl rounded-bl-md bg-cream-100 dark:bg-white/5 px-4 py-3 text-sm text-ink-700 dark:text-ink-200">
+                    That deserves a proper look. This points toward <span className="font-medium text-brand-700 dark:text-brand-300">Neurology</span> — I found a great match with an opening today.
                   </div>
-                  <div className="w-fit max-w-[88%] rounded-2xl rounded-bl-md bg-ink-50 dark:bg-white/5 px-4 py-3 text-sm text-ink-700 dark:text-ink-200">
-                    That sounds draining. A few things often help: rest in a quiet, dim room, hydrate
-                    steadily, and consider an over-the-counter pain reliever.
-                    <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                      <span className="text-[10px] font-medium text-ink-400 flex items-center gap-1"><BookOpen className="h-3 w-3" /> Based on</span>
-                      <span className="chip !py-0.5 !text-[10px]">Headache</span>
-                      <span className="chip !py-0.5 !text-[10px]">Migraine relief</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 pt-1">
-                    <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-50 dark:bg-white/5 text-brand-500">
-                      <Mic className="h-4 w-4" />
-                    </span>
-                    <div className="flex-1 h-9 rounded-full bg-ink-50 dark:bg-white/5 border border-ink-100 dark:border-white/10 flex items-center px-4 text-xs text-ink-400">
-                      Describe your symptoms…
-                    </div>
-                  </div>
+                </div>
+              </div>
+
+              {/* floating: matched doctor */}
+              <div className="absolute -top-6 -right-2 sm:right-2 z-20 rounded-2xl bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-lift p-3 pr-4 rotate-[4deg] flex items-center gap-3">
+                <DoctorAvatar name="Dr. Emily Rodriguez" photo={doctors[2].photo} className="h-11 w-11 rounded-xl text-xs" />
+                <div className="leading-tight">
+                  <div className="text-[11px] text-ink-400">Best match</div>
+                  <div className="text-sm font-semibold text-ink-900 dark:text-white">Dr. Emily Rodriguez</div>
+                  <div className="text-[11px] text-brand-600 dark:text-brand-300 flex items-center gap-1"><Star className="h-3 w-3 fill-current" /> 4.7 · Neurology</div>
+                </div>
+              </div>
+
+              {/* floating: booked */}
+              <div className="absolute -bottom-5 left-2 sm:-left-6 z-20 rounded-2xl bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-lift p-3 pr-4 rotate-[-5deg] flex items-center gap-3">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-600"><CalendarCheck className="h-5 w-5" /></span>
+                <div className="leading-tight">
+                  <div className="text-sm font-semibold text-ink-900 dark:text-white">Appointment booked</div>
+                  <div className="text-[11px] text-ink-400">Today · 4:00 PM</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <Wave className="text-sage-50 dark:text-white/[0.02]" />
       </section>
 
-      {/* ===== Stats strip ===== */}
-      <section className="border-y border-ink-200/70 dark:border-white/10 bg-white/50 dark:bg-white/[0.02] backdrop-blur">
-        <div className="mx-auto max-w-6xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="font-display text-3xl sm:text-4xl font-semibold text-gradient">{s.value}</div>
-              <div className="mt-1 text-xs sm:text-sm text-ink-500 dark:text-ink-400">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ===== Features ===== */}
-      <section id="features" className="mx-auto max-w-6xl px-6 py-24">
-        <div className="max-w-2xl">
-          <span className="chip"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> Why Auravia</span>
-          <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">
-            Care that feels considered
-          </h2>
-          <p className="mt-4 text-lg text-ink-500 dark:text-ink-300">
-            Every detail is designed to be calm, clear, and trustworthy — from grounded answers to gentle guidance.
-          </p>
-        </div>
-
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f) => (
-            <div
-              key={f.title}
-              className="group card p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
-            >
-              <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-300 ring-1 ring-brand-100 dark:ring-white/10 transition-colors group-hover:bg-brand-500 group-hover:text-white">
-                <f.icon className="h-6 w-6" strokeWidth={2} />
-              </div>
-              <h3 className="mt-5 text-lg font-semibold text-ink-900 dark:text-white">{f.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-500 dark:text-ink-400">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ===== How it works ===== */}
-      <section id="how" className="relative border-y border-ink-200/70 dark:border-white/10 bg-white/40 dark:bg-white/[0.02]">
-        <div className="mx-auto max-w-6xl px-6 py-24">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="chip"><Zap className="h-3.5 w-3.5 text-brand-500" /> How it works</span>
-            <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">
-              From worry to clarity in four steps
-            </h2>
+      {/* ===================== SPECIALTIES ===================== */}
+      <section className="relative bg-sage-50 dark:bg-white/[0.02]">
+        <Leaf className="absolute top-10 right-[6%] w-12 text-brand-300/40 rotate-45 hidden md:block" />
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="max-w-xl">
+            <span className="chip"><HeartPulse className="h-3.5 w-3.5 text-brand-500" /> Care for every concern</span>
+            <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">Specialists for whatever you&apos;re feeling</h2>
           </div>
-          <div className="mt-16 grid gap-8 md:grid-cols-4">
-            {steps.map((s, i) => (
-              <div key={s.title} className="relative">
-                {i < steps.length - 1 && (
-                  <ChevronRight className="hidden md:block absolute top-6 -right-4 h-6 w-6 text-ink-300 dark:text-white/20" />
-                )}
-                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
-                  <s.icon className="h-6 w-6" />
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10">
+            {specialties.map((s, i) => (
+              <div key={s.name} className={`group flex flex-col items-center text-center ${i % 2 === 1 ? 'sm:mt-8' : ''}`}>
+                <span className={`grid h-16 w-16 place-items-center rounded-[1.4rem] bg-gradient-to-br ${s.tint} text-white shadow-lift transition-transform group-hover:-translate-y-1 group-hover:rotate-3`}>
+                  <s.icon className="h-7 w-7" />
+                </span>
+                <p className="mt-4 font-semibold text-ink-800 dark:text-white">{s.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <Wave flip className="text-cream-50 dark:text-[#17140f]" />
+      </section>
+
+      {/* ===================== DOCTORS ===================== */}
+      <section className="relative">
+        <Blob className="absolute -bottom-20 -right-24 w-96 h-96 text-coral-200/40 dark:text-coral-500/10" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20">
+          <div className="flex items-end justify-between gap-6 flex-wrap">
+            <div className="max-w-xl">
+              <span className="chip"><Stethoscope className="h-3.5 w-3.5 text-brand-500" /> Meet the team</span>
+              <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">Experienced. Empathetic. Human.</h2>
+            </div>
+            <Link href="/consult" className="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700">Consult a doctor <ChevronRight className="h-4 w-4" /></Link>
+          </div>
+          <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {doctors.map((d, i) => (
+              <div key={d.name} className={`group rounded-[1.75rem] bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-soft p-4 hover:shadow-lift hover:-translate-y-1 transition-all ${i % 2 === 1 ? 'lg:mt-8' : ''}`}>
+                <div className="relative overflow-hidden rounded-[1.4rem] aspect-square">
+                  <DoctorAvatar name={d.name} photo={d.photo} className="h-full w-full rounded-[1.4rem] text-2xl" />
+                  <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full bg-white/90 dark:bg-ink-900/90 px-2 py-0.5 text-[11px] font-semibold text-amber-500 shadow-soft"><Star className="h-3 w-3 fill-current" /> {d.rating}</span>
                 </div>
-                <div className="mt-5 flex items-center gap-2">
-                  <span className="text-xs font-semibold text-brand-500">0{i + 1}</span>
-                  <h3 className="text-lg font-semibold text-ink-900 dark:text-white">{s.title}</h3>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-ink-500 dark:text-ink-400">{s.desc}</p>
+                <p className="mt-3 font-semibold text-ink-900 dark:text-white leading-tight">{d.name}</p>
+                <p className="text-xs text-brand-600 dark:text-brand-300">{d.specialty}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== Quote / reassurance ===== */}
-      <section className="mx-auto max-w-4xl px-6 py-24 text-center">
-        <Quote className="mx-auto h-10 w-10 text-brand-300" />
-        <p className="mt-6 font-display text-2xl sm:text-3xl font-medium leading-snug text-ink-800 dark:text-ink-100">
-          &ldquo;Health questions can be frightening. Auravia answers them the way a calm, careful
-          friend would — clearly, kindly, and with sources you can trust.&rdquo;
-        </p>
-        <p className="mt-6 text-sm text-ink-400">Designed for reassurance, built for trust.</p>
+      {/* ===================== HOW IT WORKS ===================== */}
+      <section className="relative bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-white/[0.02] dark:to-white/[0.02]">
+        <Wave className="text-cream-50 dark:text-[#17140f] -mt-px" />
+        <div className="mx-auto max-w-5xl px-6 py-20 text-center">
+          <span className="chip mx-auto"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> How it works</span>
+          <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">From worry to booked in three steps</h2>
+          <div className="relative mt-16 grid md:grid-cols-3 gap-10">
+            <svg className="hidden md:block absolute top-8 left-[16%] right-[16%] w-[68%] h-8 text-brand-300" viewBox="0 0 600 40" fill="none" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M10 30 C 160 -10, 260 50, 300 20 S 470 -10, 590 24" stroke="currentColor" strokeWidth="2" strokeDasharray="3 8" strokeLinecap="round" />
+            </svg>
+            {steps.map((s, i) => (
+              <div key={s.title} className="relative">
+                <span className="mx-auto grid h-16 w-16 place-items-center rounded-[1.4rem] bg-white dark:bg-ink-900 border border-cream-300 dark:border-white/10 text-brand-600 shadow-lift">
+                  <s.icon className="h-7 w-7" />
+                </span>
+                <div className="mt-5 flex items-center justify-center gap-2">
+                  <span className="text-xs font-semibold text-brand-500">0{i + 1}</span>
+                  <h3 className="text-lg font-semibold text-ink-900 dark:text-white">{s.title}</h3>
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-ink-500 dark:text-ink-400 max-w-xs mx-auto">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* ===== CTA ===== */}
+      {/* ===================== TESTIMONIAL ===================== */}
+      <section className="relative mx-auto max-w-4xl px-6 py-24 text-center">
+        <Leaf className="absolute top-6 left-[12%] w-12 text-brand-300/40 -rotate-12 hidden sm:block" />
+        <Leaf className="absolute bottom-8 right-[12%] w-12 text-coral-300/40 rotate-45 hidden sm:block" />
+        <Quote className="mx-auto h-10 w-10 text-brand-300" />
+        <p className="mt-6 font-display text-2xl sm:text-[2rem] font-medium leading-snug text-ink-800 dark:text-ink-100">
+          &ldquo;It felt like texting a calm friend who happens to be a doctor — I described how I felt,
+          and minutes later I was booked with the right specialist.&rdquo;
+        </p>
+        <p className="mt-6 text-sm text-ink-400">A calmer way to find care.</p>
+      </section>
+
+      {/* ===================== CTA ===================== */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="relative overflow-hidden rounded-4xl bg-gradient-to-br from-brand-600 to-brand-700 px-8 py-16 text-center shadow-lift">
-          <div className="absolute inset-0 bg-grid opacity-20" />
-          <div className="absolute -top-16 -right-10 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-brand-600 to-brand-700 px-8 py-16 text-center shadow-lift">
+          <Blob className="absolute -top-16 -right-10 w-72 h-72 text-white/10" />
+          <Leaf className="absolute bottom-4 left-8 w-16 text-white/10 -rotate-12" />
           <div className="relative">
             <h2 className="font-display text-4xl font-semibold text-white">Ready when you are</h2>
-            <p className="mx-auto mt-4 max-w-xl text-brand-50/90">
-              Start a free consultation now — no sign-up, no cost. Just calm, clear health guidance.
-            </p>
-            <Link
-              href="/consult"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-brand-700 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
-            >
-              Start free consultation
-              <ArrowRight className="h-4 w-4" />
+            <p className="mx-auto mt-4 max-w-xl text-brand-50/90">Start a free consultation now — no cost, no waiting rooms. Just calm, clear guidance.</p>
+            <Link href="/consult" className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-brand-700 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
+              Start free consultation <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ===== FAQ ===== */}
+      {/* ===================== FAQ ===================== */}
       <section className="mx-auto max-w-3xl px-6 pb-28">
         <div className="text-center mb-12">
-          <h2 className="font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">
-            Questions, answered
-          </h2>
+          <h2 className="font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">Questions, answered</h2>
         </div>
         <div className="space-y-4">
           {faqs.map((f) => (
-            <details key={f.q} className="group card p-6 [&_summary]:cursor-pointer">
+            <details key={f.q} className="group rounded-3xl bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-soft p-6 [&_summary]:cursor-pointer">
               <summary className="flex items-center justify-between gap-4 list-none">
                 <span className="font-semibold text-ink-900 dark:text-white">{f.q}</span>
                 <ChevronRight className="h-5 w-5 shrink-0 text-brand-500 transition-transform group-open:rotate-90" />
