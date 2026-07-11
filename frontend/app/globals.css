@@ -118,3 +118,9 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
+/* Light-mode readability: muted text was too faint on the cream canvas —
+   bump each muted shade one step darker. Dark mode keeps original shades. */
+:root:not(.dark) .text-ink-400 { color: #64748b; } /* was ink-400 -> ink-500 */
+:root:not(.dark) .text-ink-500 { color: #475569; } /* was ink-500 -> ink-600 */
+:root:not(.dark) .placeholder-ink-400::placeholder { color: #64748b; }
