@@ -18,7 +18,7 @@ const CHAPTERS = [
     kicker: 'Smart matching',
     title: <>The right doctor,<br />at the right time.</>,
     sub: 'Our AI finds the specialist you need and books the earliest slot that fits your preferences.',
-    img: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1800&q=70&auto=format&fit=crop',
+    img: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1800&q=70&auto=format&fit=crop',
     fallback: 'bg-gradient-to-br from-ink-900 via-brand-900 to-ink-950',
   },
   {
