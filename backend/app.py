@@ -791,24 +791,22 @@ def seed_accounts():
         print(f"[WARNING] seed_accounts: {e}")
 
 
-if __name__ == '__main__':
+def bootstrap():
+    """Connect + seed. Runs at import time so gunicorn workers are initialized
+    too (the __main__ block never executes under gunicorn)."""
     init_chats_file()
-    
     if MONGO_AVAILABLE:
         if connect_mongodb():
             init_collections()
             seed_accounts()
         else:
             print("[WARNING] Using mock appointment data (MongoDB not available)")
-    print(f"[DEBUG] Starting Flask on port {FLASK_PORT}")
     print(f"[DEBUG] Gemini configured: {bool(GEMINI_API_KEY)}")
-    print(f"[DEBUG] OpenAI configured: {bool(OPENAI_API_KEY)}")
     print(f"[DEBUG] Appointment booking: {'✓ Enabled' if MONGO_AVAILABLE else '✗ Disabled'}")
-    try:
-        from rag_engine import get_engine
-        _eng = get_engine()
-        _mode = "Semantic (Gemini embeddings)" if _eng.ready else "Keyword fallback"
-        print(f"[DEBUG] RAG System: ✓ Enabled ({_mode}, {len(_eng.doc_ids)} docs)")
-    except Exception as e:
-        print(f"[DEBUG] RAG System: keyword fallback ({e})")
+
+
+bootstrap()
+
+if __name__ == '__main__':
+    print(f"[DEBUG] Starting Flask on port {FLASK_PORT}")
     app.run(host='0.0.0.0', port=FLASK_PORT, debug=False)
