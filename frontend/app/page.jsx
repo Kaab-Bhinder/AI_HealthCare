@@ -1,20 +1,11 @@
 import Link from 'next/link'
 import {
-  ArrowRight, Sparkles, Stethoscope, HeartPulse, Brain, Baby, Bone, Wind, Ear, Pill,
-  Mic, ShieldCheck, Clock, Star, CalendarCheck, ChevronRight, Quote, MessageCircle, Search, BookOpen,
+  ArrowRight, Sparkles, ShieldCheck, CalendarCheck, ChevronRight, Quote, MessageCircle, Search,
 } from 'lucide-react'
-import { Blob, Leaf, Wave, DoctorAvatar } from '../components/Organic'
+import { Blob, Leaf, Wave } from '../components/Organic'
+import ScrollyHero from '../components/ScrollyHero'
+import FanCarousel from '../components/FanCarousel'
 
-const specialties = [
-  { icon: Stethoscope, name: 'General', tint: 'from-brand-400 to-brand-600' },
-  { icon: Brain, name: 'Neurology', tint: 'from-brand-400 to-brand-600' },
-  { icon: HeartPulse, name: 'Cardiology', tint: 'from-coral-400 to-coral-500' },
-  { icon: Baby, name: 'Pediatrics', tint: 'from-brand-400 to-brand-600' },
-  { icon: Bone, name: 'Orthopedics', tint: 'from-brand-400 to-brand-600' },
-  { icon: Wind, name: 'Pulmonology', tint: 'from-brand-400 to-brand-600' },
-  { icon: Ear, name: 'ENT', tint: 'from-coral-400 to-coral-500' },
-  { icon: Pill, name: 'Dermatology', tint: 'from-brand-400 to-brand-600' },
-]
 
 const steps = [
   { icon: MessageCircle, title: 'Describe', desc: 'Tell us how you feel — type or just speak.' },
@@ -32,104 +23,23 @@ const faqs = [
 export default function Home() {
   return (
     <div className="overflow-hidden">
-      {/* ===================== HERO ===================== */}
-      <section className="relative">
-        <Blob className="absolute -top-24 -right-24 w-[34rem] h-[34rem] text-brand-200/50 dark:text-brand-500/15" />
-        <Blob className="absolute top-40 -left-40 w-[28rem] h-[28rem] text-coral-200/50 dark:text-coral-500/10" />
-        <Leaf className="absolute top-24 right-[42%] w-16 text-brand-300/50 rotate-12 hidden lg:block" />
-        <Leaf className="absolute bottom-10 left-[8%] w-14 text-brand-300/40 -rotate-45 hidden lg:block" />
+      {/* ===================== SCROLLY HERO ===================== */}
+      <ScrollyHero />
 
-        <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-28 lg:pt-24">
-          <div className="grid items-center gap-16 lg:grid-cols-[1.05fr_1fr]">
-            {/* Copy */}
-            <div className="animate-fade-up">
-              <span className="chip"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> AI-guided care, made calm</span>
-              <h1 className="mt-6 font-display text-5xl sm:text-6xl font-semibold leading-[1.03] tracking-tight text-ink-900 dark:text-white">
-                Feel unwell?{' '}
-                <span className="relative whitespace-nowrap">
-                  <span className="text-gradient">Meet the right</span>
-                </span>{' '}
-                <br className="hidden sm:block" />doctor in minutes.
-              </h1>
-              <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-500 dark:text-ink-300">
-                Describe your symptoms in your own words. Auravia understands them, matches you to
-                the right specialist, and books your visit — calmly and clearly.
-              </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <Link href="/consult" className="btn-primary text-base">Start free consultation <ArrowRight className="h-4 w-4" /></Link>
-                <Link href="/register" className="btn-ghost text-base">Create account</Link>
-              </div>
-              <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-500 dark:text-ink-400">
-                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand-500" /> Privacy-first</span>
-                <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-brand-500" /> 24/7 available</span>
-                <span className="flex items-center gap-2"><Stethoscope className="h-4 w-4 text-brand-500" /> 12 specialists, 11 fields</span>
-              </div>
+      {/* ===================== STATS STRIP ===================== */}
+      <section className="border-y border-cream-300/60 dark:border-white/10 bg-cream-50/90 dark:bg-white/[0.02] backdrop-blur">
+        <div className="mx-auto max-w-6xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[['900+', 'Medical topics in knowledge base'], ['12', 'Specialists across 11 fields'], ['< 2s', 'Typical AI response time'], ['24/7', 'Always available']].map(([v, l]) => (
+            <div key={l}>
+              <div className="font-display text-3xl sm:text-4xl font-semibold text-gradient">{v}</div>
+              <div className="mt-1 text-xs sm:text-sm text-ink-500 dark:text-ink-400">{l}</div>
             </div>
-
-            {/* Overlapping floating cards */}
-            <div className="relative animate-fade-up [animation-delay:120ms] min-h-[26rem]">
-              {/* main consult card */}
-              <div className="relative z-10 rounded-[2rem] bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-card p-5 sm:p-6 rotate-[-2deg]">
-                <div className="flex items-center gap-2 pb-4 border-b border-cream-200 dark:border-white/10">
-                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white"><Stethoscope className="h-4 w-4" /></span>
-                  <div className="leading-tight">
-                    <div className="text-sm font-semibold text-ink-900 dark:text-white">Auravia Assistant</div>
-                    <div className="text-[11px] text-brand-500 flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-brand-500" /> Online</div>
-                  </div>
-                </div>
-                <div className="space-y-3 pt-4">
-                  <div className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-md bg-gradient-to-br from-brand-500 to-brand-600 px-4 py-2.5 text-sm text-white">I&apos;ve had a pounding headache and blurry vision.</div>
-                  <div className="w-fit max-w-[90%] rounded-2xl rounded-bl-md bg-cream-100 dark:bg-white/5 px-4 py-3 text-sm text-ink-700 dark:text-ink-200">
-                    That deserves a proper look. This points toward <span className="font-medium text-brand-700 dark:text-brand-300">Neurology</span> — I found a great match with an opening today.
-                  </div>
-                </div>
-              </div>
-
-              {/* floating: matched doctor */}
-              <div className="absolute -top-6 -right-2 sm:right-2 z-20 rounded-2xl bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-lift p-3 pr-4 rotate-[4deg] flex items-center gap-3">
-                <DoctorAvatar name="Dr. Emily Rodriguez" className="h-11 w-11 rounded-xl text-xs" />
-                <div className="leading-tight">
-                  <div className="text-[11px] text-ink-400">Best match</div>
-                  <div className="text-sm font-semibold text-ink-900 dark:text-white">Dr. Emily Rodriguez</div>
-                  <div className="text-[11px] text-brand-600 dark:text-brand-300 flex items-center gap-1"><Star className="h-3 w-3 fill-current" /> 4.7 · Neurology</div>
-                </div>
-              </div>
-
-              {/* floating: booked */}
-              <div className="absolute -bottom-5 left-2 sm:-left-6 z-20 rounded-2xl bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-lift p-3 pr-4 rotate-[-5deg] flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-600"><CalendarCheck className="h-5 w-5" /></span>
-                <div className="leading-tight">
-                  <div className="text-sm font-semibold text-ink-900 dark:text-white">Appointment booked</div>
-                  <div className="text-[11px] text-ink-400">Today · 4:00 PM</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-        <Wave className="text-sage-50 dark:text-white/[0.02]" />
       </section>
 
-      {/* ===================== SPECIALTIES ===================== */}
-      <section className="relative bg-sage-50 dark:bg-white/[0.02]">
-        <Leaf className="absolute top-10 right-[6%] w-12 text-brand-300/40 rotate-45 hidden md:block" />
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="max-w-xl">
-            <span className="chip"><HeartPulse className="h-3.5 w-3.5 text-brand-500" /> Care for every concern</span>
-            <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">Specialists for whatever you&apos;re feeling</h2>
-          </div>
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10">
-            {specialties.map((s, i) => (
-              <div key={s.name} className={`group flex flex-col items-center text-center ${i % 2 === 1 ? 'sm:mt-8' : ''}`}>
-                <span className={`grid h-16 w-16 place-items-center rounded-[1.4rem] bg-gradient-to-br ${s.tint} text-white shadow-lift transition-transform group-hover:-translate-y-1 group-hover:rotate-3`}>
-                  <s.icon className="h-7 w-7" />
-                </span>
-                <p className="mt-4 font-semibold text-ink-800 dark:text-white">{s.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <Wave flip className="text-cream-50 dark:text-[#17140f]" />
-      </section>
+      {/* ===================== SPECIALTY DECK ===================== */}
+      <FanCarousel />
 
       {/* ===================== HOW IT WORKS ===================== */}
       <section className="relative bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-white/[0.02] dark:to-white/[0.02]">
