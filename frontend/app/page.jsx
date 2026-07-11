@@ -1,18 +1,11 @@
 import Link from 'next/link'
-import {
-  ArrowRight, Sparkles, ShieldCheck, CalendarCheck, ChevronRight, Quote, MessageCircle, Search, Plus, Minus,
-} from 'lucide-react'
+import { ArrowRight, ChevronRight, Quote, Plus, Minus } from 'lucide-react'
 import { Blob, Leaf } from '../components/Organic'
 import ScrollyHero from '../components/ScrollyHero'
 import FanCarousel from '../components/FanCarousel'
 import SmartImage from '../components/SmartImage'
 
 
-const steps = [
-  { icon: MessageCircle, title: 'Describe', desc: 'Tell us how you feel — type or just speak.' },
-  { icon: Search, title: 'We match', desc: 'AI finds the right specialty and the best-fit doctor.' },
-  { icon: CalendarCheck, title: 'Book', desc: 'Pick the earliest or preferred slot in seconds.' },
-]
 
 const faqs = [
   { q: 'Is this a replacement for a real doctor?', a: 'No. Auravia offers initial guidance and triage, then connects you to a qualified professional for diagnosis and care.' },
@@ -45,41 +38,8 @@ export default function Home() {
       {/* ===================== SPECIALTY DECK ===================== */}
       <FanCarousel />
 
-      {/* ===================== HOW IT WORKS ===================== */}
-      <section className="relative overflow-x-clip -mt-12 pt-12 bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-brand-500/[0.04] dark:to-transparent">
-        {/* Atmosphere: faint grid + teal glows + organic blobs so the section
-            carries the hero's cinematic vibe (especially in dark mode). */}
-        <div className="absolute inset-0 bg-grid opacity-60 dark:opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.10),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.20),transparent_60%)]" />
-        <Blob className="absolute -top-20 -left-28 w-96 h-96 text-brand-200/40 dark:text-brand-500/15" />
-        <Blob className="absolute -bottom-24 -right-28 w-[26rem] h-[26rem] text-coral-200/40 dark:text-brand-400/10" />
-        <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
-          <div className="rounded-[2.5rem] bg-white/70 dark:bg-white/[0.045] backdrop-blur border border-cream-200 dark:border-white/10 shadow-card px-6 sm:px-12 py-14">
-          <span className="chip mx-auto"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> How it works</span>
-          <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">From worry to booked in three steps</h2>
-          <div className="relative mt-16 grid md:grid-cols-3 gap-10">
-            <svg className="hidden md:block absolute top-8 left-[16%] right-[16%] w-[68%] h-8 text-brand-300" viewBox="0 0 600 40" fill="none" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M10 30 C 160 -10, 260 50, 300 20 S 470 -10, 590 24" stroke="currentColor" strokeWidth="2" strokeDasharray="3 8" strokeLinecap="round" />
-            </svg>
-            {steps.map((s, i) => (
-              <div key={s.title} className="relative">
-                <span className="mx-auto grid h-16 w-16 place-items-center rounded-[1.4rem] bg-white dark:bg-ink-900 border border-cream-300 dark:border-white/10 text-brand-600 shadow-lift">
-                  <s.icon className="h-7 w-7" />
-                </span>
-                <div className="mt-5 flex items-center justify-center gap-2">
-                  <span className="text-xs font-semibold text-brand-500">0{i + 1}</span>
-                  <h3 className="text-lg font-semibold text-ink-900 dark:text-white">{s.title}</h3>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-ink-500 dark:text-ink-400 max-w-xs mx-auto">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-          </div>
-        </div>
-      </section>
-
       {/* ===================== TESTIMONIAL ===================== */}
-      <section className="relative overflow-x-clip border-y border-cream-300/60 dark:border-white/10 bg-white/50 dark:bg-white/[0.03]">
+      <section className="relative overflow-x-clip -mt-12 pt-12 border-b border-cream-300/60 dark:border-white/10 bg-white/50 dark:bg-white/[0.03]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.08),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.16),transparent_60%)]" />
         <Blob className="absolute top-4 -right-24 w-80 h-80 text-brand-200/30 dark:text-brand-500/10" />
         <div className="relative mx-auto max-w-4xl px-6 py-24 text-center">
@@ -98,8 +58,13 @@ export default function Home() {
 
       {/* ===================== CTA ===================== */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-brand-600 to-brand-700 px-8 py-16 text-center shadow-lift">
-          <div className="absolute inset-0 bg-grid opacity-[0.15]" />
+        <div className="relative overflow-hidden rounded-[2.5rem] px-8 py-16 text-center shadow-lift">
+          {/* Blurred photo base with a deep teal wash keeps text crisp */}
+          <SmartImage src="https://images.unsplash.com/photo-1584515933487-779824d29309?w=1600&q=60&auto=format&fit=crop"
+            className="absolute inset-0 h-full w-full object-cover scale-110 blur-[6px]"
+            fallbackClassName="bg-gradient-to-br from-brand-600 to-brand-700" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-600/90 via-brand-600/80 to-brand-800/90" />
+          <div className="absolute inset-0 bg-grid opacity-[0.12]" />
           <Blob className="absolute -top-16 -right-10 w-72 h-72 text-white/10" />
           <Leaf className="absolute bottom-4 left-8 w-16 text-white/10 -rotate-12" />
           <div className="relative">
