@@ -1,6 +1,8 @@
 Flask>=3.0.0
 python-dotenv>=1.0.0
 pymongo>=4.5.0
+PyJWT>=2.8.0
+mongomock>=4.1.2  # dev/testing only — in-memory MongoDB
 langchain>=0.1.0
 langchain-google-genai>=0.0.1
 langchain-openai>=0.0.1

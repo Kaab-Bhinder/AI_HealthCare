@@ -13,11 +13,17 @@ from rag_engine import retrieve_context, search_knowledge_base
 # Adding documents still writes to the shared documents.json knowledge base.
 from rag_simple import add_to_knowledge_base
 try:
+    import db as dbmod
     from db import connect_mongodb, init_collections, find_doctors_by_symptom, get_available_slots, book_appointment, get_doctor_details, get_all_doctors, update_doctor, delete_doctor, get_all_bookings, get_doctor_stats, cancel_booking
+    from db import (book_slot_for_patient, get_appointments_for_patient, get_appointments_for_doctor,
+                    create_doctor, get_doctor_by_user, ensure_indexes, SEED_DOCTORS)
     MONGO_AVAILABLE = True
-except ImportError:
+except ImportError as _e:
     MONGO_AVAILABLE = False
-    print("[WARNING] MongoDB module not available, appointment booking disabled")
+    print(f"[WARNING] MongoDB module not available: {_e}")
+
+import auth
+import matching
 load_dotenv()
 app = Flask(__name__)
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
@@ -240,7 +246,7 @@ def get_llm_response(message, conversation_id):
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = CORS_ORIGIN
     response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS, GET, PUT, DELETE'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, X-Admin-Password'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, X-Admin-Password, Authorization'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 @app.route('/api/chat', methods=['POST', 'OPTIONS'])
@@ -386,6 +392,153 @@ def health():
     if request.method == 'OPTIONS':
         return add_cors_headers(jsonify({})), 200
     return add_cors_headers(jsonify({"status": "ok"})), 200
+
+# ==========================================================================
+# Accounts & authentication (patient / doctor / admin)
+# ==========================================================================
+@app.route('/api/auth/register', methods=['POST', 'OPTIONS'])
+def auth_register():
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    try:
+        data = request.get_json(silent=True) or {}
+        email = (data.get('email') or '').strip()
+        password = data.get('password') or ''
+        name = (data.get('name') or '').strip()
+        if not email or not password:
+            return add_cors_headers(jsonify({"error": "Email and password are required"})), 400
+        if len(password) < 6:
+            return add_cors_headers(jsonify({"error": "Password must be at least 6 characters"})), 400
+        # Public registration only ever creates patients.
+        user, err = auth.create_user(email, password, name, role='patient',
+                                     gender=data.get('gender'), phone=data.get('phone'))
+        if err:
+            return add_cors_headers(jsonify({"error": err})), 409
+        token = auth.create_token(user)
+        return add_cors_headers(jsonify({"token": token, "user": auth._serialize_user(user)})), 201
+    except Exception as e:
+        print(f"[ERROR] register: {e}")
+        return add_cors_headers(jsonify({"error": "Registration failed"})), 500
+
+
+@app.route('/api/auth/login', methods=['POST', 'OPTIONS'])
+def auth_login():
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    try:
+        data = request.get_json(silent=True) or {}
+        email = (data.get('email') or '').strip()
+        password = data.get('password') or ''
+        user = auth.verify_credentials(email, password)
+        if not user:
+            return add_cors_headers(jsonify({"error": "Invalid email or password"})), 401
+        token = auth.create_token(user)
+        return add_cors_headers(jsonify({"token": token, "user": auth._serialize_user(user)})), 200
+    except Exception as e:
+        print(f"[ERROR] login: {e}")
+        return add_cors_headers(jsonify({"error": "Login failed"})), 500
+
+
+@app.route('/api/auth/me', methods=['GET', 'OPTIONS'])
+@auth.require_auth()
+def auth_me(current_user=None):
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    out = auth._serialize_user(current_user)
+    if current_user.get('role') == 'doctor':
+        out['doctor_profile'] = get_doctor_by_user(str(current_user['_id']))
+    return add_cors_headers(jsonify({"user": out})), 200
+
+
+# ==========================================================================
+# AI triage & doctor matching  (guest-friendly — no login required)
+# ==========================================================================
+@app.route('/api/match', methods=['POST', 'OPTIONS'])
+def ai_match():
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    try:
+        data = request.get_json(silent=True) or {}
+        symptoms = (data.get('symptoms') or '').strip()
+        if not symptoms:
+            return add_cors_headers(jsonify({"error": "Please describe your symptoms"})), 400
+        gender = data.get('gender') or None            # 'male' | 'female' preference
+        preferred_time = data.get('preferred_time') or None  # 'morning'|'afternoon'|'evening'
+        result = matching.match_doctors(symptoms, gender=gender, preferred_time=preferred_time)
+        if DEBUG_AI:
+            print(f"[DEBUG] match: specialty={result['triage']['specialty']} "
+                  f"urgency={result['triage']['urgency']} doctors={len(result['doctors'])}")
+        return add_cors_headers(jsonify(result)), 200
+    except Exception as e:
+        print(f"[ERROR] match: {e}")
+        return add_cors_headers(jsonify({"error": "Matching failed"})), 500
+
+
+# ==========================================================================
+# Patient dashboard
+# ==========================================================================
+@app.route('/api/me/appointments', methods=['GET', 'OPTIONS'])
+@auth.require_auth('patient')
+def my_appointments(current_user=None):
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    appts = get_appointments_for_patient(str(current_user['_id']))
+    return add_cors_headers(jsonify({"appointments": appts})), 200
+
+
+# ==========================================================================
+# Doctor dashboard
+# ==========================================================================
+@app.route('/api/doctor/appointments', methods=['GET', 'OPTIONS'])
+@auth.require_auth('doctor')
+def doctor_appointments(current_user=None):
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    profile = get_doctor_by_user(str(current_user['_id']))
+    if not profile:
+        return add_cors_headers(jsonify({"appointments": [], "profile": None})), 200
+    appts = get_appointments_for_doctor(profile['_id'])
+    return add_cors_headers(jsonify({"appointments": appts, "profile": profile})), 200
+
+
+# ==========================================================================
+# Admin: add a doctor (creates a login account for them too)
+# ==========================================================================
+@app.route('/api/admin/doctors/create', methods=['POST', 'OPTIONS'])
+@auth.require_auth('admin')
+def admin_create_doctor(current_user=None):
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    try:
+        data = request.get_json(silent=True) or {}
+        name = (data.get('name') or '').strip()
+        login_email = (data.get('email') or '').strip()
+        if not name or not login_email:
+            return add_cors_headers(jsonify({"error": "Doctor name and login email are required"})), 400
+        # Create the doctor's login account first.
+        temp_password = data.get('password') or 'doctor123'
+        user, err = auth.create_user(login_email, temp_password, name, role='doctor',
+                                     gender=data.get('gender'), phone=data.get('phone'))
+        if err:
+            return add_cors_headers(jsonify({"error": err})), 409
+        # Then the professional profile, linked to that account.
+        profile = create_doctor({
+            'name': name, 'specialty': data.get('specialty'), 'specialties': data.get('specialties', []),
+            'gender': data.get('gender'), 'qualifications': data.get('qualifications'),
+            'experience_years': data.get('experience_years'), 'rating': data.get('rating'),
+            'availability': data.get('availability'), 'phone': data.get('phone'),
+            'bio': data.get('bio'), 'user_id': str(user['_id']),
+        })
+        # Backlink the account to the profile.
+        if profile and dbmod.db is not None:
+            dbmod.db.users.update_one({'_id': user['_id']}, {'$set': {'doctor_id': profile['_id']}})
+        return add_cors_headers(jsonify({"success": True, "doctor": profile,
+                                         "login": {"email": login_email, "password": temp_password}})), 201
+    except Exception as e:
+        print(f"[ERROR] admin_create_doctor: {e}")
+        return add_cors_headers(jsonify({"error": "Failed to create doctor"})), 500
+
+
 @app.route('/api/doctors/search', methods=['POST', 'OPTIONS'])
 def search_doctors():
     if request.method == 'OPTIONS':
@@ -436,15 +589,27 @@ def book_appointment_endpoint():
         slot_id = data.get('slot_id')
         patient_email = data.get('email', '').strip()
         patient_phone = data.get('phone', '').strip()
+        patient_name = (data.get('name') or '').strip() or None
         if not slot_id or not patient_email:
             return add_cors_headers(jsonify({"error": "slot_id and email required"})), 400
-        success = book_appointment(slot_id, patient_email, patient_phone)
-        if success:
+
+        # If a signed-in patient is booking, link the appointment to their account
+        # and prefill from their profile.
+        patient_id = None
+        user = auth._current_user_from_request()
+        if user and user.get('role') == 'patient':
+            patient_id = str(user['_id'])
+            patient_email = patient_email or user.get('email')
+            patient_name = patient_name or user.get('name')
+
+        booking = book_slot_for_patient(slot_id, patient_id, patient_email, patient_phone, patient_name)
+        if booking:
             if DEBUG_AI:
                 print(f"[DEBUG] Appointment booked: {slot_id} for {patient_email}")
-            return add_cors_headers(jsonify({"success": True, "message": "Appointment booked successfully!"})), 200
+            return add_cors_headers(jsonify({"success": True, "booking": booking,
+                                             "message": "Appointment booked successfully!"})), 200
         else:
-            return add_cors_headers(jsonify({"success": False, "error": "Slot no longer available"})), 409
+            return add_cors_headers(jsonify({"success": False, "error": "That slot is no longer available"})), 409
     except Exception as e:
         print(f"[ERROR] Book appointment: {e}")
         return add_cors_headers(jsonify({"error": str(e)})), 500
@@ -605,12 +770,47 @@ def rag_add_document():
         print(f"[ERROR] RAG add: {e}")
         return add_cors_headers(jsonify({"error": str(e)})), 500
 
+def seed_accounts():
+    """Create the admin account and a login for each seeded doctor (idempotent)."""
+    if not MONGO_AVAILABLE or dbmod.db is None:
+        return
+    try:
+        ensure_indexes()
+        # Admin
+        admin_email = os.getenv('ADMIN_EMAIL', 'admin@auravia.health')
+        if not auth.find_user_by_email(admin_email):
+            auth.create_user(admin_email, os.getenv('ADMIN_PASSWORD', 'admin123'),
+                             'Auravia Admin', role='admin')
+            print(f"[DEBUG] Seeded admin account: {admin_email}")
+        # Doctor logins — email derived from name, linked to their profile.
+        for doc in SEED_DOCTORS:
+            slug = doc['name'].replace('Dr. ', '').replace(' ', '.').lower()
+            email = f"{slug}@auravia.health"
+            existing = auth.find_user_by_email(email)
+            if existing:
+                user_id = str(existing['_id'])
+            else:
+                user, err = auth.create_user(email, 'doctor123', doc['name'], role='doctor',
+                                             gender=doc.get('gender'), phone=doc.get('phone'))
+                if err:
+                    continue
+                user_id = str(user['_id'])
+            # Link profile <-> account both ways.
+            dbmod.db.doctors.update_one({'_id': doc['_id']}, {'$set': {'user_id': user_id}})
+            dbmod.db.users.update_one({'_id': auth.find_user_by_email(email)['_id']},
+                                      {'$set': {'doctor_id': doc['_id']}})
+        print(f"[DEBUG] Seeded {len(SEED_DOCTORS)} doctor logins (password: doctor123)")
+    except Exception as e:
+        print(f"[WARNING] seed_accounts: {e}")
+
+
 if __name__ == '__main__':
-    init_chats_file()  
+    init_chats_file()
     
     if MONGO_AVAILABLE:
         if connect_mongodb():
             init_collections()
+            seed_accounts()
         else:
             print("[WARNING] Using mock appointment data (MongoDB not available)")
     print(f"[DEBUG] Starting Flask on port {FLASK_PORT}")

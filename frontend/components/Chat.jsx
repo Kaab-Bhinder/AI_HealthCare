@@ -2,7 +2,11 @@
 import { useState, useRef, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { Stethoscope, User, Send, CalendarPlus, BookOpen, Sparkles, Check, X } from 'lucide-react'
+import {
+  Stethoscope, User, Send, CalendarPlus, BookOpen, Sparkles, Check, X,
+  Search, Clock, Star, ChevronLeft, Mail, Phone, CalendarCheck, ArrowRight,
+  Loader2, ShieldCheck, AlertCircle, Award,
+} from 'lucide-react'
 import VoiceChat from './VoiceChat'
 
 // Tailwind-styled renderers for the markdown in AI answers (dark-mode aware).
@@ -43,7 +47,13 @@ export default function Chat() {
   const [doctors, setDoctors] = useState([])
   const [selectedDoctor, setSelectedDoctor] = useState(null)
   const [slots, setSlots] = useState([])
-  const [bookingStep, setBookingStep] = useState(1)
+  const [bookingStep, setBookingStep] = useState(1)   // 1 Symptom · 2 Doctor · 3 Time · 4 Details · 5 Success
+  const [symptomQuery, setSymptomQuery] = useState('')
+  const [selectedSlot, setSelectedSlot] = useState(null)
+  const [form, setForm] = useState({ name: '', email: '', phone: '' })
+  const [formError, setFormError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [searching, setSearching] = useState(false)
   const [notification, setNotification] = useState({ show: false, message: '', type: 'success' })
   const [playingId, setPlayingId] = useState(null)  // Track which message is playing
   const [copiedId, setCopiedId] = useState(null)    // Track which message was just copied
@@ -137,7 +147,23 @@ export default function Chat() {
       console.error('Chat error', err)
     })
   }
+  function openBooking() {
+    setBookingStep(1)
+    setSymptomQuery('')
+    setDoctors([])
+    setSelectedDoctor(null)
+    setSlots([])
+    setSelectedSlot(null)
+    setForm({ name: '', email: '', phone: '' })
+    setFormError('')
+    setShowBooking(true)
+  }
+  function closeBooking() {
+    setShowBooking(false)
+    setTimeout(() => { setBookingStep(1); setSelectedSlot(null); setFormError('') }, 200)
+  }
   function searchDoctors(symptom) {
+    setSearching(true)
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000'
     fetch(`${backendUrl}/api/doctors/search`, {
       method: 'POST',
@@ -148,11 +174,13 @@ export default function Chat() {
       setBookingStep(2)
     }).catch(err => {
       console.error('Doctor search error:', err)
-      alert('Failed to search doctors')
-    })
+      setDoctors([])
+      setBookingStep(2)
+    }).finally(() => setSearching(false))
   }
   function loadDoctorSlots(doctorId) {
     setSelectedDoctor(doctorId)
+    setSelectedSlot(null)
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000'
     fetch(`${backendUrl}/api/doctors/${doctorId}/slots?days=7`, {
       headers: { 'Content-Type': 'application/json' }
@@ -161,8 +189,35 @@ export default function Chat() {
       setBookingStep(3)
     }).catch(err => {
       console.error('Slots error:', err)
-      alert('Failed to load slots')
+      setSlots([])
+      setBookingStep(3)
     })
+  }
+  function submitBooking() {
+    setFormError('')
+    if (!form.email.includes('@') || form.email.length < 5) {
+      setFormError('Please enter a valid email address.'); return
+    }
+    if (form.phone.replace(/\D/g, '').length < 7) {
+      setFormError('Please enter a valid phone number.'); return
+    }
+    if (!selectedSlot) { setFormError('Please select a time slot.'); return }
+    setSubmitting(true)
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000'
+    fetch(`${backendUrl}/api/appointments/book`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slot_id: selectedSlot._id, email: form.email, phone: form.phone })
+    }).then(res => res.json()).then(data => {
+      if (data.success) {
+        setBookingStep(5)
+      } else {
+        setFormError(data.error || 'That slot is no longer available. Please pick another time.')
+      }
+    }).catch(err => {
+      console.error('Booking error:', err)
+      setFormError('Something went wrong. Please try again.')
+    }).finally(() => setSubmitting(false))
   }
   function bookSlot(slotId, email, phone) {
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000'
@@ -418,7 +473,7 @@ export default function Chat() {
             <Send className="h-4 w-4" /> <span className="hidden sm:inline">Send</span>
           </button>
           <button
-            onClick={() => { setShowBooking(true); setBookingStep(1) }}
+            onClick={openBooking}
             className="inline-flex items-center gap-2 rounded-full border border-ink-200 dark:border-white/15 bg-white/60 dark:bg-white/5 px-5 py-3 text-ink-700 dark:text-ink-200 font-semibold hover:border-brand-300 hover:text-brand-600 transition-all"
             title="Book an appointment"
           >
@@ -432,118 +487,121 @@ export default function Chat() {
       {showBooking && (
         <div className="fixed inset-0 bg-ink-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-ink-900 border border-ink-200 dark:border-white/10 rounded-3xl shadow-lift w-full max-w-2xl max-h-[90vh] overflow-auto">
-            {/* Modal Header */}
-            <div className="bg-gradient-to-br from-brand-500 to-brand-600 text-white p-8 rounded-t-3xl">
-              <div className="flex justify-between items-center">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-ink-100 dark:border-white/10">
+              <div className="flex items-center gap-3">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-soft">
+                  <CalendarPlus className="h-5 w-5" />
+                </span>
                 <div>
-                  <h2 className="text-3xl font-bold font-display">📅 Book an Appointment</h2>
-                  <p className="text-white/80 text-sm mt-2">Find the perfect doctor for your needs</p>
+                  <h2 className="font-display text-lg font-semibold text-ink-900 dark:text-white leading-tight">Book an appointment</h2>
+                  <p className="text-xs text-ink-500 dark:text-ink-400">{bookingStep === 5 ? 'Confirmed' : `Step ${bookingStep} of 4`}</p>
                 </div>
-                <button onClick={() => setShowBooking(false)} className="text-white/90 hover:bg-white/15 rounded-full p-2 transition-all text-2xl w-12 h-12 flex items-center justify-center">✕</button>
               </div>
+              <button onClick={closeBooking} aria-label="Close" className="grid h-9 w-9 place-items-center rounded-full text-ink-400 hover:text-ink-700 dark:hover:text-white hover:bg-ink-100 dark:hover:bg-white/10 transition-colors">
+                <X className="h-5 w-5" />
+              </button>
             </div>
 
-            <div className="p-8">
-              {/* Progress Indicator */}
-              <div className="flex gap-3 mb-8">
-                {[1, 2, 3].map(step => (
-                  <div key={step} className="flex flex-col items-center flex-1">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${bookingStep >= step ? 'bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-soft' : 'bg-ink-100 dark:bg-white/10 text-ink-400'}`}>
-                      {step === 1 ? '🔍' : step === 2 ? '👨‍⚕️' : '🕒'}
+            {/* Stepper */}
+            {bookingStep <= 4 && (
+              <div className="px-6 pt-6">
+                <div className="flex items-center">
+                  {[{ n: 1, label: 'Symptom', Icon: Search }, { n: 2, label: 'Doctor', Icon: Stethoscope }, { n: 3, label: 'Time', Icon: Clock }, { n: 4, label: 'Details', Icon: User }].map((s, i) => (
+                    <div key={s.n} className={`flex items-center ${i < 3 ? 'flex-1' : ''}`}>
+                      <div className="flex flex-col items-center gap-1.5">
+                        <div className={`grid h-9 w-9 place-items-center rounded-full transition-all ${bookingStep > s.n ? 'bg-brand-500 text-white' : bookingStep === s.n ? 'bg-gradient-to-br from-brand-500 to-brand-600 text-white ring-4 ring-brand-500/15' : 'bg-ink-100 dark:bg-white/10 text-ink-400'}`}>
+                          {bookingStep > s.n ? <Check className="h-4 w-4" /> : <s.Icon className="h-4 w-4" />}
+                        </div>
+                        <span className={`text-[11px] font-medium ${bookingStep >= s.n ? 'text-brand-600 dark:text-brand-300' : 'text-ink-400'}`}>{s.label}</span>
+                      </div>
+                      {i < 3 && <div className={`h-0.5 flex-1 mx-2 mb-5 rounded-full transition-colors ${bookingStep > s.n ? 'bg-brand-400' : 'bg-ink-200 dark:bg-white/10'}`} />}
                     </div>
-                    <div className={`text-xs mt-2 font-semibold ${bookingStep >= step ? 'text-brand-600' : 'text-ink-400'}`}>
-                      {step === 1 ? 'Symptom' : step === 2 ? 'Doctor' : 'Time'}
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
+            )}
 
-              {/* Step 1: Symptom Input */}
+            <div className="p-6">
+
+              {/* Step 1: Symptom */}
               {bookingStep === 1 && (
-                <div className="space-y-6 animate-fade-in">
-                  <div className="bg-gradient-to-br from-brand-50 to-teal-50 dark:from-white/5 dark:to-white/5 p-6 rounded-2xl border border-ink-200 dark:border-white/10">
-                    <label className="block text-lg font-bold font-display text-ink-900 dark:text-white mb-3">
-                      What symptom or condition do you need help with?
+                <div className="space-y-5 animate-fade-in">
+                  <div>
+                    <label className="block text-sm font-medium text-ink-700 dark:text-ink-200 mb-2">
+                      What do you need help with?
                     </label>
                     <input
-                      id="symptom-input"
                       type="text"
-                      placeholder="e.g., headache, fever, cold, chest pain, sore throat..."
-                      className="w-full rounded-xl border border-ink-200 dark:border-white/15 bg-white dark:bg-white/5 text-ink-800 dark:text-ink-100 px-4 py-3 focus:outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-500/10 placeholder-ink-400 text-base transition-all"
+                      value={symptomQuery}
+                      onChange={(e) => setSymptomQuery(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && symptomQuery.trim() && searchDoctors(symptomQuery.trim())}
+                      placeholder="e.g. headache, fever, sore throat…"
+                      className="w-full rounded-xl border border-ink-200 dark:border-white/15 bg-white dark:bg-white/5 text-ink-800 dark:text-ink-100 px-4 py-3 focus:outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-500/10 placeholder-ink-400 dark:placeholder-ink-500 transition-all"
                       autoFocus
                     />
-                    <p className="text-xs text-ink-500 dark:text-ink-400 mt-3 flex items-center gap-2">
-                      <span>💡</span> We'll find specialized doctors for your condition
-                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {['Headache', 'Fever', 'Cough', 'Sore throat', 'Fatigue'].map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => setSymptomQuery(s)}
+                          className={`rounded-full px-3 py-1 text-xs font-medium border transition-colors ${symptomQuery === s ? 'border-brand-400 bg-brand-50 dark:bg-brand-500/15 text-brand-700 dark:text-brand-300' : 'border-ink-200 dark:border-white/10 text-ink-500 dark:text-ink-400 hover:border-brand-300 hover:text-brand-600'}`}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                   <button
-                    onClick={() => {
-                      const symptom = document.getElementById('symptom-input').value
-                      if (symptom.trim()) searchDoctors(symptom)
-                      else alert('Please enter a symptom')
-                    }}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-brand-500 to-brand-600 text-white font-semibold shadow-soft hover:shadow-lift hover:-translate-y-0.5 transition-all py-4 text-lg"
+                    onClick={() => symptomQuery.trim() && searchDoctors(symptomQuery.trim())}
+                    disabled={!symptomQuery.trim() || searching}
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 text-white font-semibold py-3 shadow-soft hover:shadow-lift transition-all disabled:opacity-40 disabled:hover:shadow-soft"
                   >
-                    🔍 Search Doctors
+                    {searching ? <><Loader2 className="h-4 w-4 animate-spin" /> Searching…</> : <><Search className="h-4 w-4" /> Find doctors</>}
                   </button>
                 </div>
               )}
 
             {/* Step 2: Doctor Selection */}
             {bookingStep === 2 && doctors.length > 0 && (
-              <div className="space-y-6 animate-fade-in">
-                <div className="bg-brand-50 dark:bg-brand-500/10 p-5 rounded-2xl border border-brand-200 dark:border-brand-500/20 flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-brand-700 font-bold">✓ Success!</p>
-                    <p className="text-lg font-black text-brand-700">{doctors.length} Specialist{doctors.length !== 1 ? 's' : ''} Found</p>
-                  </div>
-                  <div className="text-4xl">👨‍⚕️</div>
-                </div>
-                <div className="space-y-3 max-h-96 overflow-y-auto">
-                  {doctors.map((doc, idx) => (
-                    <div
+              <div className="space-y-4 animate-fade-in">
+                <p className="text-sm text-ink-500 dark:text-ink-400">
+                  {doctors.length} {doctors.length === 1 ? 'specialist' : 'specialists'} available for <span className="font-medium text-ink-700 dark:text-ink-200">“{symptomQuery}”</span>
+                </p>
+                <div className="space-y-2.5 max-h-[22rem] overflow-y-auto -mx-1 px-1">
+                  {doctors.map((doc) => (
+                    <button
                       key={doc._id}
                       onClick={() => loadDoctorSlots(doc._id)}
-                      className="border border-ink-200 dark:border-white/10 rounded-2xl p-6 hover:border-brand-400 hover:bg-brand-50 dark:hover:bg-white/5 cursor-pointer transition-all hover:shadow-card bg-white dark:bg-ink-800 group"
+                      className="w-full text-left rounded-2xl border border-ink-200 dark:border-white/10 bg-white dark:bg-ink-800 p-4 hover:border-brand-400 hover:shadow-card transition-all group"
                     >
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white font-bold">
-                              {idx + 1}
-                            </div>
-                            <div>
-                              <p className="font-bold text-lg text-ink-900 dark:text-white group-hover:text-brand-700">{doc.name}</p>
-                              <p className="text-xs text-ink-500 dark:text-ink-400">{doc.specialty}</p>
-                            </div>
-                          </div>
-                          <p className="text-xs text-ink-500 dark:text-ink-400 mt-2">{doc.qualifications}</p>
-                        </div>
-                        <div className="text-right flex-shrink-0">
-                          <div className="flex items-center gap-1 mb-2">
-                            <span className="text-2xl">⭐</span>
-                            <span className="font-black text-lg text-amber-500">{doc.rating}</span>
-                          </div>
-                          <p className="text-xs text-ink-500 dark:text-ink-400 font-semibold">{doc.experience_years}y exp</p>
-                        </div>
-                      </div>
-                      <div className="mt-4 flex gap-4 text-xs text-ink-500 dark:text-ink-400 flex-wrap">
-                        <span className="inline-flex items-center gap-1 bg-ink-100 dark:bg-white/5 px-3 py-1 rounded-full">📱 {doc.phone}</span>
-                        <span className="inline-flex items-center gap-1 bg-ink-100 dark:bg-white/5 px-3 py-1 rounded-full">🕒 {doc.availability}</span>
-                      </div>
-                      <div className="mt-4 text-right">
-                        <span className="inline-block bg-gradient-to-b from-brand-500 to-brand-600 text-white px-5 py-2 rounded-full text-xs font-bold shadow-soft transition-all">
-                          View Available Times →
+                      <div className="flex items-center gap-4">
+                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white font-semibold">
+                          {doc.name ? doc.name.replace(/^Dr\.?\s*/i, '').split(' ').map(w => w[0]).slice(0, 2).join('') : 'Dr'}
                         </span>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="font-semibold text-ink-900 dark:text-white truncate group-hover:text-brand-700 dark:group-hover:text-brand-300">{doc.name}</p>
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-amber-500 shrink-0">
+                              <Star className="h-3.5 w-3.5 fill-current" /> {doc.rating}
+                            </span>
+                          </div>
+                          <p className="text-xs text-brand-600 dark:text-brand-300 font-medium">{doc.specialty}</p>
+                          <div className="mt-1.5 flex items-center gap-3 text-[11px] text-ink-400">
+                            {doc.experience_years != null && <span className="inline-flex items-center gap-1"><Award className="h-3 w-3" /> {doc.experience_years}y exp</span>}
+                            {doc.availability && <span className="inline-flex items-center gap-1 truncate"><Clock className="h-3 w-3" /> {doc.availability}</span>}
+                          </div>
+                        </div>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-ink-300 group-hover:text-brand-500 group-hover:translate-x-0.5 transition-all" />
                       </div>
-                    </div>
+                    </button>
                   ))}
                 </div>
                 <button
                   onClick={() => setBookingStep(1)}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 dark:border-white/15 bg-white dark:bg-white/5 text-ink-700 dark:text-ink-200 font-semibold py-4 hover:border-brand-300 hover:text-brand-600 transition-all"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-brand-600 transition-colors"
                 >
-                  ← Change Symptom
+                  <ChevronLeft className="h-4 w-4" /> Change symptom
                 </button>
               </div>
             )}
