@@ -7,7 +7,7 @@ import SmartImage from './SmartImage'
 const U = 'https://images.unsplash.com/photo-'
 const CARDS = [
   { name: 'General Medicine', tag: 'Everyday health, handled with care', icon: Stethoscope,
-    img: `${U}1576091160399-112ba8d25d1d?w=700&q=65&auto=format&fit=crop`, fb: 'from-brand-500 to-brand-800' },
+    img: `${U}1584982751601-97dcc096659c?w=700&q=65&auto=format&fit=crop`, fb: 'from-brand-500 to-brand-800' },
   { name: 'Cardiology', tag: 'For every beat of your heart', icon: HeartPulse,
     img: `${U}1628348068343-c6a848d2b6dd?w=700&q=65&auto=format&fit=crop`, fb: 'from-coral-400 to-coral-600' },
   { name: 'Neurology', tag: 'Headaches, migraines & nerve care', icon: Brain,

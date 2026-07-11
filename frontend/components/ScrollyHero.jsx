@@ -10,7 +10,7 @@ const CHAPTERS = [
     kicker: 'AI-guided care',
     title: <>Understand your health,<br />without the worry.</>,
     sub: 'Describe your symptoms in your own words — Auravia listens, understands, and guides you calmly.',
-    img: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1800&q=70&auto=format&fit=crop',
+    img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1800&q=70&auto=format&fit=crop',
     fallback: 'bg-gradient-to-br from-brand-700 via-brand-800 to-ink-950',
   },
   {
@@ -18,7 +18,7 @@ const CHAPTERS = [
     kicker: 'Smart matching',
     title: <>The right doctor,<br />at the right time.</>,
     sub: 'Our AI finds the specialist you need and books the earliest slot that fits your preferences.',
-    img: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1800&q=70&auto=format&fit=crop',
+    img: 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1800&q=70&auto=format&fit=crop',
     fallback: 'bg-gradient-to-br from-ink-900 via-brand-900 to-ink-950',
   },
   {
@@ -26,7 +26,7 @@ const CHAPTERS = [
     kicker: 'Always with you',
     title: <>Care that stays<br />by your side.</>,
     sub: 'Your conversations, appointments and guidance — saved to your account, available any time. Emergencies? One tap to 1122.',
-    img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1800&q=70&auto=format&fit=crop',
+    img: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=1800&q=70&auto=format&fit=crop',
     fallback: 'bg-gradient-to-br from-brand-900 via-ink-900 to-ink-950',
   },
 ]
