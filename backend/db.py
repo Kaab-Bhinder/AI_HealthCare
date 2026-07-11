@@ -577,3 +577,15 @@ def get_patient_conversations(patient_id):
     except Exception as e:
         print(f"[ERROR] get_patient_conversations: {e}")
         return []
+
+
+def delete_patient_conversation(patient_id, conversation_id):
+    """Delete one of the patient's saved conversations."""
+    if db is None:
+        return False
+    try:
+        res = db.chats.delete_many({'patient_id': patient_id, 'conversationId': conversation_id})
+        return res.deleted_count > 0
+    except Exception as e:
+        print(f"[ERROR] delete_patient_conversation: {e}")
+        return False

@@ -509,6 +509,15 @@ def my_chats(current_user=None):
     return add_cors_headers(jsonify({"conversations": convos})), 200
 
 
+@app.route('/api/me/chats/<conversation_id>', methods=['DELETE', 'OPTIONS'])
+@auth.require_auth('patient')
+def delete_my_chat(conversation_id, current_user=None):
+    if request.method == 'OPTIONS':
+        return add_cors_headers(jsonify({})), 200
+    ok = dbmod.delete_patient_conversation(str(current_user['_id']), conversation_id) if MONGO_AVAILABLE else False
+    return add_cors_headers(jsonify({"success": bool(ok)})), (200 if ok else 404)
+
+
 # ==========================================================================
 # Doctor dashboard
 # ==========================================================================

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Search, MessageCircle, ShieldAlert } from 'lucide-react'
 import { Blob, Leaf } from '../../components/Organic'
-import Chat from '../../components/Chat'
+import ChatWorkspace from '../../components/ChatWorkspace'
 import MatchFlow from '../../components/MatchFlow'
 
 export default function Consult() {
@@ -15,24 +15,28 @@ export default function Consult() {
       <Blob className="absolute top-52 -left-40 w-96 h-96 text-coral-200/30 dark:text-coral-500/10" />
       <Leaf className="absolute top-24 right-[10%] w-12 text-brand-300/40 rotate-12 hidden lg:block" />
 
-      <div className="relative mx-auto max-w-3xl px-6 py-8">
-        <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-brand-600 transition-colors">
-          <ArrowLeft className="h-4 w-4" /> Back home
-        </Link>
+      <div className={`relative mx-auto px-6 py-8 transition-all ${tab === 'chat' ? 'max-w-6xl' : 'max-w-3xl'}`}>
+        <div className="flex items-center justify-between">
+          <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-brand-600 transition-colors">
+            <ArrowLeft className="h-4 w-4" /> Back home
+          </Link>
 
-        <div className="mt-4 text-center">
-          <h1 className="font-display text-3xl sm:text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">How can we help today?</h1>
-          <p className="mt-2 text-ink-500 dark:text-ink-400">Get matched to a doctor, or ask our assistant anything.</p>
+          {/* Tabs */}
+          <div className="rounded-full bg-cream-100 dark:bg-white/5 border border-cream-300 dark:border-white/10 p-1 flex">
+            <TabButton active={tab === 'match'} onClick={() => setTab('match')} icon={Search} label="Find a doctor" />
+            <TabButton active={tab === 'chat'} onClick={() => setTab('chat')} icon={MessageCircle} label="Assistant" />
+          </div>
         </div>
 
-        {/* Tabs */}
-        <div className="mt-7 mx-auto w-fit rounded-full bg-cream-100 dark:bg-white/5 border border-cream-300 dark:border-white/10 p-1 flex">
-          <TabButton active={tab === 'match'} onClick={() => setTab('match')} icon={Search} label="Find a doctor" />
-          <TabButton active={tab === 'chat'} onClick={() => setTab('chat')} icon={MessageCircle} label="Ask the assistant" />
-        </div>
+        {tab === 'match' && (
+          <div className="mt-6 text-center">
+            <h1 className="font-display text-3xl sm:text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">How can we help today?</h1>
+            <p className="mt-2 text-ink-500 dark:text-ink-400">Describe your symptoms and we&apos;ll match you to the right doctor.</p>
+          </div>
+        )}
 
         <div className="mt-6">
-          {tab === 'match' ? <MatchFlow /> : <Chat />}
+          {tab === 'match' ? <MatchFlow /> : <ChatWorkspace />}
         </div>
 
         <p className="mt-6 flex items-center justify-center gap-2 text-xs text-ink-400">

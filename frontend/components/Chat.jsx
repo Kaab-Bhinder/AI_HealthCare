@@ -45,13 +45,28 @@ const mdComponents = {
   td: ({ children }) => <td className="border-b border-healthcare-100 dark:border-slate-700 px-2 py-1">{children}</td>,
 }
 
-export default function Chat() {
+const WELCOME = { id: 1, from: 'assistant', text: 'Hello — I am your AI healthcare assistant. How can I help today?' }
+
+export default function Chat({ conversationId: cidProp, initialMessages, onExchange }) {
+  // Controlled mode: when `conversationId` is passed (ChatGPT-style workspace),
+  // the parent owns which conversation is open and supplies its messages.
+  const controlled = cidProp != null
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
   const listRef = useRef(null)
   const [conversationId, setConversationId] = useState(null)
   const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    if (!controlled) return
+    setConversationId(cidProp)
+    const restored = (initialMessages || []).map((m, i) => ({
+      id: i + 10, from: m.role === 'user' ? 'user' : 'assistant', text: m.content, sources: m.sources || [],
+    }))
+    setMessages(restored.length ? restored : [WELCOME])
+    setLoaded(true)
+  }, [controlled, cidProp])  // eslint-disable-line react-hooks/exhaustive-deps
   const [showBooking, setShowBooking] = useState(false)
   const [doctors, setDoctors] = useState([])
   const [selectedDoctor, setSelectedDoctor] = useState(null)
@@ -70,6 +85,7 @@ export default function Chat() {
     listRef.current?.lastElementChild?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
   useEffect(() => {
+    if (controlled) return
     let id = null
     try {
       id = localStorage.getItem('healthcare_conversation_id')
@@ -150,6 +166,7 @@ export default function Chat() {
       const replyText = (j && (j.reply || j.partial || j.debug)) || 'AI unavailable, please try again later.'
       const sources = (j && Array.isArray(j.sources)) ? j.sources : []
       setMessages(ms => [...ms, { id: Date.now()+1, from: 'assistant', text: replyText, sources }])
+      onExchange?.()
     }).catch(err => {
       setTyping(false)
       setMessages(ms => [...ms, { id: Date.now()+1, from: 'assistant', text: 'AI unavailable, please try again later.' }])
@@ -456,6 +473,7 @@ export default function Chat() {
                   if (j?.reply) {
                     const sources = Array.isArray(j.sources) ? j.sources : []
                     setMessages(ms => [...ms, { id: Date.now(), from: 'assistant', text: j.reply, sources }])
+                    onExchange?.()
                   }
                 }).catch(err => {
                   setTyping(false)
