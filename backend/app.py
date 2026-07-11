@@ -8,8 +8,10 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-# Semantic (vector) retrieval, with automatic keyword fallback inside the engine.
-from rag_engine import retrieve_context, search_knowledge_base
+# Retrieval: Atlas Vector Search when populated, else local semantic engine,
+# else keyword — the fallback chain lives inside vector_db.retrieve_context.
+from vector_db import retrieve_context
+from rag_engine import search_knowledge_base
 # Adding documents still writes to the shared documents.json knowledge base.
 from rag_simple import add_to_knowledge_base
 try:
