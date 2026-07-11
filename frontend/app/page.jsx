@@ -29,8 +29,9 @@ export default function Home() {
       <ScrollyHero />
 
       {/* ===================== STATS STRIP ===================== */}
-      <section className="border-y border-cream-300/60 dark:border-white/10 bg-cream-50/90 dark:bg-white/[0.02] backdrop-blur">
-        <div className="mx-auto max-w-6xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <section className="relative overflow-hidden border-y border-cream-300/60 dark:border-white/10 bg-cream-50/90 dark:bg-white/[0.02] backdrop-blur">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.08),transparent_65%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.18),transparent_65%)]" />
+        <div className="relative mx-auto max-w-6xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[['900+', 'Medical topics in knowledge base'], ['12', 'Specialists across 11 fields'], ['< 2s', 'Typical AI response time'], ['24/7', 'Always available']].map(([v, l]) => (
             <div key={l}>
               <div className="font-display text-3xl sm:text-4xl font-semibold text-gradient">{v}</div>
@@ -44,9 +45,15 @@ export default function Home() {
       <FanCarousel />
 
       {/* ===================== HOW IT WORKS ===================== */}
-      <section className="relative bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-white/[0.02] dark:to-white/[0.02]">
-        <Wave className="text-cream-50 dark:text-[#17140f] -mt-px" />
-        <div className="mx-auto max-w-5xl px-6 py-20 text-center">
+      <section className="relative overflow-x-clip bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-brand-500/[0.06] dark:to-transparent">
+        {/* Atmosphere: faint grid + teal glows + organic blobs so the section
+            carries the hero's cinematic vibe (especially in dark mode). */}
+        <div className="absolute inset-0 bg-grid opacity-60 dark:opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.10),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.20),transparent_60%)]" />
+        <Blob className="absolute -top-20 -left-28 w-96 h-96 text-brand-200/40 dark:text-brand-500/15" />
+        <Blob className="absolute -bottom-24 -right-28 w-[26rem] h-[26rem] text-coral-200/40 dark:text-coral-500/10" />
+        <Wave className="relative text-cream-50 dark:text-[#17140f] -mt-px" />
+        <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
           <span className="chip mx-auto"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> How it works</span>
           <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">From worry to booked in three steps</h2>
           <div className="relative mt-16 grid md:grid-cols-3 gap-10">
@@ -70,15 +77,21 @@ export default function Home() {
       </section>
 
       {/* ===================== TESTIMONIAL ===================== */}
-      <section className="relative mx-auto max-w-4xl px-6 py-24 text-center">
-        <Leaf className="absolute top-6 left-[12%] w-12 text-brand-300/40 -rotate-12 hidden sm:block" />
-        <Leaf className="absolute bottom-8 right-[12%] w-12 text-coral-300/40 rotate-45 hidden sm:block" />
-        <Quote className="mx-auto h-10 w-10 text-brand-300" />
-        <p className="mt-6 font-display text-2xl sm:text-[2rem] font-medium leading-snug text-ink-800 dark:text-ink-100">
-          &ldquo;It felt like texting a calm friend who happens to be a doctor — I described how I felt,
-          and minutes later I was booked with the right specialist.&rdquo;
-        </p>
-        <p className="mt-6 text-sm text-ink-400">A calmer way to find care.</p>
+      <section className="relative overflow-x-clip">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.08),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.16),transparent_60%)]" />
+        <Blob className="absolute top-4 -right-24 w-80 h-80 text-brand-200/30 dark:text-brand-500/10" />
+        <div className="relative mx-auto max-w-4xl px-6 py-24 text-center">
+          <Leaf className="absolute top-6 left-[12%] w-12 text-brand-300/40 dark:text-brand-400/25 -rotate-12 hidden sm:block" />
+          <Leaf className="absolute bottom-8 right-[12%] w-12 text-coral-300/40 dark:text-coral-400/25 rotate-45 hidden sm:block" />
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
+            <Quote className="h-6 w-6" />
+          </span>
+          <p className="mt-8 font-display text-2xl sm:text-[2rem] font-medium leading-snug text-ink-800 dark:text-ink-100">
+            &ldquo;It felt like texting a calm friend who happens to be a doctor — I described how I felt,
+            and minutes later I was booked with the right specialist.&rdquo;
+          </p>
+          <p className="mt-6 text-sm text-ink-400">A calmer way to find care.</p>
+        </div>
       </section>
 
       {/* ===================== CTA ===================== */}
@@ -97,7 +110,10 @@ export default function Home() {
       </section>
 
       {/* ===================== FAQ ===================== */}
-      <section className="mx-auto max-w-3xl px-6 pb-28">
+      <section className="relative overflow-x-clip">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(20,184,166,0.07),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_bottom,rgba(20,184,166,0.14),transparent_60%)]" />
+        <Blob className="absolute -bottom-24 -left-28 w-80 h-80 text-sage-100 dark:text-brand-500/10" />
+        <div className="relative mx-auto max-w-3xl px-6 pb-28">
         <div className="text-center mb-12">
           <h2 className="font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">Questions, answered</h2>
         </div>
@@ -111,6 +127,7 @@ export default function Home() {
               <p className="mt-4 text-sm leading-relaxed text-ink-500 dark:text-ink-400">{f.a}</p>
             </details>
           ))}
+        </div>
         </div>
       </section>
     </div>
