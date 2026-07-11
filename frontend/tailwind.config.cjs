@@ -38,13 +38,36 @@ module.exports = {
           800: '#115e59',
           900: '#134e4a',
         },
-        // Warm secondary accent for highlights / illustrations.
+        // Warm coral accent — soft, human, for highlights & CTAs (from the refs).
         accent: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#f97316',
+          50: '#fef1ed',
+          100: '#fde3da',
+          200: '#fbc9b8',
+          300: '#f7a58c',
+          400: '#f2876a',
+          500: '#ec6a4b',
+          600: '#d9532f',
+        },
+        coral: {
+          50: '#fef1ed',
+          100: '#fde3da',
+          200: '#fbc9b8',
+          300: '#f7a58c',
+          400: '#f2876a',
+          500: '#ec6a4b',
+          600: '#d9532f',
+        },
+        // Warm cream canvas + surfaces — replaces the cold slate background.
+        cream: {
+          50: '#fdfbf6',
+          100: '#faf6ee',
+          200: '#f3ecdf',
+          300: '#e9dfcb',
+        },
+        sage: {
+          50: '#eef6f3',
+          100: '#dcede7',
+          200: '#bcdbd0',
         },
         // Neutral canvas / ink built on slate for a clean clinical feel.
         ink: {

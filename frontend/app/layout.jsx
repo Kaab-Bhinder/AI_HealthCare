@@ -1,8 +1,9 @@
 import './globals.css'
 import Link from 'next/link'
 import { Inter, Fraunces } from 'next/font/google'
-import { Activity, Stethoscope, ShieldCheck, ArrowRight, Phone } from 'lucide-react'
-import ThemeToggle from '../components/ThemeToggle'
+import { Activity, Stethoscope, ShieldCheck, Phone } from 'lucide-react'
+import { AuthProvider } from '../lib/auth'
+import SiteHeader from '../components/SiteHeader'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' })
 const fraunces = Fraunces({
@@ -18,7 +19,8 @@ export const metadata = {
 }
 
 // Runs before hydration so the correct theme is applied with no flash.
-const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();`
+// Light is the default; dark only if the user explicitly chose it.
+const themeInitScript = `(function(){try{if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`
 
 export default function RootLayout({ children }) {
   return (
@@ -27,38 +29,9 @@ export default function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="min-h-screen font-sans text-ink-800 dark:text-ink-100 antialiased selection:bg-brand-200/60 selection:text-brand-900">
+        <AuthProvider>
         <div className="flex min-h-screen flex-col">
-          {/* Header — translucent, sticky, airy */}
-          <header className="sticky top-0 z-40 border-b border-ink-200/70 dark:border-white/10 bg-white/70 dark:bg-ink-950/70 backdrop-blur-xl">
-            <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
-              <Link href="/" className="flex items-center gap-2.5 group">
-                <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
-                  <Activity className="h-5 w-5" strokeWidth={2.5} />
-                </span>
-                <span className="flex flex-col leading-none">
-                  <span className="font-display text-lg font-semibold tracking-tight text-ink-900 dark:text-white">Auravia</span>
-                  <span className="text-[10px] uppercase tracking-[0.18em] text-ink-400">Health Assistant</span>
-                </span>
-              </Link>
-
-              <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-ink-500 dark:text-ink-300">
-                <Link href="/" className="px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-white/5 transition-colors">Home</Link>
-                <Link href="/consult" className="px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-white/5 transition-colors">Consult</Link>
-                <Link href="/admin" className="px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-brand-50 dark:hover:bg-white/5 transition-colors">Admin</Link>
-              </nav>
-
-              <div className="flex items-center gap-2">
-                <ThemeToggle />
-                <Link
-                  href="/consult"
-                  className="group inline-flex items-center gap-1.5 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 px-4 py-2 text-sm font-semibold shadow-soft hover:shadow-lift transition-all"
-                >
-                  Start
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
-            </div>
-          </header>
+          <SiteHeader />
 
           <main className="flex-grow">{children}</main>
 
@@ -107,6 +80,7 @@ export default function RootLayout({ children }) {
             </div>
           </footer>
         </div>
+        </AuthProvider>
       </body>
     </html>
   )
