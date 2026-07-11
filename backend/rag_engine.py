@@ -42,7 +42,9 @@ DEBUG_AI = os.getenv("DEBUG_AI", "false").lower() == "true"
 class SemanticRAG:
     """Vector-based retrieval over the medical knowledge base."""
 
-    def __init__(self, kb_dir="knowledge_base", cache_dir="rag_cache"):
+    def __init__(self, kb_dir="knowledge_base", cache_dir=None):
+        if cache_dir is None:
+            cache_dir = '/tmp/rag_cache' if os.getenv('VERCEL') else 'rag_cache' 
         self.kb_dir = kb_dir
         self.cache_dir = cache_dir
         self.kb_file = os.path.join(kb_dir, "documents.json")

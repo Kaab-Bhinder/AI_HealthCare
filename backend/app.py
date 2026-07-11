@@ -91,16 +91,20 @@ However, please see a doctor if the pain is severe, persistent, or gets worse."
 
 REMEMBER: Write complete responses that fully answer the user's question."""
 
-DATA_DIR = "data"
+# On serverless (Vercel) the project filesystem is read-only — use /tmp.
+DATA_DIR = os.getenv('DATA_DIR') or ('/tmp/data' if os.getenv('VERCEL') else 'data')
 CHATS_FILE = os.path.join(DATA_DIR, "chats.json")
 def ensure_data_file():
     """Create data directory if it doesn't exist"""
     os.makedirs(DATA_DIR, exist_ok=True)
 def init_chats_file():
     """Initialize chats file - clears history on server startup"""
-    os.makedirs(DATA_DIR, exist_ok=True)
-    with open(CHATS_FILE, 'w') as f:
-        json.dump([], f)
+    try:
+        os.makedirs(DATA_DIR, exist_ok=True)
+        with open(CHATS_FILE, 'w') as f:
+            json.dump([], f)
+    except OSError as e:
+        print(f"[WARNING] chats file unavailable ({e}) — guest history disabled")
 def load_conversation(conversation_id):
     try:
         with open(CHATS_FILE, 'r') as f:
@@ -740,17 +744,21 @@ def seed_accounts():
 
 
 def bootstrap():
-    """Connect + seed. Runs at import time so gunicorn workers are initialized
-    too (the __main__ block never executes under gunicorn)."""
-    init_chats_file()
-    if MONGO_AVAILABLE:
-        if connect_mongodb():
-            init_collections()
-            seed_accounts()
-        else:
-            print("[WARNING] Using mock appointment data (MongoDB not available)")
-    print(f"[DEBUG] Gemini configured: {bool(GEMINI_API_KEY)}")
-    print(f"[DEBUG] Appointment booking: {'✓ Enabled' if MONGO_AVAILABLE else '✗ Disabled'}")
+    """Connect + seed. Runs at import time so gunicorn/serverless workers are
+    initialized (the __main__ block never executes there). Never raises — a
+    failed step degrades gracefully instead of crashing every request."""
+    try:
+        init_chats_file()
+        if MONGO_AVAILABLE:
+            if connect_mongodb():
+                init_collections()
+                seed_accounts()
+            else:
+                print("[WARNING] Using mock appointment data (MongoDB not available)")
+        print(f"[DEBUG] Gemini configured: {bool(GEMINI_API_KEY)}")
+        print(f"[DEBUG] Appointment booking: {'✓ Enabled' if MONGO_AVAILABLE else '✗ Disabled'}")
+    except Exception as e:
+        print(f"[ERROR] bootstrap failed (continuing degraded): {e}")
 
 
 bootstrap()
