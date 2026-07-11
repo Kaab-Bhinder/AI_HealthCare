@@ -3,3 +3,4 @@ backend/.env
 backend/rag_cache/
 __pycache__/
 backend/venv/
+backend/data/
