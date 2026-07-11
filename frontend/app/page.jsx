@@ -29,14 +29,14 @@ export default function Home() {
       {/* ===================== SCROLLY HERO ===================== */}
       <ScrollyHero />
 
-      {/* ===================== STATS STRIP ===================== */}
-      <section className="relative overflow-hidden border-y border-cream-300/60 dark:border-white/10 bg-cream-50/90 dark:bg-white/[0.02] backdrop-blur">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.08),transparent_65%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.18),transparent_65%)]" />
-        <div className="relative mx-auto max-w-6xl px-6 py-14 grid grid-cols-2 md:grid-cols-4 gap-y-10 md:divide-x md:divide-cream-300/70 dark:md:divide-white/10 text-center">
+      {/* ===================== STATS STRIP (continues the dark act) ===================== */}
+      <section className="relative overflow-hidden bg-ink-950 text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.16),transparent_65%)]" />
+        <div className="relative mx-auto max-w-6xl px-6 py-14 grid grid-cols-2 md:grid-cols-4 gap-y-10 md:divide-x md:divide-white/10 text-center">
           {[['900+', 'Medical topics in knowledge base'], ['12', 'Specialists across 11 fields'], ['< 2s', 'Typical AI response time'], ['24/7', 'Always available']].map(([v, l]) => (
             <div key={l}>
               <div className="font-display text-4xl sm:text-5xl font-semibold text-gradient">{v}</div>
-              <div className="mt-2 text-xs sm:text-sm text-ink-500 dark:text-ink-400">{l}</div>
+              <div className="mt-2 text-xs sm:text-sm text-white/55">{l}</div>
             </div>
           ))}
         </div>

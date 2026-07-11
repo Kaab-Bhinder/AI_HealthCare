@@ -111,6 +111,9 @@ export default function ScrollyHero() {
           </div>
         </div>
 
+        {/* Seamless handoff into the dark stats/deck sections below */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-ink-950 to-transparent" />
+
         {/* Chapter dots */}
         <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden sm:flex flex-col gap-3">
           {CHAPTERS.map((_, i) => (
