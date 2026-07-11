@@ -29,9 +29,9 @@ export default function FanCarousel() {
   const card = CARDS[active]
 
   return (
-    <section id="specialties" className="relative overflow-hidden bg-ink-950 text-white">
+    <section id="specialties" className="relative z-10 overflow-hidden bg-ink-950 text-white rounded-b-[3rem] shadow-2xl">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.14),transparent_65%)]" />
-      <div className="relative mx-auto max-w-6xl px-6 py-20">
+      <div className="relative mx-auto max-w-6xl px-6 pt-20 pb-24">
         <div className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
             <Sparkles className="h-3.5 w-3.5 text-brand-300" /> Explore specialties
@@ -39,7 +39,7 @@ export default function FanCarousel() {
         </div>
 
         {/* Deck */}
-        <div className="relative mt-10 h-[440px] sm:h-[480px]">
+        <div className="relative mt-10 h-[470px] sm:h-[510px]">
           <div className="absolute inset-0 flex items-center justify-center">
             {CARDS.map((c, i) => {
               let rel = i - active
@@ -54,12 +54,12 @@ export default function FanCarousel() {
                   aria-label={c.name}
                   className="absolute rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 ease-out will-change-transform"
                   style={{
-                    width: 250, height: 380,
-                    transform: `translateX(${rel * 200}px) scale(${1 - abs * 0.13})`,
+                    width: 280, height: 430,
+                    transform: `translateX(${rel * 215}px) scale(${1 - abs * 0.12})`,
                     zIndex: 20 - abs,
-                    opacity: visible ? (abs === 0 ? 1 : 0.55) : 0,
+                    opacity: visible ? (abs === 0 ? 1 : 0.75) : 0,
                     pointerEvents: visible ? 'auto' : 'none',
-                    filter: abs === 0 ? 'none' : 'brightness(0.7) saturate(0.85)',
+                    filter: abs === 0 ? 'none' : 'brightness(0.78) saturate(0.9)',
                   }}
                 >
                   <SmartImage src={c.img} className="absolute inset-0 h-full w-full object-cover" fallbackClassName={`bg-gradient-to-br ${c.fb}`} />
@@ -67,18 +67,17 @@ export default function FanCarousel() {
                   <span className="absolute top-4 left-4 grid h-10 w-10 place-items-center rounded-xl bg-white/15 backdrop-blur text-white">
                     <c.icon className="h-5 w-5" />
                   </span>
-                  <span className="absolute bottom-4 left-4 right-4 text-left text-sm font-semibold text-white/95">{c.name}</span>
+                  {abs !== 0 && <span className="absolute bottom-4 left-4 right-4 text-left text-sm font-semibold text-white/95">{c.name}</span>}
                 </button>
               )
             })}
           </div>
 
-          {/* Big title overlay */}
-          <div className="pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6">
-            <h2 key={card.name} className="font-display text-4xl sm:text-6xl font-bold uppercase tracking-wide text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] animate-fade-up">
+          {/* Big title overlay — title only; tagline lives below the deck */}
+          <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center text-center px-6">
+            <h2 key={card.name} className="font-display text-4xl sm:text-6xl font-bold uppercase tracking-wide text-white drop-shadow-[0_6px_28px_rgba(0,0,0,0.75)] animate-fade-up">
               {card.name}
             </h2>
-            <p className="mt-3 text-white/85 drop-shadow-md animate-fade-in">{card.tag}</p>
           </div>
 
           {/* Arrows */}
@@ -92,7 +91,8 @@ export default function FanCarousel() {
           </button>
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
+          <p key={card.tag} className="text-white/70 animate-fade-in mb-5">{card.tag}</p>
           <Link href="/consult" className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 font-semibold text-ink-900 shadow-xl hover:-translate-y-0.5 hover:shadow-2xl transition-all">
             Consult a {card.name.toLowerCase().includes('general') ? 'doctor' : `${card.name} specialist`} <ArrowRight className="h-4 w-4" />
           </Link>

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import {
   ArrowRight, Sparkles, ShieldCheck, CalendarCheck, ChevronRight, Quote, MessageCircle, Search, Plus, Minus,
 } from 'lucide-react'
-import { Blob, Leaf, Wave } from '../components/Organic'
+import { Blob, Leaf } from '../components/Organic'
 import ScrollyHero from '../components/ScrollyHero'
 import FanCarousel from '../components/FanCarousel'
 import SmartImage from '../components/SmartImage'
@@ -32,11 +32,11 @@ export default function Home() {
       {/* ===================== STATS STRIP ===================== */}
       <section className="relative overflow-hidden border-y border-cream-300/60 dark:border-white/10 bg-cream-50/90 dark:bg-white/[0.02] backdrop-blur">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.08),transparent_65%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.18),transparent_65%)]" />
-        <div className="relative mx-auto max-w-6xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="relative mx-auto max-w-6xl px-6 py-14 grid grid-cols-2 md:grid-cols-4 gap-y-10 md:divide-x md:divide-cream-300/70 dark:md:divide-white/10 text-center">
           {[['900+', 'Medical topics in knowledge base'], ['12', 'Specialists across 11 fields'], ['< 2s', 'Typical AI response time'], ['24/7', 'Always available']].map(([v, l]) => (
             <div key={l}>
-              <div className="font-display text-3xl sm:text-4xl font-semibold text-gradient">{v}</div>
-              <div className="mt-1 text-xs sm:text-sm text-ink-500 dark:text-ink-400">{l}</div>
+              <div className="font-display text-4xl sm:text-5xl font-semibold text-gradient">{v}</div>
+              <div className="mt-2 text-xs sm:text-sm text-ink-500 dark:text-ink-400">{l}</div>
             </div>
           ))}
         </div>
@@ -46,14 +46,13 @@ export default function Home() {
       <FanCarousel />
 
       {/* ===================== HOW IT WORKS ===================== */}
-      <section className="relative overflow-x-clip bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-brand-500/[0.06] dark:to-transparent">
+      <section className="relative overflow-x-clip -mt-12 pt-12 bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-brand-500/[0.06] dark:to-transparent">
         {/* Atmosphere: faint grid + teal glows + organic blobs so the section
             carries the hero's cinematic vibe (especially in dark mode). */}
         <div className="absolute inset-0 bg-grid opacity-60 dark:opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.10),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.20),transparent_60%)]" />
         <Blob className="absolute -top-20 -left-28 w-96 h-96 text-brand-200/40 dark:text-brand-500/15" />
         <Blob className="absolute -bottom-24 -right-28 w-[26rem] h-[26rem] text-coral-200/40 dark:text-coral-500/10" />
-        <Wave className="relative text-cream-50 dark:text-[#17140f] -mt-px" />
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
           <span className="chip mx-auto"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> How it works</span>
           <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">From worry to booked in three steps</h2>
@@ -98,6 +97,7 @@ export default function Home() {
       {/* ===================== CTA ===================== */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-brand-600 to-brand-700 px-8 py-16 text-center shadow-lift">
+          <div className="absolute inset-0 bg-grid opacity-[0.15]" />
           <Blob className="absolute -top-16 -right-10 w-72 h-72 text-white/10" />
           <Leaf className="absolute bottom-4 left-8 w-16 text-white/10 -rotate-12" />
           <div className="relative">
