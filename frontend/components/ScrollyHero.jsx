@@ -38,6 +38,7 @@ const CHAPTERS = [
 export default function ScrollyHero() {
   const ref = useRef(null)
   const [idx, setIdx] = useState(0)
+  const [frac, setFrac] = useState(0) // 0..1 progress *within* the active chapter
 
   useEffect(() => {
     let raf = 0
@@ -48,14 +49,22 @@ export default function ScrollyHero() {
         if (!el) return
         const total = el.offsetHeight - window.innerHeight
         const scrolled = Math.min(Math.max(-el.getBoundingClientRect().top, 0), total)
-        const p = total > 0 ? scrolled / total : 0
-        setIdx(Math.min(CHAPTERS.length - 1, Math.floor(p * CHAPTERS.length)))
+        const p = total > 0 ? (scrolled / total) * CHAPTERS.length : 0
+        const i = Math.min(CHAPTERS.length - 1, Math.floor(p))
+        setIdx(i)
+        setFrac(Math.min(1, Math.max(0, p - i)))
       })
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
   }, [])
+
+  // Scroll-linked text motion: the copy drifts upward as you scroll and fades
+  // near the chapter boundary, where the next chapter's copy takes over.
+  const isLast = idx === CHAPTERS.length - 1
+  const drift = isLast ? Math.min(frac, 0.5) * 60 : frac * 120
+  const fade = isLast ? 1 : (frac < 0.8 ? 1 : 1 - (frac - 0.8) / 0.2)
 
   return (
     <section ref={ref} style={{ height: `${CHAPTERS.length * 100}vh` }} className="relative -mt-16">
@@ -71,11 +80,11 @@ export default function ScrollyHero() {
           </div>
         ))}
 
-        {/* Copy */}
+        {/* Copy — drifts upward with the scroll, hands off at chapter boundaries */}
         <div className="relative h-full mx-auto max-w-6xl px-6 flex items-center">
-          <div className="max-w-2xl pt-16">
+          <div className="max-w-2xl pt-16" style={{ transform: `translateY(${-drift}px)`, opacity: fade }}>
             {CHAPTERS.map((c, i) => (
-              <div key={i} className={`transition-all duration-700 ${i === idx ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 absolute pointer-events-none'}`}>
+              <div key={i} className={`transition-opacity duration-500 ${i === idx ? 'opacity-100' : 'opacity-0 absolute pointer-events-none'}`}>
                 {i === idx && (
                   <>
                     <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 backdrop-blur px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">

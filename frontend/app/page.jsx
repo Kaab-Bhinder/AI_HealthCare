@@ -22,7 +22,9 @@ const faqs = [
 
 export default function Home() {
   return (
-    <div className="overflow-hidden">
+    // overflow-x-clip, NOT overflow-hidden: hidden on an ancestor breaks
+    // position:sticky, which the scrolly hero depends on.
+    <div className="overflow-x-clip">
       {/* ===================== SCROLLY HERO ===================== */}
       <ScrollyHero />
 
