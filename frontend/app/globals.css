@@ -23,11 +23,11 @@ body {
   transition: background-color 0.3s ease;
 }
 .dark body {
-  /* Warm charcoal (not cold navy) so dark mode still feels human */
+  /* One unified navy-black canvas across the whole dark theme (matches the
+     hero/stats/deck ink-950) with a soft teal aura — no more mixed blacks. */
   background:
-    radial-gradient(900px 520px at 100% -8%, rgba(20, 184, 166, 0.12), transparent 60%),
-    radial-gradient(760px 460px at -8% 8%, rgba(242, 135, 106, 0.07), transparent 58%),
-    #17140f;
+    radial-gradient(900px 520px at 100% -8%, rgba(20, 184, 166, 0.10), transparent 60%),
+    #0b1120;
 }
 
 a {

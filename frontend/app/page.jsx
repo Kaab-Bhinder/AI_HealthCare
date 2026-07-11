@@ -46,7 +46,7 @@ export default function Home() {
       <FanCarousel />
 
       {/* ===================== HOW IT WORKS ===================== */}
-      <section className="relative overflow-x-clip -mt-12 pt-12 bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-brand-500/[0.06] dark:to-transparent">
+      <section className="relative overflow-x-clip -mt-12 pt-12 bg-gradient-to-b from-cream-100/60 to-sage-50 dark:from-brand-500/[0.04] dark:to-transparent">
         {/* Atmosphere: faint grid + teal glows + organic blobs so the section
             carries the hero's cinematic vibe (especially in dark mode). */}
         <div className="absolute inset-0 bg-grid opacity-60 dark:opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
@@ -118,7 +118,7 @@ export default function Home() {
         <div className="absolute inset-0">
           <SmartImage src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1600&q=55&auto=format&fit=crop"
             className="absolute inset-0 h-full w-full object-cover" fallbackClassName="bg-sage-100" />
-          <div className="absolute inset-0 bg-cream-50/[0.93] dark:bg-[#17140f]/[0.95]" />
+          <div className="absolute inset-0 bg-cream-50/[0.93] dark:bg-ink-950/[0.96]" />
         </div>
 
         <div className="relative mx-auto max-w-6xl px-6 py-24">

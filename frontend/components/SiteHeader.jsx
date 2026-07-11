@@ -19,7 +19,7 @@ export default function SiteHeader() {
   const initials = user?.name ? user.name.replace(/^Dr\.?\s*/i, '').split(' ').map((w) => w[0]).slice(0, 2).join('') : 'U'
 
   return (
-    <header className="sticky top-0 z-40 border-b border-cream-300/60 dark:border-white/10 bg-cream-50/80 dark:bg-[#17140f]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-cream-300/60 dark:border-white/10 bg-cream-50/80 dark:bg-ink-950/80 backdrop-blur-xl">
       <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5 group">
           <span className="grid h-9 w-9 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
