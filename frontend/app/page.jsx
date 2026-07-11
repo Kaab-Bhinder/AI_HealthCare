@@ -57,13 +57,13 @@ export default function Home() {
       </section>
 
       {/* ===================== CTA ===================== */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
+      <section className="mx-auto max-w-6xl px-6 pt-20 pb-24">
         <div className="relative overflow-hidden rounded-[2.5rem] px-8 py-16 text-center shadow-lift">
           {/* Blurred photo base with a deep teal wash keeps text crisp */}
           <SmartImage src="https://images.unsplash.com/photo-1584515933487-779824d29309?w=1600&q=60&auto=format&fit=crop"
-            className="absolute inset-0 h-full w-full object-cover scale-110 blur-[6px]"
+            className="absolute inset-0 h-full w-full object-cover scale-110 blur-[3px]"
             fallbackClassName="bg-gradient-to-br from-brand-600 to-brand-700" />
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-600/90 via-brand-600/80 to-brand-800/90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-700/70 via-brand-600/45 to-brand-900/75" />
           <div className="absolute inset-0 bg-grid opacity-[0.12]" />
           <Blob className="absolute -top-16 -right-10 w-72 h-72 text-white/10" />
           <Leaf className="absolute bottom-4 left-8 w-16 text-white/10 -rotate-12" />

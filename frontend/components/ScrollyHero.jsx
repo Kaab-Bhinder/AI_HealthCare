@@ -8,28 +8,38 @@ const CHAPTERS = [
   {
     icon: Sparkles,
     kicker: 'AI-guided care',
-    title: <>Understand your health,<br />without the worry.</>,
-    sub: 'Describe your symptoms in your own words — Auravia listens, understands, and guides you calmly.',
-    img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1800&q=70&auto=format&fit=crop',
+    title: <>Understand your <Accent>health</Accent>,<br />without the worry.</>,
+    sub: 'Describe your symptoms in your own words — no forms, no jargon. Auravia listens, understands, and guides you calmly toward the right care.',
+    img: '/images/pic1.jpg',
     fallback: 'bg-gradient-to-br from-brand-700 via-brand-800 to-ink-950',
   },
   {
     icon: Stethoscope,
     kicker: 'Smart matching',
-    title: <>The right doctor,<br />at the right time.</>,
-    sub: 'Our AI finds the specialist you need and books the earliest slot that fits your preferences.',
-    img: 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1800&q=70&auto=format&fit=crop',
+    title: <>The right <Accent>doctor</Accent>,<br />at the right time.</>,
+    sub: 'Our AI reads your symptoms, finds the specialist you need, and books the earliest slot that fits your day — with your preferences respected.',
+    img: '/images/pic2.jpg',
     fallback: 'bg-gradient-to-br from-ink-900 via-brand-900 to-ink-950',
   },
   {
     icon: HeartPulse,
     kicker: 'Always with you',
-    title: <>Care that stays<br />by your side.</>,
-    sub: 'Your conversations, appointments and guidance — saved to your account, available any time. Emergencies? One tap to 1122.',
-    img: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=1800&q=70&auto=format&fit=crop',
+    title: <>Care that <Accent>stays</Accent><br />by your side.</>,
+    sub: 'Every conversation, appointment and piece of guidance is saved to your account, ready whenever you need it — and in an emergency, help is one tap away on 1122.',
+    img: '/images/pic6.jpg',
     fallback: 'bg-gradient-to-br from-brand-900 via-ink-900 to-ink-950',
   },
 ]
+
+/** Theme-colored highlight for the key word in each headline. */
+function Accent({ children }) {
+  return (
+    <span className="bg-gradient-to-r from-brand-300 via-teal-300 to-brand-400 bg-clip-text text-transparent">
+      {children}
+    </span>
+  )
+}
+
 
 /**
  * Scrollytelling hero: the section is N screens tall; the viewport stays
@@ -78,13 +88,13 @@ export default function ScrollyHero() {
             <SmartImage src={c.img} eager={i === 0} fallbackClassName={c.fallback}
               className="absolute inset-0 h-full w-full object-cover scale-110 blur-[8px]" />
             <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/45 to-ink-950/40" />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink-950/70 via-ink-950/25 to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(11,17,32,0.55),rgba(11,17,32,0.25)_60%,transparent)]" />
           </div>
         ))}
 
-        {/* Copy — drifts upward with the scroll, hands off at chapter boundaries */}
-        <div className="relative h-full mx-auto max-w-6xl px-6 flex items-center">
-          <div className="max-w-2xl pt-16" style={{ transform: `translateY(${-drift}px)`, opacity: fade }}>
+        {/* Copy — centered; drifts upward with the scroll, hands off at boundaries */}
+        <div className="relative h-full mx-auto max-w-6xl px-6 flex items-center justify-center text-center">
+          <div className="max-w-3xl pt-16" style={{ transform: `translateY(${-drift}px)`, opacity: fade }}>
             {CHAPTERS.map((c, i) => (
               <div key={i} className={`transition-opacity duration-500 ${i === idx ? 'opacity-100' : 'opacity-0 absolute pointer-events-none'}`}>
                 {i === idx && (
@@ -95,8 +105,8 @@ export default function ScrollyHero() {
                     <h1 className="mt-6 font-display text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[1.02] text-white drop-shadow-lg">
                       {c.title}
                     </h1>
-                    <p className="mt-6 max-w-lg text-lg text-white/85 leading-relaxed drop-shadow">{c.sub}</p>
-                    <div className="mt-8 flex flex-wrap gap-3">
+                    <p className="mt-6 max-w-xl mx-auto text-lg text-white/85 leading-relaxed drop-shadow">{c.sub}</p>
+                    <div className="mt-8 flex flex-wrap justify-center gap-3">
                       <Link href="/consult" className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 font-semibold text-brand-700 shadow-xl hover:-translate-y-0.5 hover:shadow-2xl transition-all">
                         Start free consultation <ArrowRight className="h-4 w-4" />
                       </Link>
