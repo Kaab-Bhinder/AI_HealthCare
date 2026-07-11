@@ -52,8 +52,9 @@ export default function Home() {
         <div className="absolute inset-0 bg-grid opacity-60 dark:opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.10),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.20),transparent_60%)]" />
         <Blob className="absolute -top-20 -left-28 w-96 h-96 text-brand-200/40 dark:text-brand-500/15" />
-        <Blob className="absolute -bottom-24 -right-28 w-[26rem] h-[26rem] text-coral-200/40 dark:text-coral-500/10" />
+        <Blob className="absolute -bottom-24 -right-28 w-[26rem] h-[26rem] text-coral-200/40 dark:text-brand-400/10" />
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
+          <div className="rounded-[2.5rem] bg-white/70 dark:bg-white/[0.045] backdrop-blur border border-cream-200 dark:border-white/10 shadow-card px-6 sm:px-12 py-14">
           <span className="chip mx-auto"><Sparkles className="h-3.5 w-3.5 text-brand-500" /> How it works</span>
           <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">From worry to booked in three steps</h2>
           <div className="relative mt-16 grid md:grid-cols-3 gap-10">
@@ -73,16 +74,17 @@ export default function Home() {
               </div>
             ))}
           </div>
+          </div>
         </div>
       </section>
 
       {/* ===================== TESTIMONIAL ===================== */}
-      <section className="relative overflow-x-clip">
+      <section className="relative overflow-x-clip border-y border-cream-300/60 dark:border-white/10 bg-white/50 dark:bg-white/[0.03]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.08),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.16),transparent_60%)]" />
         <Blob className="absolute top-4 -right-24 w-80 h-80 text-brand-200/30 dark:text-brand-500/10" />
         <div className="relative mx-auto max-w-4xl px-6 py-24 text-center">
           <Leaf className="absolute top-6 left-[12%] w-12 text-brand-300/40 dark:text-brand-400/25 -rotate-12 hidden sm:block" />
-          <Leaf className="absolute bottom-8 right-[12%] w-12 text-coral-300/40 dark:text-coral-400/25 rotate-45 hidden sm:block" />
+          <Leaf className="absolute bottom-8 right-[12%] w-12 text-coral-300/40 dark:text-brand-300/20 rotate-45 hidden sm:block" />
           <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
             <Quote className="h-6 w-6" />
           </span>
