@@ -58,6 +58,30 @@ SEED_DOCTORS = [
      'availability': 'Mon-Fri 8AM-6PM', 'phone': '555-0012', 'bio': 'Approachable family doctor for everyday health needs.'},
 ]
 
+# Attach portrait photos by gender (graceful initials fallback on the frontend).
+_U = 'https://images.unsplash.com/photo-'
+_FEMALE_PHOTOS = [
+    f'{_U}1594824476967-48c8b964273f?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1559839734-2b71ea197ec2?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1573496359142-b8d87734a5a2?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1651008376811-b90baee60c1f?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1638202993928-7d113b8e4519?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1527613426441-4da17471b66d?w=320&h=320&fit=crop&crop=faces&auto=format',
+]
+_MALE_PHOTOS = [
+    f'{_U}1622253692010-333f2da6031d?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1612349317150-e413f6a5b16d?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1582750433449-648ed127bb54?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1618498082410-b4aa22193b38?w=320&h=320&fit=crop&crop=faces&auto=format',
+    f'{_U}1637059824899-a441006a6875?w=320&h=320&fit=crop&crop=faces&auto=format',
+]
+_fi = _mi = 0
+for _d in SEED_DOCTORS:
+    if _d.get('gender') == 'female':
+        _d['photo'] = _FEMALE_PHOTOS[_fi % len(_FEMALE_PHOTOS)]; _fi += 1
+    else:
+        _d['photo'] = _MALE_PHOTOS[_mi % len(_MALE_PHOTOS)]; _mi += 1
+
 # Standard weekly slot template (hour of day) for generated availability.
 _SLOT_HOURS = [9, 11, 14, 16]
 MONGODB_URI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017')

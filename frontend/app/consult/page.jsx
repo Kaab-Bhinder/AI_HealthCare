@@ -1,97 +1,55 @@
+"use client"
+import { useState } from 'react'
 import Link from 'next/link'
+import { ArrowLeft, Search, MessageCircle, ShieldAlert } from 'lucide-react'
+import { Blob, Leaf } from '../../components/Organic'
 import Chat from '../../components/Chat'
-import { ArrowLeft, Lightbulb, Activity, ShieldAlert, Sparkles } from 'lucide-react'
-
-const tips = [
-  'Describe symptoms clearly, with when they started and how severe they feel.',
-  'Mention your age and any chronic conditions if relevant.',
-  'For emergencies, call your local emergency number immediately.',
-  'Book an appointment for an in-depth, in-person consultation.',
-]
-
-const common = ['Headache', 'Fever', 'Cough', 'Sore throat', 'Nausea', 'Fatigue']
+import MatchFlow from '../../components/MatchFlow'
 
 export default function Consult() {
+  const [tab, setTab] = useState('match') // match | chat
+
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        {/* Page header */}
-        <div className="mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-brand-600 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" /> Back home
-          </Link>
-          <div className="mt-4 flex items-center gap-3">
-            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white shadow-lift">
-              <Sparkles className="h-5 w-5" />
-            </span>
-            <div>
-              <h1 className="font-display text-3xl font-semibold tracking-tight text-ink-900 dark:text-white">
-                AI Consultation
-              </h1>
-              <p className="text-sm text-ink-500 dark:text-ink-400">
-                Calm health guidance & doctor appointments
-              </p>
-            </div>
-          </div>
+    <div className="relative min-h-screen overflow-hidden">
+      <Blob className="absolute -top-28 -right-28 w-[30rem] h-[30rem] text-brand-200/40 dark:text-brand-500/10" />
+      <Blob className="absolute top-52 -left-40 w-96 h-96 text-coral-200/30 dark:text-coral-500/10" />
+      <Leaf className="absolute top-24 right-[10%] w-12 text-brand-300/40 rotate-12 hidden lg:block" />
+
+      <div className="relative mx-auto max-w-3xl px-6 py-8">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-brand-600 transition-colors">
+          <ArrowLeft className="h-4 w-4" /> Back home
+        </Link>
+
+        <div className="mt-4 text-center">
+          <h1 className="font-display text-3xl sm:text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">How can we help today?</h1>
+          <p className="mt-2 text-ink-500 dark:text-ink-400">Get matched to a doctor, or ask our assistant anything.</p>
         </div>
 
-        {/* Layout */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-          {/* Sidebar */}
-          <aside className="lg:col-span-1 space-y-5">
-            <div className="card p-6">
-              <h3 className="flex items-center gap-2 font-semibold text-ink-900 dark:text-white">
-                <Lightbulb className="h-5 w-5 text-brand-500" /> Quick tips
-              </h3>
-              <ul className="mt-4 space-y-3">
-                {tips.map((t, i) => (
-                  <li key={i} className="flex gap-2.5 text-sm text-ink-600 dark:text-ink-300">
-                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-50 dark:bg-brand-500/15 text-[11px] font-semibold text-brand-600 dark:text-brand-300">
-                      {i + 1}
-                    </span>
-                    <span className="leading-relaxed">{t}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="card p-6">
-              <h3 className="flex items-center gap-2 font-semibold text-ink-900 dark:text-white">
-                <Activity className="h-5 w-5 text-brand-500" /> Common symptoms
-              </h3>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {common.map((c) => (
-                  <span
-                    key={c}
-                    className="rounded-full border border-ink-200 dark:border-white/10 bg-ink-50 dark:bg-white/5 px-3 py-1 text-xs font-medium text-ink-600 dark:text-ink-300"
-                  >
-                    {c}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-accent-300/60 dark:border-accent-500/30 bg-accent-50/80 dark:bg-accent-500/5 p-6">
-              <h3 className="flex items-center gap-2 font-semibold text-accent-600 dark:text-accent-400">
-                <ShieldAlert className="h-5 w-5" /> Important
-              </h3>
-              <p className="mt-3 text-xs leading-relaxed text-ink-600 dark:text-ink-300">
-                Auravia provides general guidance only — not a substitute for professional medical
-                advice, diagnosis, or treatment. Always consult a healthcare provider for a proper
-                evaluation.
-              </p>
-            </div>
-          </aside>
-
-          {/* Chat */}
-          <section className="lg:col-span-3">
-            <Chat />
-          </section>
+        {/* Tabs */}
+        <div className="mt-7 mx-auto w-fit rounded-full bg-cream-100 dark:bg-white/5 border border-cream-300 dark:border-white/10 p-1 flex">
+          <TabButton active={tab === 'match'} onClick={() => setTab('match')} icon={Search} label="Find a doctor" />
+          <TabButton active={tab === 'chat'} onClick={() => setTab('chat')} icon={MessageCircle} label="Ask the assistant" />
         </div>
+
+        <div className="mt-6">
+          {tab === 'match' ? <MatchFlow /> : <Chat />}
+        </div>
+
+        <p className="mt-6 flex items-center justify-center gap-2 text-xs text-ink-400">
+          <ShieldAlert className="h-3.5 w-3.5" /> Guidance only — not a substitute for professional medical care.
+        </p>
       </div>
     </div>
+  )
+}
+
+function TabButton({ active, onClick, icon: Icon, label }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${active ? 'bg-white dark:bg-ink-900 text-brand-700 dark:text-brand-300 shadow-soft' : 'text-ink-500 dark:text-ink-400 hover:text-ink-700'}`}
+    >
+      <Icon className="h-4 w-4" /> {label}
+    </button>
   )
 }
