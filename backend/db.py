@@ -8,54 +8,54 @@ load_dotenv()
 # Richer seed set — spread across specialties and genders so AI matching has
 # real variety to choose from.
 SEED_DOCTORS = [
-    {'_id': 'doc_001', 'name': 'Dr. Sarah Johnson', 'specialty': 'General Practitioner', 'gender': 'female',
+    {'_id': 'doc_001', 'name': 'Dr. Ayesha Siddiqui', 'specialty': 'General Practitioner', 'gender': 'female',
      'specialties': ['headache', 'fever', 'cold', 'cough', 'sore throat', 'fatigue'],
-     'qualifications': 'MD, Board Certified', 'experience_years': 10, 'rating': 4.8,
-     'availability': 'Mon-Fri 9AM-5PM', 'phone': '555-0001', 'bio': 'Family medicine physician focused on preventive, whole-person care.'},
-    {'_id': 'doc_002', 'name': 'Dr. Michael Chen', 'specialty': 'Internal Medicine', 'gender': 'male',
+     'qualifications': 'MBBS, FCPS (Family Medicine)', 'experience_years': 10, 'rating': 4.8,
+     'availability': 'Mon-Fri 9AM-5PM', 'phone': '+92 300 1234501', 'bio': 'Family physician focused on preventive, whole-person care.'},
+    {'_id': 'doc_002', 'name': 'Dr. Bilal Ahmed', 'specialty': 'Internal Medicine', 'gender': 'male',
      'specialties': ['fever', 'diabetes', 'hypertension', 'fatigue'],
-     'qualifications': 'MD, Internal Medicine', 'experience_years': 15, 'rating': 4.9,
-     'availability': 'Mon-Sat 10AM-6PM', 'phone': '555-0002', 'bio': 'Internist specializing in chronic disease management.'},
-    {'_id': 'doc_003', 'name': 'Dr. Emily Rodriguez', 'specialty': 'Neurology', 'gender': 'female',
+     'qualifications': 'MBBS, FCPS (Medicine)', 'experience_years': 15, 'rating': 4.9,
+     'availability': 'Mon-Sat 10AM-6PM', 'phone': '+92 301 1234502', 'bio': 'Internist specialising in chronic disease management.'},
+    {'_id': 'doc_003', 'name': 'Dr. Sana Malik', 'specialty': 'Neurology', 'gender': 'female',
      'specialties': ['headache', 'migraine', 'dizziness', 'numbness', 'seizure'],
-     'qualifications': 'MD, Neurology', 'experience_years': 12, 'rating': 4.7,
-     'availability': 'Tue-Fri 2PM-8PM', 'phone': '555-0003', 'bio': 'Neurologist treating headache, migraine and nerve disorders.'},
-    {'_id': 'doc_004', 'name': 'Dr. James Wilson', 'specialty': 'ENT Specialist', 'gender': 'male',
+     'qualifications': 'MBBS, FCPS (Neurology)', 'experience_years': 12, 'rating': 4.7,
+     'availability': 'Tue-Fri 2PM-8PM', 'phone': '+92 302 1234503', 'bio': 'Neurologist treating headache, migraine and nerve disorders.'},
+    {'_id': 'doc_004', 'name': 'Dr. Usman Tariq', 'specialty': 'ENT Specialist', 'gender': 'male',
      'specialties': ['sore throat', 'cough', 'cold', 'sinusitis', 'ear pain'],
-     'qualifications': 'MD, Otolaryngology', 'experience_years': 18, 'rating': 4.6,
-     'availability': 'Mon-Thu 8AM-4PM', 'phone': '555-0004', 'bio': 'Ear, nose and throat surgeon.'},
-    {'_id': 'doc_005', 'name': 'Dr. Aisha Khan', 'specialty': 'Cardiology', 'gender': 'female',
+     'qualifications': 'MBBS, FCPS (ENT)', 'experience_years': 18, 'rating': 4.6,
+     'availability': 'Mon-Thu 8AM-4PM', 'phone': '+92 303 1234504', 'bio': 'Ear, nose and throat surgeon.'},
+    {'_id': 'doc_005', 'name': 'Dr. Hina Raza', 'specialty': 'Cardiology', 'gender': 'female',
      'specialties': ['chest pain', 'palpitation', 'hypertension', 'blood pressure'],
-     'qualifications': 'MD, FACC', 'experience_years': 20, 'rating': 4.9,
-     'availability': 'Mon-Fri 9AM-3PM', 'phone': '555-0005', 'bio': 'Cardiologist with two decades of clinical experience.'},
-    {'_id': 'doc_006', 'name': 'Dr. David Park', 'specialty': 'Dermatology', 'gender': 'male',
+     'qualifications': 'MBBS, FCPS (Cardiology)', 'experience_years': 20, 'rating': 4.9,
+     'availability': 'Mon-Fri 9AM-3PM', 'phone': '+92 304 1234505', 'bio': 'Cardiologist with two decades of clinical experience.'},
+    {'_id': 'doc_006', 'name': 'Dr. Faisal Iqbal', 'specialty': 'Dermatology', 'gender': 'male',
      'specialties': ['rash', 'acne', 'skin', 'eczema', 'itching'],
-     'qualifications': 'MD, Dermatology', 'experience_years': 9, 'rating': 4.5,
-     'availability': 'Wed-Sat 10AM-5PM', 'phone': '555-0006', 'bio': 'Dermatologist for medical and cosmetic skin care.'},
-    {'_id': 'doc_007', 'name': 'Dr. Priya Sharma', 'specialty': 'Pediatrics', 'gender': 'female',
+     'qualifications': 'MBBS, FCPS (Dermatology)', 'experience_years': 9, 'rating': 4.5,
+     'availability': 'Wed-Sat 10AM-5PM', 'phone': '+92 305 1234506', 'bio': 'Dermatologist for medical and cosmetic skin care.'},
+    {'_id': 'doc_007', 'name': 'Dr. Mariam Khan', 'specialty': 'Pediatrics', 'gender': 'female',
      'specialties': ['child', 'infant', 'fever', 'cough', 'vaccination'],
-     'qualifications': 'MD, Pediatrics', 'experience_years': 11, 'rating': 4.8,
-     'availability': 'Mon-Fri 9AM-4PM', 'phone': '555-0007', 'bio': 'Pediatrician caring for newborns through teens.'},
-    {'_id': 'doc_008', 'name': 'Dr. Robert Blake', 'specialty': 'Orthopedics', 'gender': 'male',
+     'qualifications': 'MBBS, FCPS (Paediatrics)', 'experience_years': 11, 'rating': 4.8,
+     'availability': 'Mon-Fri 9AM-4PM', 'phone': '+92 306 1234507', 'bio': 'Paediatrician caring for newborns through teens.'},
+    {'_id': 'doc_008', 'name': 'Dr. Kamran Sheikh', 'specialty': 'Orthopedics', 'gender': 'male',
      'specialties': ['joint pain', 'back pain', 'fracture', 'muscle', 'knee'],
-     'qualifications': 'MD, Orthopedic Surgery', 'experience_years': 16, 'rating': 4.6,
-     'availability': 'Tue-Sat 8AM-2PM', 'phone': '555-0008', 'bio': 'Orthopedic surgeon focused on joints and sports injuries.'},
-    {'_id': 'doc_009', 'name': 'Dr. Lena Fischer', 'specialty': 'Psychiatry', 'gender': 'female',
+     'qualifications': 'MBBS, FCPS (Orthopaedics)', 'experience_years': 16, 'rating': 4.6,
+     'availability': 'Tue-Sat 8AM-2PM', 'phone': '+92 307 1234508', 'bio': 'Orthopaedic surgeon focused on joints and sports injuries.'},
+    {'_id': 'doc_009', 'name': 'Dr. Nadia Aslam', 'specialty': 'Psychiatry', 'gender': 'female',
      'specialties': ['anxiety', 'depression', 'stress', 'sleep', 'panic'],
-     'qualifications': 'MD, Psychiatry', 'experience_years': 13, 'rating': 4.7,
-     'availability': 'Mon-Thu 11AM-7PM', 'phone': '555-0009', 'bio': 'Psychiatrist supporting mental and emotional wellbeing.'},
-    {'_id': 'doc_010', 'name': 'Dr. Omar Farouk', 'specialty': 'Gastroenterology', 'gender': 'male',
+     'qualifications': 'MBBS, FCPS (Psychiatry)', 'experience_years': 13, 'rating': 4.7,
+     'availability': 'Mon-Thu 11AM-7PM', 'phone': '+92 308 1234509', 'bio': 'Psychiatrist supporting mental and emotional wellbeing.'},
+    {'_id': 'doc_010', 'name': 'Dr. Omar Farooq', 'specialty': 'Gastroenterology', 'gender': 'male',
      'specialties': ['stomach', 'nausea', 'diarrhea', 'abdominal pain', 'indigestion'],
-     'qualifications': 'MD, Gastroenterology', 'experience_years': 14, 'rating': 4.6,
-     'availability': 'Mon-Fri 10AM-5PM', 'phone': '555-0010', 'bio': 'Gastroenterologist for digestive health.'},
-    {'_id': 'doc_011', 'name': 'Dr. Grace Lee', 'specialty': 'Pulmonology', 'gender': 'female',
+     'qualifications': 'MBBS, FCPS (Gastroenterology)', 'experience_years': 14, 'rating': 4.6,
+     'availability': 'Mon-Fri 10AM-5PM', 'phone': '+92 309 1234510', 'bio': 'Gastroenterologist for digestive health.'},
+    {'_id': 'doc_011', 'name': 'Dr. Zara Hussain', 'specialty': 'Pulmonology', 'gender': 'female',
      'specialties': ['cough', 'breathing', 'asthma', 'wheezing', 'shortness of breath'],
-     'qualifications': 'MD, Pulmonology', 'experience_years': 10, 'rating': 4.5,
-     'availability': 'Wed-Sat 9AM-4PM', 'phone': '555-0011', 'bio': 'Pulmonologist treating lung and airway conditions.'},
-    {'_id': 'doc_012', 'name': 'Dr. Daniel Mercer', 'specialty': 'General Practitioner', 'gender': 'male',
+     'qualifications': 'MBBS, FCPS (Pulmonology)', 'experience_years': 10, 'rating': 4.5,
+     'availability': 'Wed-Sat 9AM-4PM', 'phone': '+92 310 1234511', 'bio': 'Pulmonologist treating lung and airway conditions.'},
+    {'_id': 'doc_012', 'name': 'Dr. Hamza Yousaf', 'specialty': 'General Practitioner', 'gender': 'male',
      'specialties': ['fever', 'cold', 'flu', 'checkup', 'fatigue', 'headache'],
-     'qualifications': 'MD, Family Medicine', 'experience_years': 7, 'rating': 4.7,
-     'availability': 'Mon-Fri 8AM-6PM', 'phone': '555-0012', 'bio': 'Approachable family doctor for everyday health needs.'},
+     'qualifications': 'MBBS (Family Medicine)', 'experience_years': 7, 'rating': 4.7,
+     'availability': 'Mon-Fri 8AM-6PM', 'phone': '+92 311 1234512', 'bio': 'Approachable family doctor for everyday health needs.'},
 ]
 
 # Attach portrait photos by gender (graceful initials fallback on the frontend).
@@ -117,20 +117,16 @@ def init_collections():
     if db is None:
         return False
     try:
-        if 'doctors' not in db.list_collection_names():
-            db.create_collection('doctors')
+        # Seed when the collection is missing OR empty (so a data reset re-seeds).
+        if db.doctors.count_documents({}) == 0:
             db.doctors.insert_many(SEED_DOCTORS)
-            print(f"[DEBUG] Created doctors collection with {len(SEED_DOCTORS)} doctors")
-        if 'appointments' not in db.list_collection_names():
-            db.create_collection('appointments')
+            print(f"[DEBUG] Seeded doctors collection with {len(SEED_DOCTORS)} doctors")
+        if db.appointments.count_documents({}) == 0:
             appointments = []
             for doc in SEED_DOCTORS:
                 appointments.extend(_build_slots(doc['_id']))
             db.appointments.insert_many(appointments)
-            print(f"[DEBUG] Created appointments collection with {len(appointments)} slots")
-        if 'bookings' not in db.list_collection_names():
-            db.create_collection('bookings')
-            print("[DEBUG] Created bookings collection")
+            print(f"[DEBUG] Seeded appointments collection with {len(appointments)} slots")
         return True
     except Exception as e:
         print(f"[ERROR] Failed to initialize collections: {e}")

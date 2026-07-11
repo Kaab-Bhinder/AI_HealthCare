@@ -309,7 +309,7 @@ function EmergencyBanner({ reason }) {
         <div className="flex-1">
           <p className="font-semibold">This may be an emergency</p>
           <p className="text-sm text-white/90 mt-0.5">{reason || 'Your symptoms may need urgent care. Please don’t wait.'}</p>
-          <a href="tel:112" className="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-coral-600 hover:shadow-lg transition-all">
+          <a href="tel:1122" className="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-coral-600 hover:shadow-lg transition-all">
             <Phone className="h-4 w-4" /> Call an ambulance now
           </a>
         </div>

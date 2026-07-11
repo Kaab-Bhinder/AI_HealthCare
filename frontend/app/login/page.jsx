@@ -66,7 +66,7 @@ export default function LoginPage() {
               <div className="mt-1.5 relative">
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-ink-400" />
                 <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
+                  placeholder="you@gmail.com"
                   className="w-full rounded-xl border border-cream-300 dark:border-white/15 bg-white dark:bg-white/5 text-ink-800 dark:text-ink-100 pl-10 pr-4 py-3 focus:outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-500/10 placeholder-ink-400 transition-all" />
               </div>
             </label>
@@ -87,7 +87,7 @@ export default function LoginPage() {
 
           <div className="mt-6 rounded-xl border border-cream-300 dark:border-white/10 bg-cream-100/60 dark:bg-white/5 p-4 text-xs text-ink-500 dark:text-ink-400">
             <p className="font-medium text-ink-600 dark:text-ink-300">Demo logins</p>
-            <p className="mt-1">Patient: register your own · Doctor: <span className="font-mono">sarah.johnson@auravia.health</span> / doctor123 · Admin: <span className="font-mono">admin@auravia.health</span> / admin123</p>
+            <p className="mt-1">Patient: register your own · Doctor: <span className="font-mono">ayesha.siddiqui@auravia.health</span> / doctor123 · Admin: <span className="font-mono">admin@auravia.health</span> / admin123</p>
           </div>
         </div>
       </div>

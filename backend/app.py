@@ -466,7 +466,13 @@ def ai_match():
             return add_cors_headers(jsonify({"error": "Please describe your symptoms"})), 400
         gender = data.get('gender') or None            # 'male' | 'female' preference
         preferred_time = data.get('preferred_time') or None  # 'morning'|'afternoon'|'evening'
-        result = matching.match_doctors(symptoms, gender=gender, preferred_time=preferred_time)
+        # A doctor browsing shouldn't be matched to themselves.
+        exclude = None
+        user = auth._current_user_from_request()
+        if user and user.get('role') == 'doctor':
+            exclude = user.get('doctor_id')
+        result = matching.match_doctors(symptoms, gender=gender, preferred_time=preferred_time,
+                                        exclude_doctor_id=exclude)
         if DEBUG_AI:
             print(f"[DEBUG] match: specialty={result['triage']['specialty']} "
                   f"urgency={result['triage']['urgency']} doctors={len(result['doctors'])}")
@@ -595,11 +601,13 @@ def book_appointment_endpoint():
         if not slot_id or not patient_email:
             return add_cors_headers(jsonify({"error": "slot_id and email required"})), 400
 
-        # If a signed-in patient is booking, link the appointment to their account
-        # and prefill from their profile.
+        # Only patients (or guests) may book. Doctors/admins are providers, not
+        # patients — this prevents a doctor booking an appointment with themselves.
         patient_id = None
         user = auth._current_user_from_request()
-        if user and user.get('role') == 'patient':
+        if user:
+            if user.get('role') != 'patient':
+                return add_cors_headers(jsonify({"error": "Only patients can book appointments"})), 403
             patient_id = str(user['_id'])
             patient_email = patient_email or user.get('email')
             patient_name = patient_name or user.get('name')

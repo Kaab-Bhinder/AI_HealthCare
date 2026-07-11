@@ -45,8 +45,8 @@ export default function RegisterPage() {
             {error && (
               <div className="rounded-xl border border-coral-200 bg-coral-50 dark:bg-coral-500/10 px-4 py-3 text-sm text-coral-600 dark:text-coral-300">{error}</div>
             )}
-            <Field icon={User} label="Full name" type="text" value={form.name} onChange={set('name')} placeholder="Alex Doe" required />
-            <Field icon={Mail} label="Email" type="email" value={form.email} onChange={set('email')} placeholder="you@example.com" required />
+            <Field icon={User} label="Full name" type="text" value={form.name} onChange={set('name')} placeholder="Ali Hassan" required />
+            <Field icon={Mail} label="Email" type="email" value={form.email} onChange={set('email')} placeholder="you@gmail.com" required />
             <Field icon={Lock} label="Password" type="password" value={form.password} onChange={set('password')} placeholder="At least 6 characters" required />
             <div className="grid grid-cols-2 gap-3">
               <label className="block">
@@ -58,7 +58,7 @@ export default function RegisterPage() {
                   <option value="male">Male</option>
                 </select>
               </label>
-              <Field icon={Phone} label="Phone" sub="(optional)" type="tel" value={form.phone} onChange={set('phone')} placeholder="555-0100" />
+              <Field icon={Phone} label="Phone" sub="(optional)" type="tel" value={form.phone} onChange={set('phone')} placeholder="+92 3XX XXXXXXX" />
             </div>
             <button type="submit" disabled={busy}
               className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 text-white font-semibold py-3 shadow-soft hover:shadow-lift transition-all disabled:opacity-50">

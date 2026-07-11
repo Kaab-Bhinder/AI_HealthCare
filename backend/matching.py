@@ -135,7 +135,7 @@ def _time_of_day_bucket(dt):
     return 'evening'
 
 
-def match_doctors(symptoms, gender=None, preferred_time=None, limit=6):
+def match_doctors(symptoms, gender=None, preferred_time=None, limit=6, exclude_doctor_id=None):
     """
     Full pipeline: triage the symptoms, then find & rank doctors.
 
@@ -151,6 +151,8 @@ def match_doctors(symptoms, gender=None, preferred_time=None, limit=6):
     specialties = [tri['specialty']] + tri.get('alt_specialties', [])
 
     doctors = dbmod.find_matching_doctors(specialties, gender=gender, limit=20)
+    if exclude_doctor_id:
+        doctors = [d for d in doctors if str(d.get('_id')) != str(exclude_doctor_id)]
 
     ranked = []
     for doc in doctors:

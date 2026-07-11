@@ -179,8 +179,8 @@ function AddDoctorModal({ onClose, onCreated }) {
           <form onSubmit={submit} className="p-6 space-y-4">
             {error && <div className="rounded-xl border border-coral-200 bg-coral-50 dark:bg-coral-500/10 px-4 py-3 text-sm text-coral-600 dark:text-coral-300">{error}</div>}
             <div className="grid sm:grid-cols-2 gap-3">
-              <Input label="Full name" value={f.name} onChange={set('name')} placeholder="Dr. Jane Doe" required />
-              <Input label="Login email" type="email" value={f.email} onChange={set('email')} placeholder="jane@auravia.health" required />
+              <Input label="Full name" value={f.name} onChange={set('name')} placeholder="Dr. Ayesha Khan" required />
+              <Input label="Login email" type="email" value={f.email} onChange={set('email')} placeholder="ayesha.khan@auravia.health" required />
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <Select label="Specialty" value={f.specialty} onChange={set('specialty')} options={SPECIALTIES} />
@@ -188,7 +188,7 @@ function AddDoctorModal({ onClose, onCreated }) {
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <Input label="Experience (years)" type="number" value={f.experience_years} onChange={set('experience_years')} />
-              <Input label="Phone" value={f.phone} onChange={set('phone')} placeholder="555-0100" />
+              <Input label="Phone" value={f.phone} onChange={set('phone')} placeholder="+92 3XX XXXXXXX" />
             </div>
             <Input label="Temp password" value={f.password} onChange={set('password')} />
             <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 text-white font-semibold py-3 shadow-soft hover:shadow-lift transition-all disabled:opacity-50">

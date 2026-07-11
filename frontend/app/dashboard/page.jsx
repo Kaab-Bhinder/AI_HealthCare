@@ -46,7 +46,7 @@ function PatientDashboard() {
           <h3 className="mt-4 font-semibold text-ink-900 dark:text-white">Book an appointment</h3>
           <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">Find a specialist and reserve a time.</p>
         </Link>
-        <a href="tel:112" className="group rounded-3xl p-6 bg-gradient-to-br from-coral-500 to-coral-600 text-white shadow-soft hover:shadow-lift hover:-translate-y-1 transition-all">
+        <a href="tel:1122" className="group rounded-3xl p-6 bg-gradient-to-br from-coral-500 to-coral-600 text-white shadow-soft hover:shadow-lift hover:-translate-y-1 transition-all">
           <span className="grid h-11 w-11 place-items-center rounded-2xl bg-white/20"><Phone className="h-5 w-5" /></span>
           <h3 className="mt-4 font-semibold">Emergency</h3>
           <p className="mt-1 text-sm text-white/90">Call an ambulance now.</p>
