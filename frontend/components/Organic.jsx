@@ -31,23 +31,12 @@ export function Wave({ className = '', flip = false, fill = 'currentColor' }) {
   )
 }
 
-/** Doctor avatar: shows a real photo when it loads, falls back to warm initials. */
-export function DoctorAvatar({ name, photo, className = '' }) {
-  const [failed, setFailed] = useState(false)
+/** Doctor avatar — clean gradient initials. (Real photos can be re-enabled later
+ *  by passing a `photo` URL and restoring the <img> branch.) */
+export function DoctorAvatar({ name, className = '' }) {
   const initials = name
     ? name.replace(/^Dr\.?\s*/i, '').split(' ').map((w) => w[0]).slice(0, 2).join('')
     : 'Dr'
-  if (photo && !failed) {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={photo}
-        alt={name}
-        onError={() => setFailed(true)}
-        className={`object-cover ${className}`}
-      />
-    )
-  }
   return (
     <span className={`grid place-items-center bg-gradient-to-br from-brand-400 to-brand-600 text-white font-semibold ${className}`}>
       {initials}

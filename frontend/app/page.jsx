@@ -16,13 +16,6 @@ const specialties = [
   { icon: Pill, name: 'Dermatology', tint: 'from-brand-400 to-brand-600' },
 ]
 
-const doctors = [
-  { name: 'Dr. Sarah Johnson', specialty: 'General Practitioner', rating: 4.8, photo: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=320&h=320&fit=crop&crop=faces&auto=format' },
-  { name: 'Dr. Michael Chen', specialty: 'Internal Medicine', rating: 4.9, photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=320&h=320&fit=crop&crop=faces&auto=format' },
-  { name: 'Dr. Emily Rodriguez', specialty: 'Neurology', rating: 4.7, photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=320&h=320&fit=crop&crop=faces&auto=format' },
-  { name: 'Dr. Aisha Khan', specialty: 'Cardiology', rating: 4.9, photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=320&h=320&fit=crop&crop=faces&auto=format' },
-]
-
 const steps = [
   { icon: MessageCircle, title: 'Describe', desc: 'Tell us how you feel — type or just speak.' },
   { icon: Search, title: 'We match', desc: 'AI finds the right specialty and the best-fit doctor.' },
@@ -66,13 +59,10 @@ export default function Home() {
                 <Link href="/consult" className="btn-primary text-base">Start free consultation <ArrowRight className="h-4 w-4" /></Link>
                 <Link href="/register" className="btn-ghost text-base">Create account</Link>
               </div>
-              <div className="mt-9 flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {doctors.map((d) => (
-                    <DoctorAvatar key={d.name} name={d.name} photo={d.photo} className="h-10 w-10 rounded-full ring-2 ring-cream-50 dark:ring-[#17140f] text-xs" />
-                  ))}
-                </div>
-                <p className="text-sm text-ink-500 dark:text-ink-400"><span className="font-semibold text-ink-800 dark:text-white">12 specialists</span> across 11 fields, ready to help.</p>
+              <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-500 dark:text-ink-400">
+                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand-500" /> Privacy-first</span>
+                <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-brand-500" /> 24/7 available</span>
+                <span className="flex items-center gap-2"><Stethoscope className="h-4 w-4 text-brand-500" /> 12 specialists, 11 fields</span>
               </div>
             </div>
 
@@ -97,7 +87,7 @@ export default function Home() {
 
               {/* floating: matched doctor */}
               <div className="absolute -top-6 -right-2 sm:right-2 z-20 rounded-2xl bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-lift p-3 pr-4 rotate-[4deg] flex items-center gap-3">
-                <DoctorAvatar name="Dr. Emily Rodriguez" photo={doctors[2].photo} className="h-11 w-11 rounded-xl text-xs" />
+                <DoctorAvatar name="Dr. Emily Rodriguez" className="h-11 w-11 rounded-xl text-xs" />
                 <div className="leading-tight">
                   <div className="text-[11px] text-ink-400">Best match</div>
                   <div className="text-sm font-semibold text-ink-900 dark:text-white">Dr. Emily Rodriguez</div>
@@ -139,32 +129,6 @@ export default function Home() {
           </div>
         </div>
         <Wave flip className="text-cream-50 dark:text-[#17140f]" />
-      </section>
-
-      {/* ===================== DOCTORS ===================== */}
-      <section className="relative">
-        <Blob className="absolute -bottom-20 -right-24 w-96 h-96 text-coral-200/40 dark:text-coral-500/10" />
-        <div className="relative mx-auto max-w-6xl px-6 py-20">
-          <div className="flex items-end justify-between gap-6 flex-wrap">
-            <div className="max-w-xl">
-              <span className="chip"><Stethoscope className="h-3.5 w-3.5 text-brand-500" /> Meet the team</span>
-              <h2 className="mt-5 font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">Experienced. Empathetic. Human.</h2>
-            </div>
-            <Link href="/consult" className="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700">Consult a doctor <ChevronRight className="h-4 w-4" /></Link>
-          </div>
-          <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {doctors.map((d, i) => (
-              <div key={d.name} className={`group rounded-[1.75rem] bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-soft p-4 hover:shadow-lift hover:-translate-y-1 transition-all ${i % 2 === 1 ? 'lg:mt-8' : ''}`}>
-                <div className="relative overflow-hidden rounded-[1.4rem] aspect-square">
-                  <DoctorAvatar name={d.name} photo={d.photo} className="h-full w-full rounded-[1.4rem] text-2xl" />
-                  <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full bg-white/90 dark:bg-ink-900/90 px-2 py-0.5 text-[11px] font-semibold text-amber-500 shadow-soft"><Star className="h-3 w-3 fill-current" /> {d.rating}</span>
-                </div>
-                <p className="mt-3 font-semibold text-ink-900 dark:text-white leading-tight">{d.name}</p>
-                <p className="text-xs text-brand-600 dark:text-brand-300">{d.specialty}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* ===================== HOW IT WORKS ===================== */}
