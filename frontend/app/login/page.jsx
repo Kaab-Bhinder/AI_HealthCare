@@ -29,6 +29,7 @@ export default function LoginPage() {
 
   return (
     <AuthShell
+      image="/images/pic4.jpg"
       heading="Sign in"
       tagline={<>New here? <Link href="/register" className="font-semibold text-brand-600 hover:text-brand-700">Create an account</Link></>}
       sideTitle={<>Care,<br />made calm</>}

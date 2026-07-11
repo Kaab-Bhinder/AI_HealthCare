@@ -36,6 +36,7 @@ export default function RegisterPage() {
 
   return (
     <AuthShell
+      image="/images/pic3.jpg"
       heading="Sign up"
       tagline={<>Already have an account? <Link href="/login" className="font-semibold text-brand-600 hover:text-brand-700">Sign in</Link></>}
       sideTitle={<>Your health,<br />understood</>}

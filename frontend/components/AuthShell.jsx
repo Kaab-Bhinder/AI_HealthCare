@@ -2,8 +2,7 @@
 import { useState } from 'react'
 import SmartImage from './SmartImage'
 
-const HERO_IMG = 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1600&q=70&auto=format&fit=crop'
-const BG_IMG = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1600&q=60&auto=format&fit=crop'
+const DEFAULT_IMG = '/images/pic4.jpg'
 
 /** Torn-paper vertical edge (the signature detail from the reference design). */
 function TornEdge({ className = '' }) {
@@ -18,13 +17,13 @@ function TornEdge({ className = '' }) {
  * Split auth card inspired by the user's reference: white form panel on the
  * left, torn-paper edge into a full-bleed calm image with big display text.
  */
-export default function AuthShell({ heading, tagline, sideTitle, sideSub, children, below }) {
+export default function AuthShell({ heading, tagline, sideTitle, sideSub, children, below, image = DEFAULT_IMG }) {
   return (
     <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden flex items-center justify-center px-4 py-10">
       {/* Full-page photo backdrop with deep teal overlay */}
       <div className="absolute inset-0 -z-10">
-        <SmartImage src={BG_IMG} eager className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-900/85 via-brand-800/75 to-ink-950/85" />
+        <SmartImage src={image} eager className="absolute inset-0 h-full w-full object-cover scale-110 blur-[10px]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-900/80 via-ink-950/70 to-ink-950/85" />
       </div>
 
       {/* Floating split card */}
@@ -39,7 +38,7 @@ export default function AuthShell({ heading, tagline, sideTitle, sideSub, childr
 
         {/* Image panel with torn edge */}
         <div className="relative hidden lg:block min-h-[560px]">
-          <SmartImage src={HERO_IMG} eager className="absolute inset-0 h-full w-full object-cover" />
+          <SmartImage src={image} eager className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-900/70 via-transparent to-brand-900/20" />
           <TornEdge className="absolute left-0 top-0 h-full w-10 text-white dark:text-ink-900" />
           <div className="absolute bottom-10 right-10 left-16 text-right">
