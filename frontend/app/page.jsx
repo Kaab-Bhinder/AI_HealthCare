@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import {
-  ArrowRight, Sparkles, ShieldCheck, CalendarCheck, ChevronRight, Quote, MessageCircle, Search,
+  ArrowRight, Sparkles, ShieldCheck, CalendarCheck, ChevronRight, Quote, MessageCircle, Search, Plus, Minus,
 } from 'lucide-react'
 import { Blob, Leaf, Wave } from '../components/Organic'
 import ScrollyHero from '../components/ScrollyHero'
 import FanCarousel from '../components/FanCarousel'
+import SmartImage from '../components/SmartImage'
 
 
 const steps = [
@@ -111,23 +112,53 @@ export default function Home() {
 
       {/* ===================== FAQ ===================== */}
       <section className="relative overflow-x-clip">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(20,184,166,0.07),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_bottom,rgba(20,184,166,0.14),transparent_60%)]" />
-        <Blob className="absolute -bottom-24 -left-28 w-80 h-80 text-sage-100 dark:text-brand-500/10" />
-        <div className="relative mx-auto max-w-3xl px-6 pb-28">
-        <div className="text-center mb-12">
-          <h2 className="font-display text-4xl font-semibold tracking-tight text-ink-900 dark:text-white">Questions, answered</h2>
+        {/* Soft, light backdrop: bright photo washed out to a whisper */}
+        <div className="absolute inset-0">
+          <SmartImage src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1600&q=55&auto=format&fit=crop"
+            className="absolute inset-0 h-full w-full object-cover" fallbackClassName="bg-sage-100" />
+          <div className="absolute inset-0 bg-cream-50/[0.93] dark:bg-[#17140f]/[0.95]" />
         </div>
-        <div className="space-y-4">
-          {faqs.map((f) => (
-            <details key={f.q} className="group rounded-3xl bg-white dark:bg-ink-900 border border-cream-300/70 dark:border-white/10 shadow-soft p-6 [&_summary]:cursor-pointer">
-              <summary className="flex items-center justify-between gap-4 list-none">
-                <span className="font-semibold text-ink-900 dark:text-white">{f.q}</span>
-                <ChevronRight className="h-5 w-5 shrink-0 text-brand-500 transition-transform group-open:rotate-90" />
-              </summary>
-              <p className="mt-4 text-sm leading-relaxed text-ink-500 dark:text-ink-400">{f.a}</p>
-            </details>
-          ))}
-        </div>
+
+        <div className="relative mx-auto max-w-6xl px-6 py-24">
+          <div className="rounded-[2.5rem] bg-white/80 dark:bg-white/[0.04] backdrop-blur border border-cream-200 dark:border-white/10 shadow-card p-8 sm:p-12 lg:p-16">
+            <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr] items-start">
+              {/* Left: label + underlined heading + blurb */}
+              <div>
+                <span className="inline-flex items-center gap-2 text-sm font-semibold text-ink-700 dark:text-ink-200">
+                  <span className="h-2 w-2 rounded-full bg-coral-500" /> FAQs
+                </span>
+                <h2 className="mt-5 font-display text-4xl sm:text-5xl font-semibold tracking-tight text-ink-900 dark:text-white leading-[1.08]">
+                  Frequently asked{' '}
+                  <span className="relative inline-block">
+                    questions
+                    <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 140 10" fill="none" aria-hidden="true">
+                      <path d="M3 7 Q 35 2, 70 6 T 137 5" stroke="#f2876a" strokeWidth="4" strokeLinecap="round" />
+                    </svg>
+                  </span>
+                </h2>
+                <p className="mt-6 max-w-sm text-ink-500 dark:text-ink-400 leading-relaxed">
+                  Here are some common questions about our care to help you understand better.
+                </p>
+              </div>
+
+              {/* Right: accordion cards with circular +/- buttons */}
+              <div className="space-y-4">
+                {faqs.map((f, i) => (
+                  <details key={f.q} open={i === 0}
+                    className="group rounded-2xl bg-white dark:bg-ink-900 border border-cream-200 dark:border-white/10 shadow-soft px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
+                    <summary className="flex items-center justify-between gap-4 list-none cursor-pointer select-none">
+                      <span className="font-semibold text-ink-900 dark:text-white">{f.q}</span>
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink-900 text-white dark:bg-white dark:text-ink-900 transition-transform duration-300 group-open:rotate-180">
+                        <Plus className="h-4 w-4 group-open:hidden" />
+                        <Minus className="h-4 w-4 hidden group-open:block" />
+                      </span>
+                    </summary>
+                    <p className="mt-4 pr-10 text-sm leading-relaxed text-ink-500 dark:text-ink-400">{f.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
