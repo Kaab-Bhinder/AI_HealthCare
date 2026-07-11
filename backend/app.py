@@ -5,9 +5,8 @@ import requests
 from datetime import datetime
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+# Gemini is called via plain REST (same as embeddings/transcription) — no
+# LangChain: keeps the serverless bundle small and cold starts fast.
 # Retrieval: Atlas Vector Search when populated, else local semantic engine,
 # else keyword — the fallback chain lives inside vector_db.retrieve_context.
 from vector_db import retrieve_context
@@ -33,32 +32,28 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 DEBUG_AI = os.getenv('DEBUG_AI', 'false').lower() == 'true'
 FLASK_PORT = int(os.getenv('FLASK_PORT', 5000))
 CORS_ORIGIN = os.getenv('CORS_ORIGIN', 'http://localhost:3000')
-gemini_llm = None
-if GEMINI_API_KEY:
+GEMINI_CHAT_MODEL = os.getenv('GEMINI_CHAT_MODEL', 'gemini-2.5-flash')
+
+
+def gemini_generate(prompt, system=None, temperature=0.2, max_tokens=2500):
+    """Call Gemini generateContent via REST. Returns the reply text or None."""
+    if not GEMINI_API_KEY:
+        return None
+    url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
+           f"{GEMINI_CHAT_MODEL}:generateContent?key={GEMINI_API_KEY}")
+    body = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": temperature, "maxOutputTokens": max_tokens},
+    }
+    if system:
+        body["systemInstruction"] = {"parts": [{"text": system}]}
+    resp = requests.post(url, json=body, timeout=60)
+    resp.raise_for_status()
+    data = resp.json()
     try:
-        gemini_llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
-            google_api_key=GEMINI_API_KEY,
-            temperature=0.2,
-            max_output_tokens=2500
-        )
-        if DEBUG_AI:
-            print("[DEBUG] Gemini LLM initialized")
-    except Exception as e:
-        print(f"[ERROR] Gemini init: {e}")
-openai_llm = None
-if OPENAI_API_KEY:
-    try:
-        openai_llm = ChatOpenAI(
-            model="gpt-4o-mini",
-            openai_api_key=OPENAI_API_KEY,
-            temperature=0.2,
-            max_tokens=2500
-        )
-        if DEBUG_AI:
-            print("[DEBUG] OpenAI LLM initialized")
-    except Exception as e:
-        print(f"[ERROR] OpenAI init: {e}")
+        return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+    except (KeyError, IndexError):
+        return None
 SYSTEM_PROMPT = """You are a helpful medical assistant providing general health guidance. Be empathetic, practical, and thorough.
 
 RESPONSE GUIDELINES:
@@ -96,11 +91,6 @@ However, please see a doctor if the pain is severe, persistent, or gets worse."
 
 REMEMBER: Write complete responses that fully answer the user's question."""
 
-prompt_template = ChatPromptTemplate.from_messages([
-    ("system", SYSTEM_PROMPT),
-    MessagesPlaceholder(variable_name="chat_history"),
-    ("human", "{message}")
-])
 DATA_DIR = "data"
 CHATS_FILE = os.path.join(DATA_DIR, "chats.json")
 def ensure_data_file():
@@ -190,60 +180,18 @@ def get_llm_response(message, conversation_id):
     else:
         final_message = f"User Question: {message}\n\nInstructions: Provide a detailed, helpful response. Be thorough, empathetic, and medically responsible."
     
-    if gemini_llm:
-        try:
-            if DEBUG_AI:
-                if knowledge_found:
-                    print(f"[DEBUG] Calling Gemini with detailed RAG context")
-                else:
-                    print(f"[DEBUG] Calling Gemini without knowledge base")
-
-            response = gemini_llm.invoke(final_message)
-            if hasattr(response, 'content'):
-                reply = str(response.content).strip()
-            else:
-                reply = str(response).strip()
-            if reply:
-                reply = reply.strip()  # keep Markdown; the UI renders it
-                if DEBUG_AI:
-                    print(f"[DEBUG] Gemini response: {reply[:100]}...")
-                return reply, "gemini-2.5-flash", sources
-            else:
-                if DEBUG_AI:
-                    print(f"[DEBUG] Gemini returned empty reply")
-        except Exception as e:
-            print(f"[ERROR] Gemini error: {e}")
-            if DEBUG_AI:
-                import traceback
-                traceback.print_exc()
-    else:
-        print("[ERROR] Gemini LLM not initialized")
-    
-    if openai_llm:
-        try:
-            if DEBUG_AI:
-                if knowledge_found:
-                    print(f"[DEBUG] Calling OpenAI (fallback) with RAG context")
-                else:
-                    print(f"[DEBUG] Calling OpenAI (fallback) without knowledge base")
-            response = openai_llm.invoke(final_message)
-            if hasattr(response, 'content'):
-                reply = str(response.content).strip()
-            else:
-                reply = str(response).strip()
-            if reply:
-                reply = reply.strip()  # keep Markdown; the UI renders it
-                if DEBUG_AI:
-                    print(f"[DEBUG] OpenAI response: {reply[:100]}...")
-                return reply, "gpt-4o-mini", sources
-        except Exception as e:
-            if DEBUG_AI:
-                print(f"[DEBUG] OpenAI error: {e}")
-    else:
+    try:
         if DEBUG_AI:
-            print("[DEBUG] OpenAI LLM not configured")
+            print(f"[DEBUG] Calling Gemini ({'with' if knowledge_found else 'without'} RAG context)")
+        reply = gemini_generate(final_message, system=SYSTEM_PROMPT)
+        if reply:
+            if DEBUG_AI:
+                print(f"[DEBUG] Gemini response: {reply[:100]}...")
+            return reply, GEMINI_CHAT_MODEL, sources
+        print("[ERROR] Gemini returned empty reply")
+    except Exception as e:
+        print(f"[ERROR] Gemini error: {e}")
 
-    print("[ERROR] No LLM available or all LLMs failed")
     return None, None, []
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = CORS_ORIGIN

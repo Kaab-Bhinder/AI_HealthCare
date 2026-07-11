@@ -1,5 +1,5 @@
-# Production dependencies (slimmed for deploy — no faiss/torch needed;
-# retrieval uses Gemini embeddings + Atlas Vector Search)
+# Production dependencies — intentionally tiny for serverless (~100MB).
+# All Gemini calls (chat, embeddings, transcription) use plain REST.
 Flask>=3.0.0
 gunicorn>=21.2.0
 python-dotenv>=1.0.0
@@ -7,9 +7,6 @@ pymongo>=4.5.0
 PyJWT>=2.8.0
 requests>=2.31.0
 numpy>=1.26.0
-langchain-google-genai>=1.0.0
-langchain-openai>=0.1.0
-langchain-core>=0.1.0
 
 # Dev/testing only:
 mongomock>=4.1.2
